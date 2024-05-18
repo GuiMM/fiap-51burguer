@@ -1,0 +1,7 @@
+com\fiap\burguer\enums\CategoryProduct.class
+com\fiap\burguer\repository\ProductRepository.class
+com\fiap\burguer\Application.class
+com\fiap\burguer\config\Config.class
+com\fiap\burguer\controller\ProductController.class
+com\fiap\burguer\service\ProductService.class
+com\fiap\burguer\entities\Product.class

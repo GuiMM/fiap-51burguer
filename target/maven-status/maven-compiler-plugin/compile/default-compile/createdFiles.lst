@@ -1,3 +1,4 @@
+com\fiap\burguer\config\SwaggerConfig.class
 com\fiap\burguer\enums\CategoryProduct.class
 com\fiap\burguer\repository\ProductRepository.class
 com\fiap\burguer\Application.class

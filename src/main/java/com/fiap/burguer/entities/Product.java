@@ -23,17 +23,18 @@ public class Product {
     private String description;
 
     @Column(name = "preparationTime", nullable = false)
-    private LocalDateTime preparationTime;
+    private Integer preparationTime;
 
     @Column(name = "image", nullable = true)
     private String image;
 
+    public Product(){}
     Product(int id,
             String name,
 //            CategoryProduct category,
             double price,
             String description,
-            LocalDateTime preparationTime,
+            Integer preparationTime,
             String image) {
         this.id = id;
         this.name = name;
@@ -84,11 +85,11 @@ public class Product {
         this.description = description;
     }
 
-    public LocalDateTime getPreparationTime() {
+    public Integer getPreparationTime() {
         return preparationTime;
     }
 
-    public void setPreparationTime(LocalDateTime preparationTime) {
+    public void setPreparationTime(Integer preparationTime) {
         this.preparationTime = preparationTime;
     }
 

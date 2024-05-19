@@ -4,23 +4,22 @@ services:
   db:
     env_file:
       - .env
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: mysql:8.0
     user: root
-    container_name: sqlserver
+    container_name: mysql
     environment:
-      - MSSQL_SA_PASSWORD={$MSSQL_SA_PASSWORD}
-      - ACCEPT_EULA=Y
-      - MSSQL_ENABLE_HADR=1
-      - MSSQL_TCP_PORT=1433
-      - MSSQL_AGENT_ENABLED=true
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
 
     ports:
-      - "1433:1433"
+      - "3306:3306"
     restart: unless-stopped
     networks:
       - sql_network
     volumes:
-      - ./database:/var/opt/mssql/data
+      - ./database1:/var/lib/mysql
 networks:
   sql_network:
     driver: bridge

@@ -28,5 +28,6 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 
 ##Instructions:
-##docker build -t 51-burguer-app .
-##docker run -p 8080:8080 51-burguer-app
+## From project root:
+##docker build -f Docker/Dockerfile -t 51-burguer-app .
+##docker-compose -f Docker/docker-compose.yml up

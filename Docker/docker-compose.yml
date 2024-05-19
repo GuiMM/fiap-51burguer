@@ -20,6 +20,16 @@ services:
       - sql_network
     volumes:
       - ./database1:/var/lib/mysql
+  web:
+    image: burguer51-multi
+    ports:
+      - "8787:8080"
+    networks:
+      - sql_network
+    depends_on:
+      - db
+
+
 networks:
   sql_network:
     driver: bridge

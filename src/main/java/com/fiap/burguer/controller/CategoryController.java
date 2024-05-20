@@ -40,7 +40,7 @@ public class CategoryController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Encontrou categoria",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Product.class)) }),
+                            schema = @Schema(implementation = Category.class)) }),
             @ApiResponse(responseCode = "400", description = "Id de categoria inválida",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Categoria não encontrada",
@@ -52,6 +52,32 @@ public class CategoryController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(category, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    @Operation(summary = "Deleta categoria por ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Deletou categoria",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Category.class)) }),
+            @ApiResponse(responseCode = "400", description = "Id de categoria inválida",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Categoria não encontrada",
+                    content = @Content) })
+    public @ResponseBody ResponseEntity deleteCategory(
+            @Parameter(description = "ID da categoria a ser deletada", required = true) @PathVariable("id") int id) {
+
+        Category category = categoryService.findById(id);
+        if (category == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        try {
+            categoryService.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        }
+
     }
 
 }

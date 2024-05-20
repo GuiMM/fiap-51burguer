@@ -1,10 +1,7 @@
 package com.fiap.burguer.service;
 
 import com.fiap.burguer.entities.Product;
-import com.fiap.burguer.enums.CategoryProduct;
 import com.fiap.burguer.repository.ProductRepository;
-
-import java.util.List;
 
 public class ProductService  {
     private final ProductRepository productRepository;
@@ -14,7 +11,7 @@ public class ProductService  {
     }
 
     public Product saveProductOrUpdate(Product product) {
-        return   productRepository.save(product);
+        return productRepository.save(product);
     }
 
     public Product findById(int id) {
@@ -33,4 +30,3 @@ public class ProductService  {
 //        return productRepository.findByCategory(category);
 //    }
 }
-

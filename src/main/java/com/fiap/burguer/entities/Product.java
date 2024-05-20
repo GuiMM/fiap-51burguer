@@ -1,6 +1,6 @@
 package com.fiap.burguer.entities;
+import com.fiap.burguer.enums.CategoryProduct;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity(name = "product")
 public class Product {
@@ -12,9 +12,8 @@ public class Product {
     @Column(name = "name", nullable = false)
     private String name;
 
-//    @OneToOne
-//    @JoinColumn(name = "category")
-//    private CategoryProduct category;
+    @Enumerated(EnumType.STRING)
+    private CategoryProduct category;
 
     @Column(name = "price", nullable = false)
     private double price;
@@ -29,16 +28,17 @@ public class Product {
     private String image;
 
     public Product(){}
+
     Product(int id,
             String name,
-//            CategoryProduct category,
+            CategoryProduct category,
             double price,
             String description,
             Integer preparationTime,
             String image) {
         this.id = id;
         this.name = name;
-//        this.category = category;
+        this.category = category;
         this.price = price;
         this.description = description;
         this.preparationTime = preparationTime;
@@ -61,13 +61,13 @@ public class Product {
         this.name = name;
     }
 
-//    public CategoryProduct getCategory() {
-//        return category;
-//    }
-//
-//    public void setCategory(CategoryProduct category) {
-//        this.category = category;
-//    }
+    public CategoryProduct getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryProduct category) {
+        this.category = category;
+    }
 
     public double getPrice() {
         return price;

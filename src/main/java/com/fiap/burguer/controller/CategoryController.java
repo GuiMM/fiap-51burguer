@@ -36,14 +36,14 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Consulta produto por ID")
+    @Operation(summary = "Consulta categoria por ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Encontrou produto",
+            @ApiResponse(responseCode = "200", description = "Encontrou categoria",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Product.class)) }),
-            @ApiResponse(responseCode = "400", description = "Id de produto invalido",
+            @ApiResponse(responseCode = "400", description = "Id de categoria inválida",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "Produto não encontrado",
+            @ApiResponse(responseCode = "404", description = "Categoria não encontrada",
                     content = @Content) })
     public @ResponseBody ResponseEntity<Category> getCategoryById(
             @Parameter(description = "ID da categoria a ser consultada", required = true) @PathVariable("id") int id) {

@@ -21,7 +21,7 @@ services:
     volumes:
       - ./database1:/var/lib/mysql
   web:
-    image: burguer51-multi
+    image: 51-burguer-app
     ports:
       - "8787:8080"
     networks:

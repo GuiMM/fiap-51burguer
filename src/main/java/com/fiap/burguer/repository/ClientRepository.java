@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface ClientRepository extends CrudRepository<Client, Integer> {
     Client save(Client category);
     Client findById(int id);
-
     Client findByCpf(String cpf);
 }

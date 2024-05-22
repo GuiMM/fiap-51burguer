@@ -9,6 +9,8 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    private String DEFAULT_ERROR = "Erro na requisição, porfavor contacte o suporte";
+
     // Exemplo de manuseio de uma exceção específica
     @ExceptionHandler(InvalidCPFException.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFoundException(InvalidCPFException ex, WebRequest request) {
@@ -17,7 +19,7 @@ public class GlobalExceptionHandler {
                 ex.getMessage(),
                 System.currentTimeMillis()
         );
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     // Manuseio de exceções genéricas
@@ -25,7 +27,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex, WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                ex.getMessage(),
+                DEFAULT_ERROR,
                 System.currentTimeMillis()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);

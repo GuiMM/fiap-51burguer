@@ -1,6 +1,8 @@
 package com.fiap.burguer.controller;
 
 import com.fiap.burguer.entities.Client;
+import com.fiap.burguer.entities.Product;
+import com.fiap.burguer.handlers.ErrorResponse;
 import com.fiap.burguer.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -29,9 +31,11 @@ public class ClientController {
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Client.class)) }),
             @ApiResponse(responseCode = "400", description = "Infos de cliente inválido",
-                    content = @Content)})
-    public @ResponseBody Client postClient(@Valid Client client) {
-        return clientService.saveClientOrUpdate(client);
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)) }) })
+    public @ResponseBody ResponseEntity<?> postClient(@Valid Client client) {
+       Client newClient = clientService.saveClientOrUpdate(client);
+       return ResponseEntity.ok().body(newClient);
     }
 
     @GetMapping("/{id}")
@@ -53,7 +57,7 @@ public class ClientController {
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
-    @GetMapping("/{cpf}")
+    @GetMapping("/cpf")
     @Operation(summary = "Consulta cliente por CPF")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Encontrou cliente",
@@ -70,6 +74,18 @@ public class ClientController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(client, HttpStatus.OK);
+    }
+
+    @PutMapping(name = "/update", produces = "application/json")
+    @Operation(summary = "Atualiza cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cliente atualizado",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Product.class)) }),
+            @ApiResponse(responseCode = "400", description = "Infos de cliente invalido",
+                    content = @Content)})
+    public @ResponseBody Client putClient(@Valid Client client) {
+        return clientService.saveClientOrUpdate(client);
     }
 
     @DeleteMapping("{id}")

@@ -1,26 +1,3 @@
-create table category (
-        id integer not null auto_increment,
-        name varchar(255) not null,
-        primary key (id)
-    );
-
-
- create table product (
-        id integer not null auto_increment,
-        category enum ('DRINK','SNACK','DESSERT','SIDE_DISH') not null,
-        description varchar(255) not null,
-        image varchar(255),
-        name varchar(255) not null,
-        preparation_time integer not null,
-        price float(53) not null,
-        primary key (id)
-    );
-
-  create table status (
-         id integer not null auto_increment,
-         name varchar(255) not null,
-         primary key (id)
-     )
 -- Bebidas
 INSERT INTO product (name, category, price, description, preparation_time, image)
 VALUES ('Water', 'DRINK', 2.5, 'Bottled water', 5, NULL);

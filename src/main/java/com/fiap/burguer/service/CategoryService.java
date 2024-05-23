@@ -4,7 +4,7 @@ import com.fiap.burguer.entities.Category;
 import com.fiap.burguer.repository.CategoryRepository;
 
 public class CategoryService {
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;

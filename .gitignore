@@ -3,7 +3,7 @@
 target/
 
 #DB
-database/
+Docker/database1/
 
 
 # Log file

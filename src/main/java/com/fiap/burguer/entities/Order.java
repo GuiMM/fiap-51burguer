@@ -19,6 +19,7 @@ public class Order {
     @Column(name = "time_waiting_order", nullable = false)
     private Integer timeWaitingOrder;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_created")
     private Date dateCreated;
 
@@ -29,66 +30,19 @@ public class Order {
     @Column(name = "total_price", nullable = false)
     private double totalPrice;
 
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = true)
+    private Client client;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItensList;
+    private List<OrderItem> orderItemsList;
 
-//    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-//    private CheckOut checkOut;
-
-    public Integer getTimeWaitingOrder() {
-        return timeWaitingOrder;
-    }
-
-
-    public void setTimeWaitingOrder(Integer timeWaitingOrder) {
+    public Order(Integer timeWaitingOrder, Date dateCreated, StatusOrder status, double totalPrice, List<OrderItem> orderItemsList, Client client) {
         this.timeWaitingOrder = timeWaitingOrder;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Date getCreationDate() {
-        return dateCreated;
-    }
-
-    public void setCreationDate(Date dateCreated) {
         this.dateCreated = dateCreated;
-    }
-
-    public StatusOrder getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusOrder status) {
         this.status = status;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
-    }
-
-    public List<OrderItem> getOrderItensList() {
-        return orderItensList;
-    }
-
-    public void setOrderItemsList(List<OrderItem> orderItensList) {
-        this.orderItensList = orderItensList;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
+        this.client = client;
+        this.orderItemsList = orderItemsList;
     }
 }

@@ -2,10 +2,7 @@
 
 package com.fiap.burguer.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fiap.burguer.enums.StatusOrder;
-import com.fiap.burguer.enums.StatusPayment;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,7 +27,7 @@ public class CheckOut {
 
     @Column(name = "payment_status", nullable = true)
     @Enumerated(EnumType.STRING)
-    private StatusPayment payment_status;
+    private StatusOrder payment_status;
 
     @Column(name = "total_price", nullable = true)
     private double totalPrice;

@@ -1,5 +1,10 @@
 package com.fiap.burguer.dto;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fiap.burguer.entities.Client;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,36 +14,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderRequest {
     private List<OrderItemRequest> items;
-
-    public List<OrderItemRequest> getItems() {
-        return items;
-    }
-
-    public void setItems(List<OrderItemRequest> items) {
-        this.items = items;
-    }
+    @JsonIgnore
+    private Client client;
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     public static class OrderItemRequest {
+
+        private Integer idCliente;
+
+        @NotNull
         private int productId;
+
+        @NotNull
+        @Min(value = 1, message = "A quantidade deve ser maior que zero")
         private int quantity;
 
-        public int getProductId() {
-            return productId;
-        }
 
-        public void setProductId(int productId) {
-            this.productId = productId;
-        }
-
-        public int getQuantity() {
-            return quantity;
-        }
-
-        public void setQuantity(int quantity) {
-            this.quantity = quantity;
-        }
     }
 }

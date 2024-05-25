@@ -2,7 +2,7 @@ package com.fiap.burguer.controller;
 
 import com.fiap.burguer.entities.Client;
 import com.fiap.burguer.entities.Product;
-import com.fiap.burguer.handlers.ErrorResponse;
+import com.fiap.burguer.dto.ErrorResponse;
 import com.fiap.burguer.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -111,7 +111,5 @@ public class ClientController {
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         }
-
     }
-
 }

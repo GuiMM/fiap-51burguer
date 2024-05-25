@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,7 +42,7 @@ public class OrderService {
         for (OrderItem item : order.getOrderItemsList()) {
             totalPrice += item.getProductPrice() * item.getAmount();
             Integer preparationTime = Integer.parseInt(item.getPreparationTime());
-            timeWaitingOrder += preparationTime * item.getAmount();
+            timeWaitingOrder += (preparationTime * item.getAmount());
             date = item.getOrder().getDateCreated();
             products.add(item.getProduct());
         }
@@ -49,8 +50,8 @@ public class OrderService {
         OrderResponse response = new OrderResponse();
         response.setId(order.getId());
         response.setStatus(order.getStatus() != null ? order.getStatus().toString() : null);
-        response.setTotalPrice(totalPrice);
-        response.setTimeWaitingOrder(timeWaitingOrder);
+        response.setTotalPrice(order.getTotalPrice());
+        response.setTimeWaitingOrder(order.getTimeWaitingOrder());
         response.setDateCreated(date);
         response.setProducts(products);
 
@@ -62,6 +63,7 @@ public class OrderService {
     }
 
     public Order createOrder(OrderRequest orderRequest) {
+        AtomicReference<Integer> timeOrder = new AtomicReference<>(0);
         Order order = new Order();
         order.setDateCreated(new Date());
         order.setStatus(StatusOrder.RECEIVED);
@@ -85,10 +87,12 @@ public class OrderService {
             orderItem.setOrder(order);
 
             order.setTotalPrice(order.getTotalPrice() + (product.getPrice() * itemRequest.getQuantity()));
-            order.setTimeWaitingOrder(order.getTimeWaitingOrder() + (product.getPreparationTime() * itemRequest.getQuantity()));
+            timeOrder.updateAndGet(v -> v + order.getTimeWaitingOrder() + (product.getPreparationTime() * itemRequest.getQuantity()));
+
+
             return orderItem;
         }).collect(Collectors.toList());
-
+        order.setTimeWaitingOrder(timeOrder.get() + timeWaitingOrderQueue());
         order.setOrderItemsList(orderItems);
         //Método para chamar a função e iniciar o FakeChekout
 //        initCheckout(order);
@@ -135,5 +139,24 @@ public class OrderService {
 
     public List<Order> getOrdersByStatus(StatusOrder status) {
         return orderRepository.findByStatus(status);
+    }
+
+    public int timeWaitingOrderQueue() {
+        List<Order> receivedOrders = getOrdersByStatus(StatusOrder.RECEIVED);
+        List<Order> preparationOrders = getOrdersByStatus(StatusOrder.PREPARATION);
+
+        return sumTimeWaitingOrder(receivedOrders) + sumTimeWaitingOrder(preparationOrders);
+    }
+
+    private int sumTimeWaitingOrder(List<Order> orders) {
+        int timeWaiting = 0;
+        for (Order order : orders) {
+            timeWaiting += order.getTimeWaitingOrder();
+        }
+        return timeWaiting;
+    }
+
+    public void updateOrderStatus(Order order) {
+        orderRepository.save(order);
     }
 }

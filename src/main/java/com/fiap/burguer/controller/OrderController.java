@@ -48,11 +48,11 @@ public class OrderController {
 
             if (orderRequest.getItems() != null) {
                 for (OrderRequest.OrderItemRequest item : orderRequest.getItems()) {
-                    if (item.getIdCliente() != null) {
+                    if (orderRequest.getIdCliente() != null) {
 
-                            Client client = clientRepository.findById(item.getIdCliente())
-                                    .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
-                            orderRequest.setClient(client);
+                        Client client = clientRepository.findById(orderRequest.getIdCliente())
+                                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
+                        orderRequest.setClient(client);
 
                     }
 
@@ -136,4 +136,76 @@ public class OrderController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/{id}/status")
+    @Operation(summary = "Atualiza o status de um pedido")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Status do pedido atualizado com sucesso",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Order.class))}),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Pedido não encontrado",
+                    content = @Content)})
+    public ResponseEntity<?> updateOrderStatus(
+            @Parameter(description = "ID do pedido a ser atualizado", required = true)
+            @PathVariable("id") int id,
+            @Parameter(description = "Novo status do pedido", required = true)
+            @RequestParam StatusOrder newStatus) {
+        try {
+            Order order = orderService.getOrderById(id);
+            if (order == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            boolean isValidUpdate = isValidStatusUpdate(order.getStatus(), newStatus);
+            if (!isValidUpdate) {
+                return ResponseEntity.badRequest().body("Atualização de status inválida");
+            }
+
+
+            order.setStatus(newStatus);
+            orderService.updateOrderStatus(order);
+            OrderResponse response = orderService.mapOrderToResponse(order);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private boolean isValidStatusUpdate(StatusOrder currentStatus, StatusOrder newStatus) {
+        if (!isValidNextStatus(currentStatus, newStatus)) {
+            return false;
+        }
+
+        if (newStatus == StatusOrder.CANCELED) {
+            return isCancelValid(currentStatus);
+        }
+
+        if (newStatus == StatusOrder.RECEIVED && currentStatus != StatusOrder.APPROVEDPAYMENT) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isValidNextStatus(StatusOrder currentStatus, StatusOrder newStatus) {
+        switch (currentStatus) {
+            case WAITINGPAYMENT:
+                return newStatus == StatusOrder.APPROVEDPAYMENT || newStatus == StatusOrder.REJECTEDPAYMENT;
+            case RECEIVED:
+                return newStatus == StatusOrder.PREPARATION;
+            case PREPARATION:
+                return newStatus == StatusOrder.READY;
+            case READY:
+                return newStatus == StatusOrder.FINISHED;
+            default:
+                return false;
+        }
+    }
+
+    private boolean isCancelValid(StatusOrder currentStatus) {
+        return currentStatus == StatusOrder.WAITINGPAYMENT || currentStatus == StatusOrder.REJECTEDPAYMENT;
+    }
+
 }

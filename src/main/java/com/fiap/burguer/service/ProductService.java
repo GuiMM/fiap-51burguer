@@ -1,5 +1,4 @@
 package com.fiap.burguer.service;
-
 import com.fiap.burguer.dto.ProductCreate;
 import com.fiap.burguer.entities.Product;
 import com.fiap.burguer.enums.CategoryProduct;
@@ -36,6 +35,11 @@ public class ProductService {
 
         if (product.getName() != null) {
             existingProduct.setName(product.getName());
+            existingProduct.setCategory(product.getCategory());
+            existingProduct.setPrice(product.getPrice());
+            existingProduct.setDescription(product.getDescription());
+            existingProduct.setPreparationTime(product.getPreparationTime());
+            existingProduct.setImage(product.getImage());
         }
 
         return productRepository.save(existingProduct);

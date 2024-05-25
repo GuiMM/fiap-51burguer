@@ -15,7 +15,7 @@ public class ClientService {
     }
 
     public Client saveClientOrUpdate(Client client) {
-
+        client.setCpf(client.getCpf().replaceAll("\\D", ""));
         if (!CPFUtils.isValidCPF(client.getCpf())) {
             throw new InvalidCPFException("CPF '" + client.getCpf() + "' inválido!");
         }
@@ -25,8 +25,6 @@ public class ClientService {
         }
 
         return clientRepository.save(client);
-
-
     }
 
     public Client findById(int id) {

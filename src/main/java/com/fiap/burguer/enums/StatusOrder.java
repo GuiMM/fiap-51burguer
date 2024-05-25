@@ -7,5 +7,6 @@ public enum StatusOrder {
     RECEIVED,
     PREPARATION,
     READY,
-    FINISHED
+    FINISHED,
+    CANCELED
 }

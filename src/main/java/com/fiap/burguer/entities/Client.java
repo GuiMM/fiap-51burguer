@@ -21,6 +21,6 @@ public class Client {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "cpf", nullable = false)
+    @Column(name = "cpf", nullable = false, unique = true)
     private String cpf;
 }

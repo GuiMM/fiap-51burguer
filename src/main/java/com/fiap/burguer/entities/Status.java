@@ -1,16 +1,22 @@
 package com.fiap.burguer.entities;
-
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity(name = "category")
+@Entity(name = "status")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
+public class Status {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(name = "name", nullable = false)
     private String name;
 }
+
+
+

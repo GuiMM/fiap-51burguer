@@ -1,11 +1,6 @@
 package com.fiap.burguer.config;
-
-import com.fiap.burguer.repository.CategoryRepository;
-import com.fiap.burguer.repository.ClientRepository;
-import com.fiap.burguer.repository.ProductRepository;
-import com.fiap.burguer.service.CategoryService;
-import com.fiap.burguer.service.ClientService;
-import com.fiap.burguer.service.ProductService;
+import com.fiap.burguer.repository.*;
+import com.fiap.burguer.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,14 +12,28 @@ public class Config {
     ProductRepository productRepository;
 
     @Autowired
+    OrderRepository orderRepository;
+
+    @Autowired
     CategoryRepository categoryRepository;
 
     @Autowired
     ClientRepository clientRepository;
 
+    @Autowired
+    StatusRepository statusRepository;
+
+    @Autowired
+    CheckoutRepository checkoutRepository;
+
     @Bean
     public ProductService getProductService(){
         return new ProductService(productRepository);
+    }
+
+    @Bean
+    public OrderService getOrderService(){
+        return new OrderService(orderRepository);
     }
 
     @Bean
@@ -34,4 +43,14 @@ public class Config {
 
     @Bean
     public ClientService getClientService() { return new ClientService(clientRepository); }
+
+    @Bean
+    public StatusService getStatusService() {
+        return new StatusService(statusRepository);
+    }
+
+    @Bean
+    public CheckoutService getCheckoutService() {
+        return new CheckoutService(checkoutRepository);
+    }
 }

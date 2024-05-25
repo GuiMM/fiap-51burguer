@@ -4,7 +4,7 @@ target/
 
 #DB
 Docker/database1/
-
+Docker/data.sql/
 
 # Log file
 *.log

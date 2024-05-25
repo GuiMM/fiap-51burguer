@@ -1,26 +1,10 @@
 version: '3.8'
 
 services:
-  db:
-    env_file:
-      - .env
-    image: mysql:8.0
-    user: root
-    container_name: mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-
-    ports:
-      - "3306:3306"
-    restart: unless-stopped
-    networks:
-      - sql_network
-    volumes:
-      - ./database1:/var/lib/mysql
   web:
+    build:
+      context: ..
+      dockerfile: Dockerfile
     image: 51-burguer-app
     restart: always
     ports:
@@ -28,8 +12,35 @@ services:
     networks:
       - sql_network
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/${MYSQL_DATABASE}
+      - SPRING_DATASOURCE_USERNAME=${MYSQL_USER}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
 
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    restart: always
+    networks:
+      - sql_network
+    volumes:
+      - ./data.sql:/docker-entrypoint-initdb.d/data.sql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h db -u root --password=${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   sql_network:

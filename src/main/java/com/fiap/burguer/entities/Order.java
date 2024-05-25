@@ -32,9 +32,13 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItensList;
 
+//    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+//    private CheckOut checkOut;
+
     public Integer getTimeWaitingOrder() {
         return timeWaitingOrder;
     }
+
 
     public void setTimeWaitingOrder(Integer timeWaitingOrder) {
         this.timeWaitingOrder = timeWaitingOrder;

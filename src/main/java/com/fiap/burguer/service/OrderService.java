@@ -6,6 +6,7 @@ import com.fiap.burguer.entities.Order;
 import com.fiap.burguer.entities.OrderItem;
 import com.fiap.burguer.entities.Product;
 import com.fiap.burguer.enums.StatusOrder;
+import com.fiap.burguer.enums.StatusPayment;
 import com.fiap.burguer.repository.CheckoutRepository;
 import com.fiap.burguer.repository.OrderRepository;
 import com.fiap.burguer.repository.ProductRepository;
@@ -24,6 +25,7 @@ public class OrderService {
     private ProductRepository productRepository;
     @Autowired
     private CheckoutRepository checkoutRepository;
+
     public OrderService(OrderRepository orderRepository) {
     }
 
@@ -80,23 +82,24 @@ public class OrderService {
 
         order.setOrderItemsList(orderItems);
         //Método para chamar a função e iniciar o FakeChekout
-        initCheckout(order);
+//        initCheckout(order);
         return orderRepository.save(order);
     }
 //Esse método é para iniciar o checkout assim que o pedido for criado
     public void initCheckout(Order order){
         CheckOut checkOut = new  CheckOut(); // Crio um objeto checkout
         checkOut.setTransactId(generateTransactId()); // defino o transactId
-        checkOut.setPayment_status(StatusOrder.PREPARATION);// altero o status para preparando
+        checkOut.setPayment_status(StatusPayment.WAITINGPAYMENT);// altero o status para preparando
         checkOut.setDateCreated(new Date());// Defino a hora que o checkout foi criado
-        checkOut.setOrder(order.getId()); // Passo o ID do pedido (conferir depois se é esse método que traz o valor ou se precisa consultar do banco)
-        checkoutRepository.saveCheckOut(checkOut);// chamado o método do repository para salvar o checkout
+        checkOut.setOrder(order);
+       // Passo o ID do pedido (conferir depois se é esse método que traz o valor ou se precisa consultar do banco)
+      checkoutRepository.save(checkOut);// chamado o método do repository para salvar o checkout
 
     }
 // Método para gerar um TransactId, como estamos fazendo algo fake
 // Fiz a seguinte validação, a cade 20 pedido inseridos com os últimos dígitos 1, ele gerará um com dígito para compra negada
 String generateTransactId() {
-    long count = checkoutRepository.countCheckOut(); // consulta quantos checkouts existem no banco
+    long count = checkoutRepository.count(); // consulta quantos checkouts existem no banco
     String baseId = UUID.randomUUID().toString().replace("-", ""); // gera a base do id Transact
     if (baseId.length() < 30) {
         baseId = baseId + UUID.randomUUID().toString().replace("-", "").substring(0, 30 - baseId.length());
@@ -110,7 +113,6 @@ String generateTransactId() {
     }
     return baseId.substring(0, baseId.length() - 3) + suffix;
 }
-
 
     public Order getOrderById(int id) {
         return orderRepository.findById(id).orElse(null);

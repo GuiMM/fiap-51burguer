@@ -1,12 +1,6 @@
 package com.fiap.burguer.config;
-import com.fiap.burguer.repository.CategoryRepository;
-import com.fiap.burguer.repository.OrderRepository;
-import com.fiap.burguer.repository.ProductRepository;
-import com.fiap.burguer.repository.StatusRepository;
-import com.fiap.burguer.service.CategoryService;
-import com.fiap.burguer.service.OrderService;
-import com.fiap.burguer.service.ProductService;
-import com.fiap.burguer.service.StatusService;
+import com.fiap.burguer.repository.*;
+import com.fiap.burguer.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +20,9 @@ public class Config {
     @Autowired
     StatusRepository statusRepository;
 
+    @Autowired
+    CheckoutRepository checkoutRepository;
+
     @Bean
     public ProductService getProductService(){
         return new ProductService(productRepository);
@@ -44,5 +41,10 @@ public class Config {
     @Bean
     public StatusService getStatusService() {
         return new StatusService(statusRepository);
+    }
+
+    @Bean
+    public CheckoutService getCheckoutService() {
+        return new CheckoutService(checkoutRepository);
     }
 }

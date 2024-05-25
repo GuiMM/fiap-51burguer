@@ -2,43 +2,40 @@
 
 package com.fiap.burguer.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fiap.burguer.enums.StatusOrder;
+import com.fiap.burguer.enums.StatusPayment;
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.util.Date;
 
-@Getter
 @Entity(name = "CheckOut")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class CheckOut {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Setter
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private int order;
+    @OneToOne
+    @JoinColumn(name = "order_id", nullable = true)
+    private Order order;
 
-    @Setter
-    @Column(name = "date_created")
+    @Column(name = "date_created", nullable = true)
     private Date dateCreated;
 
-    @Setter
-    @Column(name = "payment_status", nullable = false)
+    @Column(name = "payment_status", nullable = true)
     @Enumerated(EnumType.STRING)
-    private StatusOrder payment_status;
+    private StatusPayment payment_status;
 
-    @Column(name = "total_price", nullable = false)
+    @Column(name = "total_price", nullable = true)
     private double totalPrice;
 
-    @Setter
-    @Column(name = "transactId", nullable = false)
-    @Enumerated(EnumType.STRING)
+    @Column(name = "transactId", nullable = true)
     private String transactId;
 
 }

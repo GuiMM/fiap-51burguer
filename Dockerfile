@@ -6,7 +6,7 @@ FROM maven:3.9.6-eclipse-temurin-22-alpine AS build
 WORKDIR /app
 
   # Copy the Maven project files to the container
-COPY ../.. .
+COPY . .
 
   # Build the project and create an executable JAR file
 RUN mvn clean package -DskipTests

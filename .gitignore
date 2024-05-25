@@ -3,8 +3,8 @@
 target/
 
 #DB
-database1/
-
+Docker/database1/
+Docker/data.sql/
 
 # Log file
 *.log

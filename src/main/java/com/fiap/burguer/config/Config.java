@@ -18,6 +18,9 @@ public class Config {
     CategoryRepository categoryRepository;
 
     @Autowired
+    ClientRepository clientRepository;
+
+    @Autowired
     StatusRepository statusRepository;
 
     @Autowired
@@ -37,6 +40,9 @@ public class Config {
     public CategoryService getCategoryService() {
         return new CategoryService(categoryRepository);
     }
+
+    @Bean
+    public ClientService getClientService() { return new ClientService(clientRepository); }
 
     @Bean
     public StatusService getStatusService() {

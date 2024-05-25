@@ -1,11 +1,7 @@
 package com.fiap.burguer.controller;
-
-import com.fiap.burguer.dto.OrderResponse;
 import com.fiap.burguer.entities.CheckOut;
-import com.fiap.burguer.entities.Order;
 import com.fiap.burguer.entities.Product;
 import com.fiap.burguer.service.CheckoutService;
-import com.fiap.burguer.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,12 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("/checkout")
 public class CheckoutController {
+    //Injeção de Dependência da Service, através dela é chamado o método da service para consultar
+    // o checkout do Pedido
     CheckoutService checkoutService;
 
     @GetMapping("/{idOrder}")

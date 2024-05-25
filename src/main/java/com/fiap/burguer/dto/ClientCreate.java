@@ -1,7 +1,7 @@
 package com.fiap.burguer.dto;
+import lombok.Data;
 
-import jakarta.persistence.Column;
-
+@Data
 public class ClientCreate {
 
     private String name;

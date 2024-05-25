@@ -1,10 +1,12 @@
 package com.fiap.burguer.dto;
 
 import com.fiap.burguer.entities.Product;
+import com.fiap.burguer.enums.StatusOrder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Data

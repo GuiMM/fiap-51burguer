@@ -60,7 +60,7 @@ INSERT INTO product (name, category, price, description, preparation_time, image
 VALUES ('Cheesecake', 'DESSERT', 6.0, 'Creamy cheesecake', 6, NULL);
 
 -- Clientes
---INSERT INTO client (name, email, cpf)
---VALUES ('João Silva', 'joao@example.com', '52998224725'),
---       ('Maria Santos', 'maria@example.com', '06325614706'),
---       ('Pedro Oliveira', 'pedro@example.com', '27798646686');
+INSERT INTO client (name, email, cpf)
+VALUES ('João Silva', 'joao@example.com', '52998224725'),
+       ('Maria Santos', 'maria@example.com', '06325614706'),
+       ('Pedro Oliveira', 'pedro@example.com', '27798646686');

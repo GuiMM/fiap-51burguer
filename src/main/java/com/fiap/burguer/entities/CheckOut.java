@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Entity(name = "CheckOut")
 @Data
@@ -35,5 +36,11 @@ public class CheckOut {
     @Column(name = "transactId", nullable = true)
     private String transactId;
 
-}
+    @PrePersist
+    public void generateTransactId() {
+        if (this.transactId == null || this.transactId.isEmpty()) {
+            this.transactId = UUID.randomUUID().toString();
+        }
+    }
 
+}

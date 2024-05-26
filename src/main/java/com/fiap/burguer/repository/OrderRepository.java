@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface OrderRepository  extends JpaRepository<Order, Integer> {
     List<Order> findByStatus(StatusOrder status);
+     Order getById(int id);
 }

@@ -3,6 +3,7 @@ import com.fiap.burguer.dto.CheckoutResponse;
 import com.fiap.burguer.dto.OrderResponse;
 import com.fiap.burguer.entities.*;
 import com.fiap.burguer.enums.StatusOrder;
+import com.fiap.burguer.ports.IPaymentGateway;
 import com.fiap.burguer.repository.CheckoutRepository;
 import com.fiap.burguer.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CheckoutService {
+public class CheckoutService  {
+    @Autowired
     private final CheckoutRepository checkoutRepository;
     @Autowired
     private  OrderRepository orderRepository;
-
+    @Autowired
+    private  IPaymentGateway paymentGateway;
 
     public CheckoutService(CheckoutRepository checkoutRepository) {
         this.checkoutRepository = checkoutRepository;
@@ -37,7 +40,7 @@ public class CheckoutService {
     }
 
     public Order updateStatusOrder(Order order, StatusOrder statusOrder){
-        if(statusOrder == StatusOrder.APPROVEDPAYMENT){
+        if(paymentGateway.processPayment(statusOrder)){
             order.setStatus(StatusOrder.RECEIVED);
 
         }else{

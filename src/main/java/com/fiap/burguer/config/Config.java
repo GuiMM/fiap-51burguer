@@ -1,4 +1,6 @@
 package com.fiap.burguer.config;
+import com.fiap.burguer.adapters.PaymentGateway;
+import com.fiap.burguer.ports.IPaymentGateway;
 import com.fiap.burguer.repository.*;
 import com.fiap.burguer.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class Config {
 
     @Autowired
     CheckoutRepository checkoutRepository;
+
+    @Autowired
+    IPaymentGateway paymentGateway;
 
     @Bean
     public ProductService getProductService(){
@@ -53,4 +58,8 @@ public class Config {
     public CheckoutService getCheckoutService() {
         return new CheckoutService(checkoutRepository);
     }
+
+    @Bean
+    public IPaymentGateway paymentGateway() {return  new PaymentGateway();}
+    
 }

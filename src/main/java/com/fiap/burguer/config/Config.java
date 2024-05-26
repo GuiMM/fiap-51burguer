@@ -1,4 +1,5 @@
 package com.fiap.burguer.config;
+
 import com.fiap.burguer.adapters.PaymentGateway;
 import com.fiap.burguer.ports.IPaymentGateway;
 import com.fiap.burguer.repository.*;
@@ -29,16 +30,16 @@ public class Config {
     CheckoutRepository checkoutRepository;
 
     @Autowired
-    IPaymentGateway paymentGateway;
+    PaymentGateway paymentGateway;
 
     @Bean
-    public ProductService getProductService(){
+    public ProductService getProductService() {
         return new ProductService(productRepository);
     }
 
     @Bean
-    public OrderService getOrderService(){
-        return new OrderService(orderRepository);
+    public OrderService getOrderService() {
+        return new OrderService(orderRepository, productRepository);
     }
 
     @Bean
@@ -47,7 +48,9 @@ public class Config {
     }
 
     @Bean
-    public ClientService getClientService() { return new ClientService(clientRepository); }
+    public ClientService getClientService() {
+        return new ClientService(clientRepository);
+    }
 
     @Bean
     public StatusService getStatusService() {
@@ -56,10 +59,7 @@ public class Config {
 
     @Bean
     public CheckoutService getCheckoutService() {
-        return new CheckoutService(checkoutRepository);
+        return new CheckoutService(checkoutRepository, orderRepository, paymentGateway);
     }
 
-    @Bean
-    public IPaymentGateway paymentGateway() {return  new PaymentGateway();}
-    
 }

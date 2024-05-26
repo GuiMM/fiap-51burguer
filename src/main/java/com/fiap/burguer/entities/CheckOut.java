@@ -28,7 +28,7 @@ public class CheckOut {
 
     @Column(name = "payment_status", nullable = true)
     @Enumerated(EnumType.STRING)
-    private StatusOrder payment_status;
+    private StatusOrder paymentStatus;
 
     @Column(name = "total_price", nullable = true)
     private double totalPrice;

@@ -150,7 +150,11 @@ public class OrderController {
     public ResponseEntity<?> updateOrderStatus(
             @Parameter(description = "ID do pedido a ser atualizado", required = true)
             @PathVariable("id") int id,
-            @Parameter(description = "Novo status do pedido", required = true)
+            @Parameter(description = "Novo status do pedido", required = true, schema = @Schema(allowableValues = {
+                    "PREPARATION",
+                    "READY",
+                    "FINISHED",
+                    "CANCELED"}))
             @RequestParam StatusOrder newStatus) {
         try {
             Order order = orderService.getOrderById(id);
@@ -158,9 +162,10 @@ public class OrderController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
+
             boolean isValidUpdate = isValidStatusUpdate(order.getStatus(), newStatus);
             if (!isValidUpdate) {
-                return ResponseEntity.badRequest().body("Atualização de status inválida");
+                return ResponseEntity.badRequest().body("Atualização de status para: " + newStatus + isValidUpdate + " inválida");
             }
 
 
@@ -190,18 +195,15 @@ public class OrderController {
     }
 
     private boolean isValidNextStatus(StatusOrder currentStatus, StatusOrder newStatus) {
-        switch (currentStatus) {
-            case WAITINGPAYMENT:
-                return newStatus == StatusOrder.APPROVEDPAYMENT || newStatus == StatusOrder.REJECTEDPAYMENT;
-            case RECEIVED:
-                return newStatus == StatusOrder.PREPARATION;
-            case PREPARATION:
-                return newStatus == StatusOrder.READY;
-            case READY:
-                return newStatus == StatusOrder.FINISHED;
-            default:
-                return false;
-        }
+        return switch (currentStatus) {
+            case WAITINGPAYMENT ->
+                    newStatus == StatusOrder.APPROVEDPAYMENT || newStatus == StatusOrder.REJECTEDPAYMENT || newStatus == StatusOrder.CANCELED;
+            case RECEIVED -> newStatus == StatusOrder.PREPARATION;
+            case PREPARATION -> newStatus == StatusOrder.READY;
+            case READY -> newStatus == StatusOrder.FINISHED;
+            case REJECTEDPAYMENT -> newStatus == StatusOrder.CANCELED;
+            default -> false;
+        };
     }
 
     private boolean isCancelValid(StatusOrder currentStatus) {

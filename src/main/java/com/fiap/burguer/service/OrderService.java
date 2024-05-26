@@ -17,16 +17,13 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
-@Service
 public class OrderService {
-    @Autowired
     private OrderRepository orderRepository;
-    @Autowired
     private ProductRepository productRepository;
-    @Autowired
-    private CheckoutRepository checkoutRepository;
 
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository, ProductRepository productRepository) {
+        this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
     }
 
     public OrderResponse mapOrderToResponse(Order order) {

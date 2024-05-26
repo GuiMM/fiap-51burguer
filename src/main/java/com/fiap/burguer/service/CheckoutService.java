@@ -6,30 +6,22 @@ import com.fiap.burguer.enums.StatusOrder;
 import com.fiap.burguer.ports.IPaymentGateway;
 import com.fiap.burguer.repository.CheckoutRepository;
 import com.fiap.burguer.repository.OrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 // Essa classe, é para realizar uma requisição consultará o checkout, através do ID do pedido
 import com.fiap.burguer.entities.CheckOut;
-import com.fiap.burguer.repository.CheckoutRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
-@Service
 public class CheckoutService  {
-    @Autowired
     private final CheckoutRepository checkoutRepository;
-    @Autowired
-    private  OrderRepository orderRepository;
-    @Autowired
-    private  IPaymentGateway paymentGateway;
+    private final OrderRepository orderRepository;
+    private final IPaymentGateway paymentGateway;
 
-    public CheckoutService(CheckoutRepository checkoutRepository) {
+    public CheckoutService(CheckoutRepository checkoutRepository,  OrderRepository orderRepository, IPaymentGateway paymentGateway) {
         this.checkoutRepository = checkoutRepository;
+        this.orderRepository = orderRepository;
+        this.paymentGateway = paymentGateway;
     }
 
     public CheckOut findById(int id) {
@@ -39,7 +31,7 @@ public class CheckoutService  {
         return orderRepository.getById(id);
     }
 
-    public Order updateStatusOrder(Order order, StatusOrder statusOrder){
+    public void updateStatusOrder(Order order, StatusOrder statusOrder){
         if(paymentGateway.processPayment(statusOrder)){
             order.setStatus(StatusOrder.RECEIVED);
 
@@ -47,7 +39,7 @@ public class CheckoutService  {
             order.setStatus(StatusOrder.WAITINGPAYMENT);
 
         }
-        return orderRepository.save(order);
+        orderRepository.save(order);
 
     }
 
@@ -55,13 +47,13 @@ public class CheckoutService  {
        return  checkoutRepository.save(checkOut);
     }
 
-    public CheckOut mapOrderToCheckout(Order order, StatusOrder status_order){
+    public CheckOut mapOrderToCheckout(Order order, StatusOrder statusOrder){
         CheckOut checkoutNew = new CheckOut();
         checkoutNew.setDateCreated(new Date());
         checkoutNew.setOrder(order);
         checkoutNew.setTotalPrice(order.getTotalPrice());
         checkoutNew.setTransactId(checkoutNew.getTransactId());
-        checkoutNew.setPayment_status(status_order);
+        checkoutNew.setPaymentStatus(StatusOrder.APPROVEDPAYMENT);
         return checkoutNew;
     }
 
@@ -97,7 +89,7 @@ public class CheckoutService  {
         responseCheckout.setOrder(responseOrder);
         responseCheckout.setTransactId(checkOut.getTransactId());
         responseCheckout.setId(checkOut.getId());
-        responseCheckout.setPayment_status(checkOut.getPayment_status());
+        responseCheckout.setPayment_status(checkOut.getPaymentStatus());
         responseCheckout.setDateCreated(checkOut.getDateCreated());
         responseCheckout.setTotalPrice(checkOut.getTotalPrice());
         return responseCheckout;

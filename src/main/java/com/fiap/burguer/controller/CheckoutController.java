@@ -65,15 +65,15 @@ public class CheckoutController {
     public @ResponseBody ResponseEntity<?> postCheckout(
             @Parameter(description = "ID do pedido para criar checkout", required = true) @PathVariable("id") int id,
             @Parameter(description = "Status do Pedido", required = true, schema = @Schema(allowableValues = {"APPROVEDPAYMENT", "REJECTEDPAYMENT"}))
-            @PathVariable("status_order") StatusOrder status_order) {
+            @PathVariable("status_order") StatusOrder statusOrder) {
         Order order = checkoutService.findOrderById(id);
         if(order.getStatus() == StatusOrder.RECEIVED|| order.getStatus() == StatusOrder.CANCELED){
-            String errorMessage = "Não foi possível realizar o pagamento, pois o pedido " + order.getId() + "já está com o status "+ order.getStatus() ;
+            String errorMessage = "Não foi possível realizar o pagamento, pois o pedido " + order.getId() + " já está com o status "+ order.getStatus() ;
             return ResponseEntity.badRequest().body(errorMessage);
         }else{
-            checkoutService.updateStatusOrder(order, status_order);
+            checkoutService.updateStatusOrder(order, statusOrder);
         }
-        CheckOut checkoutNew = checkoutService.save(checkoutService.mapOrderToCheckout(order, status_order));
+        CheckOut checkoutNew = checkoutService.save(checkoutService.mapOrderToCheckout(order, statusOrder));
         try {
             if (checkoutNew == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

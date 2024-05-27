@@ -2,8 +2,10 @@ package com.fiap.burguer.service;
 
 import com.fiap.burguer.entities.Client;
 import com.fiap.burguer.handlers.InvalidCPFException;
+import com.fiap.burguer.handlers.InvalidEmailException;
 import com.fiap.burguer.repository.ClientRepository;
 import com.fiap.burguer.utils.CPFUtils;
+import com.fiap.burguer.utils.EmailUtils;
 
 public class ClientService {
     private ClientRepository clientRepository;
@@ -13,10 +15,16 @@ public class ClientService {
     }
 
     public Client saveClientOrUpdate(Client client) {
+        client.setCpf(client.getCpf().replaceAll("\\D", ""));
+        if (!CPFUtils.isValidCPF(client.getCpf())) {
+            throw new InvalidCPFException("CPF '" + client.getCpf() + "' inválido!");
+        }
 
-        if(CPFUtils.isValidCPF(client.getCpf())) return clientRepository.save(client);
-        else throw new InvalidCPFException( "Cpf '"+ client.getCpf() +"' inválido! ");
+        if (!EmailUtils.isValidEmail(client.getEmail())) {
+            throw new InvalidEmailException("E-mail '" + client.getEmail() + "' inválido!");
+        }
 
+        return clientRepository.save(client);
     }
 
     public Client findById(int id) {

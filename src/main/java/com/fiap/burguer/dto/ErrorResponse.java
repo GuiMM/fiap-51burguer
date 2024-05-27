@@ -1,4 +1,4 @@
-package com.fiap.burguer.handlers;
+package com.fiap.burguer.dto;
 
 import lombok.Data;
 
@@ -13,6 +13,4 @@ public class ErrorResponse {
         this.message = message;
         this.timestamp = timestamp;
     }
-
-    // Getters e Setters
 }

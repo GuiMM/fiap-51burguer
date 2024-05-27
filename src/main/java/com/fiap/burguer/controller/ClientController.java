@@ -1,8 +1,9 @@
 package com.fiap.burguer.controller;
 
+import com.fiap.burguer.dto.ClientCreate;
 import com.fiap.burguer.entities.Client;
 import com.fiap.burguer.entities.Product;
-import com.fiap.burguer.handlers.ErrorResponse;
+import com.fiap.burguer.dto.ErrorResponse;
 import com.fiap.burguer.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,7 +34,12 @@ public class ClientController {
             @ApiResponse(responseCode = "400", description = "Infos de cliente inválido",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)) }) })
-    public @ResponseBody ResponseEntity<?> postClient(@Valid Client client) {
+    public @ResponseBody ResponseEntity<?> postClient(@Valid ClientCreate clientCreate) {
+        Client client = new Client();
+        client.setName(clientCreate.getName());
+        client.setEmail(clientCreate.getEmail());
+        client.setCpf(clientCreate.getCpf());
+
        Client newClient = clientService.saveClientOrUpdate(client);
        return ResponseEntity.ok().body(newClient);
     }
@@ -111,7 +117,5 @@ public class ClientController {
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         }
-
     }
-
 }

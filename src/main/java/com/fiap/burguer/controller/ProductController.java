@@ -1,4 +1,5 @@
 package com.fiap.burguer.controller;
+import com.fiap.burguer.dto.ProductCreate;
 import com.fiap.burguer.entities.Product;
 import com.fiap.burguer.enums.CategoryProduct;
 import com.fiap.burguer.service.ProductService;
@@ -79,8 +80,8 @@ public class ProductController {
                             schema = @Schema(implementation = Product.class))}),
             @ApiResponse(responseCode = "400", description = "Infos de produto invalido",
                     content = @Content)})
-    public @ResponseBody Product postProduct(@Valid Product product) {
-        return productService.saveProductOrUpdate(product);
+    public @ResponseBody Product postProduct(@RequestBody @Valid ProductCreate productCreate) {
+        return productService.saveProduct(productCreate);
     }
 
     @PutMapping(name = "/update", produces = "application/json")
@@ -92,7 +93,8 @@ public class ProductController {
             @ApiResponse(responseCode = "400", description = "Infos de produto invalido",
                     content = @Content)})
     public @ResponseBody Product putProduct(@Valid Product product) {
-        return productService.saveProductOrUpdate(product);
+
+        return productService.updateProduct(product);
     }
 
     @DeleteMapping("{id}")

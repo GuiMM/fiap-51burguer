@@ -1,5 +1,4 @@
 package com.fiap.burguer.entities;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fiap.burguer.enums.CategoryProduct;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,8 +12,8 @@ import lombok.NoArgsConstructor;
 public class Product {
 
     @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private int id;
 
     @Column(name = "name", nullable = false)

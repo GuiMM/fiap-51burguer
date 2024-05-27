@@ -10,15 +10,8 @@ public class StatusService {
         this.StatusRepository = StatusRepository;
     }
 
-    public Status saveStatusOrUpdate(Status Status) {
-        return StatusRepository.save(Status);
-    }
-
     public Status findById(int id) {
         return StatusRepository.findById(id);
     }
 
-    public void deleteById(int id) {
-        StatusRepository.deleteById(id);
-    }
 }

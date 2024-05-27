@@ -1,6 +1,10 @@
 package com.fiap.burguer.controller;
+import com.fiap.burguer.dto.CheckoutResponse;
 import com.fiap.burguer.entities.CheckOut;
+import com.fiap.burguer.entities.Order;
 import com.fiap.burguer.entities.Product;
+import com.fiap.burguer.enums.StatusOrder;
+import com.fiap.burguer.repository.ClientRepository;
 import com.fiap.burguer.service.CheckoutService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,30 +16,72 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @RestController
 @RequestMapping("/checkout")
 public class CheckoutController {
-    //Injeção de Dependência da Service, através dela é chamado o método da service para consultar
-    // o checkout do Pedido
     CheckoutService checkoutService;
-
-    @GetMapping("/{idOrder}")
+    public CheckoutController(CheckoutService checkoutService, ClientRepository clientRepository) {
+        this.checkoutService = checkoutService;
+    }
+    @GetMapping("/{id}")
     @Operation(summary = "Consulta checkout do pedido por ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Consulta de checkout do Pedido, realizada com sucesso!",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Product.class))}),
+                            schema = @Schema(implementation = CheckOut.class))}),
             @ApiResponse(responseCode = "400", description = "Não foi possível encontrar o checkout para este pedido!",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Pedido não encontrado, tente outro!",
                     content = @Content)})
-    public @ResponseBody ResponseEntity<CheckOut> getCheckoutOrderById(
-            @Parameter(description = "ID do pedido a ser consultado", required = true) @PathVariable("id") int id) {
-        CheckOut checkout = checkoutService.findById(id);
-        if (checkout == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public @ResponseBody  ResponseEntity<?> getCheckoutOrderById(
+            @Parameter(description = "ID do pedido a ser pago", required = true) @PathVariable("id") int id) {
+        try {
+            CheckOut checkout = checkoutService.findById(id);
+
+            if (checkout == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            Order order = checkoutService.findOrderById(checkout.getOrder().getId());
+            CheckOut checkoutNew = checkoutService.mapOrderToCheckout(order, order.getStatus());
+            CheckoutResponse response = checkoutService.mapCheckoutToResponse(checkoutNew);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(checkout, HttpStatus.OK);
     }
 
+    @PostMapping("/criar/{id}/{status_order}")
+    @Operation(summary = "Cria checkout por ID do pedido")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Checkout criado com sucesso!",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CheckOut.class))}),
+            @ApiResponse(responseCode = "400", description = "Não foi possível criar o checkout para este pedido!",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Checkout não encontrado, tente outro!",
+                    content = @Content)})
+    public @ResponseBody ResponseEntity<?> postCheckout(
+            @Parameter(description = "ID do pedido para criar checkout", required = true) @PathVariable("id") int id,
+            @Parameter(description = "Status do Pedido", required = true, schema = @Schema(allowableValues = {"APPROVEDPAYMENT", "REJECTEDPAYMENT"}))
+            @PathVariable("status_order") StatusOrder statusOrder) {
+        Order order = checkoutService.findOrderById(id);
+        if(order.getStatus() == StatusOrder.RECEIVED|| order.getStatus() == StatusOrder.CANCELED){
+            String errorMessage = "Não foi possível realizar o pagamento, pois o pedido " + order.getId() + " já está com o status "+ order.getStatus() ;
+            return ResponseEntity.badRequest().body(errorMessage);
+        }else{
+            checkoutService.updateStatusOrder(order, statusOrder);
+        }
+        CheckOut checkoutNew = checkoutService.save(checkoutService.mapOrderToCheckout(order, statusOrder));
+        try {
+            if (checkoutNew == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            CheckoutResponse response = checkoutService.mapCheckoutToResponse(checkoutNew);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

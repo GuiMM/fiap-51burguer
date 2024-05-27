@@ -34,8 +34,6 @@ services:
     restart: always
     networks:
       - sql_network
-    volumes:
-      - ./data.sql:/docker-entrypoint-initdb.d/data.sql
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h db -u root --password=${MYSQL_ROOT_PASSWORD}"]
       interval: 10s

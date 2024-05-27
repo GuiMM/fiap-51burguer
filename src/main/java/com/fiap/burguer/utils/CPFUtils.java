@@ -3,8 +3,6 @@ package com.fiap.burguer.utils;
 public class CPFUtils {
 
     public static boolean isValidCPF(String cpf) {
-        // Remove caracteres não numéricos
-        cpf = cpf.replaceAll("\\D", "");
 
         // Verifica se o CPF tem 11 dígitos
         if (cpf.length() != 11) {

@@ -2,14 +2,12 @@
 
 package com.fiap.burguer.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fiap.burguer.enums.StatusOrder;
-import com.fiap.burguer.enums.StatusPayment;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Entity(name = "CheckOut")
 @Data
@@ -30,7 +28,7 @@ public class CheckOut {
 
     @Column(name = "payment_status", nullable = true)
     @Enumerated(EnumType.STRING)
-    private StatusPayment payment_status;
+    private StatusOrder paymentStatus;
 
     @Column(name = "total_price", nullable = true)
     private double totalPrice;
@@ -38,5 +36,11 @@ public class CheckOut {
     @Column(name = "transactId", nullable = true)
     private String transactId;
 
-}
+    @PrePersist
+    public void generateTransactId() {
+        if (this.transactId == null || this.transactId.isEmpty()) {
+            this.transactId = UUID.randomUUID().toString();
+        }
+    }
 
+}

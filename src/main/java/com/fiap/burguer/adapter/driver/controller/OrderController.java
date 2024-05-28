@@ -2,10 +2,13 @@ package com.fiap.burguer.adapter.driver.controller;
 import com.fiap.burguer.core.application.dto.OrderRequest;
 import com.fiap.burguer.core.application.dto.OrderResponse;
 import com.fiap.burguer.adapter.driven.entities.ClientEntity;
-import com.fiap.burguer.adapter.driven.entities.Order;
+import com.fiap.burguer.adapter.driven.entities.OrderEntity;
 import com.fiap.burguer.core.application.enums.StatusOrder;
 import com.fiap.burguer.adapter.driven.repository.ClientRepository;
+import com.fiap.burguer.core.application.service.ClientService;
 import com.fiap.burguer.core.application.service.OrderService;
+import com.fiap.burguer.core.domain.Client;
+import com.fiap.burguer.core.domain.Order;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -23,11 +26,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/orders")
 public class OrderController {
     private final OrderService orderService;
-    private final ClientRepository clientRepository;
+    private final ClientService clientservice;
 
-    public OrderController(OrderService orderService, ClientRepository clientRepository) {
+    public OrderController(OrderService orderService, ClientService clientservice) {
         this.orderService = orderService;
-        this.clientRepository = clientRepository;
+        this.clientservice = clientservice;
     }
 
     @PostMapping
@@ -47,9 +50,11 @@ public class OrderController {
                 for (OrderRequest.OrderItemRequest item : orderRequest.getItems()) {
                     if (orderRequest.getIdClient() != null) {
 
-                        ClientEntity clientEntity = clientRepository.findById(orderRequest.getIdClient())
-                                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
-                        orderRequest.setClientEntity(clientEntity);
+                        Client client = clientservice.findById(orderRequest.getIdClient());
+                        if(client == null)
+                            throw new IllegalArgumentException("Cliente não encontrado");
+
+                        orderRequest.setClient(client);
 
                     }
 
@@ -77,11 +82,11 @@ public class OrderController {
             @ApiResponse(responseCode = "404", description = "Nenhum pedido encontrado",
                     content = @Content)})
     public ResponseEntity<List<OrderResponse>> getAllOrders() {
-        List<Order> orders = orderService.getAllOrders();
-        if (orders == null || orders.isEmpty()) {
+        List<Order> orderEntities = orderService.getAllOrders();
+        if (orderEntities == null || orderEntities.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        List<OrderResponse> responses = orders.stream()
+        List<OrderResponse> responses = orderEntities.stream()
                 .map(orderService::mapOrderToResponse)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(responses);
@@ -139,7 +144,7 @@ public class OrderController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Status do pedido atualizado com sucesso",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Order.class))}),
+                            schema = @Schema(implementation = OrderEntity.class))}),
             @ApiResponse(responseCode = "400", description = "Requisição inválida",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Pedido não encontrado",

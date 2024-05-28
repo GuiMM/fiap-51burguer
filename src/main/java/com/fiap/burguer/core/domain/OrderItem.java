@@ -1,9 +1,4 @@
 package com.fiap.burguer.core.domain;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -19,7 +14,7 @@ public class OrderItem  implements Serializable {
     private Product product;
 
 
-    private Double productPrice;
+    private Double totalProductPrice;
 
 
     private String preparationTime;
@@ -54,12 +49,12 @@ public class OrderItem  implements Serializable {
         this.preparationTime = preparationTime;
     }
 
-    public Double getProductPrice() {
-        return productPrice;
+    public Double getTotalProductPrice() {
+        return totalProductPrice;
     }
 
-    public void setProductPrice(Double productPrice) {
-        this.productPrice = productPrice;
+    public void setTotalProductPrice(Double totalProductPrice) {
+        this.totalProductPrice = totalProductPrice;
     }
 
     public Product getProduct() {

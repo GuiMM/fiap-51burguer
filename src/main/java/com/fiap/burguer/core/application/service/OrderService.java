@@ -1,13 +1,13 @@
 package com.fiap.burguer.core.application.service;
 
+import com.fiap.burguer.adapter.driven.adapters.OrderAdapter;
+import com.fiap.burguer.adapter.driven.adapters.ProductAdapter;
 import com.fiap.burguer.core.application.dto.OrderRequest;
 import com.fiap.burguer.core.application.dto.OrderResponse;
-import com.fiap.burguer.adapter.driven.entities.Order;
-import com.fiap.burguer.adapter.driven.entities.OrderItem;
-import com.fiap.burguer.adapter.driven.entities.ProductEntity;
 import com.fiap.burguer.core.application.enums.StatusOrder;
-import com.fiap.burguer.adapter.driven.repository.OrderRepository;
-import com.fiap.burguer.adapter.driven.repository.ProductRepository;
+import com.fiap.burguer.core.domain.Order;
+import com.fiap.burguer.core.domain.OrderItem;
+import com.fiap.burguer.core.domain.Product;
 
 
 import java.util.*;
@@ -15,12 +15,12 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 public class OrderService {
-    private final OrderRepository orderRepository;
-    private final ProductRepository productRepository;
+    private final OrderAdapter orderAdapter;
+    private final ProductAdapter productAdapter;
 
-    public OrderService(OrderRepository orderRepository, ProductRepository productRepository) {
-        this.orderRepository = orderRepository;
-        this.productRepository = productRepository;
+    public OrderService(OrderAdapter orderAdapter, ProductAdapter productAdapter) {
+        this.orderAdapter = orderAdapter;
+        this.productAdapter = productAdapter;
     }
 
     public OrderResponse mapOrderToResponse(Order order) {
@@ -29,13 +29,14 @@ public class OrderService {
         }
 
         Date date = new Date();
-        List<ProductEntity> productEntities = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
 
-        for (OrderItem item : order.getOrderItemsList()) {
-            Integer preparationTime = Integer.parseInt(item.getPreparationTime());
-            date = item.getOrder().getDateCreated();
-            productEntities.add(item.getProductEntity());
-        }
+        if(order.getOrderItemsList() != null)
+            for (OrderItem item : order.getOrderItemsList()) {
+                Integer preparationTime = Integer.parseInt(item.getPreparationTime());
+                date = item.getOrder().getDateCreated();
+                products.add(item.getProduct());
+            }
 
         OrderResponse response = new OrderResponse();
         response.setId(order.getId());
@@ -43,10 +44,10 @@ public class OrderService {
         response.setTotalPrice(order.getTotalPrice());
         response.setTimeWaitingOrder(order.getTimeWaitingOrder());
         response.setDateCreated(date);
-        response.setProductEntities(productEntities);
+        response.setProducts(products);
 
-        if (order.getClientEntity() != null) {
-            response.setClientEntity(order.getClientEntity());
+        if (order.getClient() != null) {
+            response.setClient(order.getClient());
         }
 
         return response;
@@ -60,50 +61,50 @@ public class OrderService {
         order.setTotalPrice(0.0);
         order.setTimeWaitingOrder(0);
 
-        if (orderRequest.getClientEntity() != null) {
-            order.setClientEntity(orderRequest.getClientEntity());
+        if (orderRequest.getClient() != null) {
+            order.setClient(orderRequest.getClient());
         }
 
         List<OrderItem> orderItems = orderRequest.getItems().stream().map(itemRequest -> {
-            Optional<ProductEntity> optionalProduct = Optional.ofNullable(productRepository.findById(itemRequest.getProductId()));
-            ProductEntity productEntity = optionalProduct.orElseThrow(() -> new RuntimeException("Product not found"));
+            Optional<Product> optionalProduct = Optional.ofNullable(productAdapter.findById(itemRequest.getProductId()));
+            Product product = optionalProduct.orElseThrow(() -> new RuntimeException("Product not found"));
 
             OrderItem orderItem = new OrderItem();
-            orderItem.setProductEntity(productEntity);
+            orderItem.setProduct(product);
             orderItem.setAmount(itemRequest.getQuantity());
-            orderItem.setProductPrice(productEntity.getPrice());
-            orderItem.setPreparationTime(productEntity.getPreparationTime().toString());
-            orderItem.setDescription(productEntity.getDescription());
+            orderItem.setTotalProductPrice(product.getPrice());
+            orderItem.setPreparationTime(product.getPreparationTime().toString());
+            orderItem.setDescription(product.getDescription());
             orderItem.setOrder(order);
 
-            order.setTotalPrice(order.getTotalPrice() + (productEntity.getPrice() * itemRequest.getQuantity()));
-            timeOrder.updateAndGet(v -> v + order.getTimeWaitingOrder() + (productEntity.getPreparationTime() * itemRequest.getQuantity()));
+            order.setTotalPrice(order.getTotalPrice() + (product.getPrice() * itemRequest.getQuantity()));
+            timeOrder.updateAndGet(v -> v + order.getTimeWaitingOrder() + (product.getPreparationTime() * itemRequest.getQuantity()));
 
 
             return orderItem;
         }).collect(Collectors.toList());
         order.setTimeWaitingOrder(timeOrder.get() + timeWaitingOrderQueue());
         order.setOrderItemsList(orderItems);
-        return orderRepository.save(order);
+        return orderAdapter.save(order);
     }
 
     public Order getOrderById(int id) {
-        return orderRepository.findById(id).orElse(null);
+        return orderAdapter.findById(id);
     }
 
     public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+        return orderAdapter.findAll();
     }
 
     public List<Order> getOrdersByStatus(StatusOrder status) {
-        return orderRepository.findByStatus(status);
+        return orderAdapter.findByStatus(status);
     }
 
     public int timeWaitingOrderQueue() {
-        List<Order> receivedOrders = getOrdersByStatus(StatusOrder.RECEIVED);
-        List<Order> preparationOrders = getOrdersByStatus(StatusOrder.PREPARATION);
+        List<Order> receivedOrderEntities = getOrdersByStatus(StatusOrder.RECEIVED);
+        List<Order> preparationOrderEntities = getOrdersByStatus(StatusOrder.PREPARATION);
 
-        return sumTimeWaitingOrder(receivedOrders) + sumTimeWaitingOrder(preparationOrders);
+        return sumTimeWaitingOrder(receivedOrderEntities) + sumTimeWaitingOrder(preparationOrderEntities);
     }
 
     private int sumTimeWaitingOrder(List<Order> orders) {
@@ -115,6 +116,6 @@ public class OrderService {
     }
 
     public void updateOrderStatus(Order order) {
-        orderRepository.save(order);
+        orderAdapter.save(order);
     }
 }

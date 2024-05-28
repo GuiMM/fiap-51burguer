@@ -1,7 +1,7 @@
 package com.fiap.burguer.core.application.service;
 
-import com.fiap.burguer.adapter.driven.entities.Order;
-import com.fiap.burguer.adapter.driven.entities.OrderItem;
+import com.fiap.burguer.adapter.driven.entities.OrderEntity;
+import com.fiap.burguer.adapter.driven.entities.OrderItemEntity;
 import com.fiap.burguer.adapter.driven.entities.ProductEntity;
 import com.fiap.burguer.core.application.dto.CheckoutResponse;
 import com.fiap.burguer.core.application.dto.OrderResponse;
@@ -30,19 +30,19 @@ public class CheckoutService {
         return checkoutRepository.findById(id);
     }
 
-    public Order findOrderById(int id) {
-        return orderRepository.getById(id);
-    }
+//    public OrderEntity findOrderById(int id) {
+//        return orderRepository.getById(id);
+//    }
 
-    public void updateStatusOrder(Order order, StatusOrder statusOrder) {
+    public void updateStatusOrder(OrderEntity orderEntity, StatusOrder statusOrder) {
         if (paymentGateway.processPayment(statusOrder)) {
-            order.setStatus(StatusOrder.RECEIVED);
+            orderEntity.setStatus(StatusOrder.RECEIVED);
 
         } else {
-            order.setStatus(StatusOrder.WAITINGPAYMENT);
+            orderEntity.setStatus(StatusOrder.WAITINGPAYMENT);
 
         }
-        orderRepository.save(order);
+        orderRepository.save(orderEntity);
 
     }
 
@@ -50,52 +50,52 @@ public class CheckoutService {
         return checkoutRepository.save(checkOut);
     }
 
-    public CheckOut mapOrderToCheckout(Order order, StatusOrder statusOrder) {
+    public CheckOut mapOrderToCheckout(OrderEntity orderEntity, StatusOrder statusOrder) {
         CheckOut checkoutNew = new CheckOut();
         checkoutNew.setDateCreated(new Date());
-        checkoutNew.setOrder(order);
-        checkoutNew.setTotalPrice(order.getTotalPrice());
+        checkoutNew.setOrderEntity(orderEntity);
+        checkoutNew.setTotalPrice(orderEntity.getTotalPrice());
         checkoutNew.setTransactId(checkoutNew.getTransactId());
         checkoutNew.setPaymentStatus(StatusOrder.APPROVEDPAYMENT);
         return checkoutNew;
     }
 
-    public CheckoutResponse mapCheckoutToResponse(CheckOut checkOut) {
-        if (checkOut == null) {
-            return null;
-        }
-        double totalPrice = 0.0;
-        Integer timeWaitingOrder = 0;
-        Date date = new Date();
-        List<ProductEntity> productEntities = new ArrayList<>();
-
-        for (OrderItem item : checkOut.getOrder().getOrderItemsList()) {
-            totalPrice += item.getProductPrice() * item.getAmount();
-            Integer preparationTime = Integer.parseInt(item.getPreparationTime());
-            timeWaitingOrder += (preparationTime * item.getAmount());
-            date = item.getOrder().getDateCreated();
-            productEntities.add(item.getProductEntity());
-        }
-        OrderResponse responseOrder = new OrderResponse();
-        responseOrder.setId(checkOut.getOrder().getId());
-        responseOrder.setStatus(checkOut.getOrder().getStatus() != null ? checkOut.getOrder().getStatus().toString() : null);
-        responseOrder.setTotalPrice(checkOut.getOrder().getTotalPrice());
-        responseOrder.setTimeWaitingOrder(checkOut.getOrder().getTimeWaitingOrder());
-        responseOrder.setDateCreated(date);
-        responseOrder.setProductEntities(productEntities);
-
-        if (checkOut.getOrder().getClientEntity() != null) {
-            responseOrder.setClientEntity(checkOut.getOrder().getClientEntity());
-        }
-
-        CheckoutResponse responseCheckout = new CheckoutResponse();
-        responseCheckout.setOrder(responseOrder);
-        responseCheckout.setTransactId(checkOut.getTransactId());
-        responseCheckout.setId(checkOut.getId());
-        responseCheckout.setPayment_status(checkOut.getPaymentStatus());
-        responseCheckout.setDateCreated(checkOut.getDateCreated());
-        responseCheckout.setTotalPrice(checkOut.getTotalPrice());
-        return responseCheckout;
-    }
+//    public CheckoutResponse mapCheckoutToResponse(CheckOut checkOut) {
+//        if (checkOut == null) {
+//            return null;
+//        }
+//        double totalPrice = 0.0;
+//        Integer timeWaitingOrder = 0;
+//        Date date = new Date();
+//        List<ProductEntity> productEntities = new ArrayList<>();
+//
+//        for (OrderItemEntity item : checkOut.getOrderEntity().getOrderItemsListEntity()) {
+//            totalPrice += item.getProductPrice() * item.getAmount();
+//            Integer preparationTime = Integer.parseInt(item.getPreparationTime());
+//            timeWaitingOrder += (preparationTime * item.getAmount());
+//            date = item.getOrderEntity().getDateCreated();
+//            productEntities.add(item.getProductEntity());
+//        }
+//        OrderResponse responseOrder = new OrderResponse();
+//        responseOrder.setId(checkOut.getOrderEntity().getId());
+//        responseOrder.setStatus(checkOut.getOrderEntity().getStatus() != null ? checkOut.getOrderEntity().getStatus().toString() : null);
+//        responseOrder.setTotalPrice(checkOut.getOrderEntity().getTotalPrice());
+//        responseOrder.setTimeWaitingOrder(checkOut.getOrderEntity().getTimeWaitingOrder());
+//        responseOrder.setDateCreated(date);
+//        responseOrder.setProducts(productEntities);
+//
+//        if (checkOut.getOrderEntity().getClientEntity() != null) {
+//            responseOrder.setClient(checkOut.getOrderEntity().getClientEntity());
+//        }
+//
+//        CheckoutResponse responseCheckout = new CheckoutResponse();
+//        responseCheckout.setOrder(responseOrder);
+//        responseCheckout.setTransactId(checkOut.getTransactId());
+//        responseCheckout.setId(checkOut.getId());
+//        responseCheckout.setPayment_status(checkOut.getPaymentStatus());
+//        responseCheckout.setDateCreated(checkOut.getDateCreated());
+//        responseCheckout.setTotalPrice(checkOut.getTotalPrice());
+//        return responseCheckout;
+//    }
 }
 

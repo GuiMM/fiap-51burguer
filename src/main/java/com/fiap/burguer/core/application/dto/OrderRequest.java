@@ -2,6 +2,7 @@ package com.fiap.burguer.core.application.dto;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fiap.burguer.adapter.driven.entities.ClientEntity;
+import com.fiap.burguer.core.domain.Client;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,7 @@ public class OrderRequest {
     private Integer idClient;
 
     @JsonIgnore
-    private ClientEntity clientEntity;
+    private Client client;
     private List<OrderItemRequest> items;
 
     @Data

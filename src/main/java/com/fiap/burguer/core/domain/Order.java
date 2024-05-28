@@ -20,7 +20,7 @@ public class Order implements Serializable {
 
     private double totalPrice;
 
-    private ClientEntity clientEntity;
+    private Client client;
 
     private List<OrderItem> orderItemsList;
 
@@ -64,12 +64,12 @@ public class Order implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public ClientEntity getClientEntity() {
-        return clientEntity;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClientEntity(ClientEntity clientEntity) {
-        this.clientEntity = clientEntity;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public List<OrderItem> getOrderItemsList() {

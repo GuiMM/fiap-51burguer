@@ -20,7 +20,7 @@ public class CheckOut {
 
     @OneToOne
     @JoinColumn(name = "order_id", nullable = true)
-    private Order order;
+    private OrderEntity orderEntity;
 
     @Column(name = "date_created", nullable = true)
     private Date dateCreated;

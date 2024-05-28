@@ -1,5 +1,6 @@
 package com.fiap.burguer.config;
 import com.fiap.burguer.adapter.driven.adapters.ClientAdapter;
+import com.fiap.burguer.adapter.driven.adapters.OrderAdapter;
 import com.fiap.burguer.adapter.driven.adapters.ProductAdapter;
 import com.fiap.burguer.adapter.driven.repository.CheckoutRepository;
 import com.fiap.burguer.adapter.driven.repository.OrderRepository;
@@ -9,6 +10,7 @@ import com.fiap.burguer.core.application.service.CheckoutService;
 import com.fiap.burguer.core.application.service.ClientService;
 import com.fiap.burguer.core.application.service.OrderService;
 import com.fiap.burguer.core.application.service.ProductService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +22,13 @@ public class Config {
     ProductRepository productRepository;
 
     @Autowired
+    OrderRepository orderRepository;
+
+    @Autowired
     ProductAdapter productAdapter;
 
     @Autowired
-    OrderRepository orderRepository;
+    OrderAdapter orderAdapter;
 
     @Autowired
     ClientAdapter clientAdapter;
@@ -34,6 +39,7 @@ public class Config {
     @Autowired
     PaymentGateway paymentGateway;
 
+
     @Bean
     public ProductService getProductService() {
         return new ProductService(productAdapter);
@@ -41,7 +47,7 @@ public class Config {
 
     @Bean
     public OrderService getOrderService() {
-        return new OrderService(orderRepository, productRepository);
+        return new OrderService(orderAdapter, productAdapter);
     }
 
     @Bean

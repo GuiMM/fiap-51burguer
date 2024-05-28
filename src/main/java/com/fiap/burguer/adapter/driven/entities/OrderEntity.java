@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -32,17 +32,17 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = true)
-    private ClientEntity clientEntity;
+    private ClientEntity client;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItemsList;
+    private List<OrderItemEntity> orderItemsList;
 
-    public Order(Integer timeWaitingOrder, Date dateCreated, StatusOrder status, double totalPrice, List<OrderItem> orderItemsList, ClientEntity clientEntity) {
-        this.timeWaitingOrder = timeWaitingOrder;
-        this.dateCreated = dateCreated;
-        this.status = status;
-        this.totalPrice = totalPrice;
-        this.clientEntity = clientEntity;
-        this.orderItemsList = orderItemsList;
-    }
+//    public OrderEntity(Integer timeWaitingOrder, Date dateCreated, StatusOrder status, double totalPrice, List<OrderItemEntity> orderItemsListEntity, ClientEntity clientEntity) {
+//        this.timeWaitingOrder = timeWaitingOrder;
+//        this.dateCreated = dateCreated;
+//        this.status = status;
+//        this.totalPrice = totalPrice;
+//        this.clientEntity = clientEntity;
+//        this.orderItemsListEntity = orderItemsListEntity;
+//    }
 }

@@ -30,12 +30,12 @@ public class ClientController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Cliente cadastrado",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ClientEntity.class)) }),
+                            schema = @Schema(implementation = Client.class)) }),
             @ApiResponse(responseCode = "400", description = "Infos de cliente inválido",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)) }) })
     public @ResponseBody ResponseEntity<?> postClient(@Valid ClientCreate clientCreate) {
-        Client entity = new ClientEntity();
+        Client entity = new Client();
         entity.setName(clientCreate.getName());
         entity.setEmail(clientCreate.getEmail());
         entity.setCpf(clientCreate.getCpf());

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity(name = "`client`")
 
-public class ClientEntity extends Client{
+public class ClientEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

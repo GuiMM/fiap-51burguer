@@ -8,9 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity(name = "product")
-@AllArgsConstructor
-@NoArgsConstructor
-public class ProductEntity extends Product {
+@Data
+public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

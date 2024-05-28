@@ -1,5 +1,6 @@
 package com.fiap.burguer.config;
 import com.fiap.burguer.adapter.driven.adapters.ClientAdapter;
+import com.fiap.burguer.adapter.driven.adapters.ProductAdapter;
 import com.fiap.burguer.adapter.driven.repository.CheckoutRepository;
 import com.fiap.burguer.adapter.driven.repository.OrderRepository;
 import com.fiap.burguer.adapter.driven.repository.ProductRepository;
@@ -19,6 +20,9 @@ public class Config {
     ProductRepository productRepository;
 
     @Autowired
+    ProductAdapter productAdapter;
+
+    @Autowired
     OrderRepository orderRepository;
 
     @Autowired
@@ -32,14 +36,13 @@ public class Config {
 
     @Bean
     public ProductService getProductService() {
-        return new ProductService(productRepository);
+        return new ProductService(productAdapter);
     }
 
     @Bean
     public OrderService getOrderService() {
         return new OrderService(orderRepository, productRepository);
     }
-
 
     @Bean
     public ClientService getClientService() {

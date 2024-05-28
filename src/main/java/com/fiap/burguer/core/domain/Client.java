@@ -13,7 +13,6 @@ public class Client implements Serializable {
 
     private String cpf;
 
-
     public int getId() {
         return id;
     }

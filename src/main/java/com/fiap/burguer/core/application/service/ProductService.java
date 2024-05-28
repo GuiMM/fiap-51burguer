@@ -1,62 +1,65 @@
 package com.fiap.burguer.core.application.service;
 
 import com.fiap.burguer.core.application.dto.ProductCreate;
-import com.fiap.burguer.adapter.driven.entities.ProductEntity;
 import com.fiap.burguer.core.application.enums.CategoryProduct;
-import com.fiap.burguer.adapter.driven.repository.ProductRepository;
+import com.fiap.burguer.core.application.ports.ProductPort;
+import com.fiap.burguer.core.domain.Product;
 import jakarta.persistence.EntityNotFoundException;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductService {
-    private final ProductRepository productRepository;
+    private final ProductPort productPort;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductService(ProductPort productPort) {
+        this.productPort = productPort;
     }
 
-    public ProductEntity saveProduct(ProductCreate productCreate) {
-        ProductEntity productEntity = new ProductEntity();
-        productEntity.setName(productCreate.getName());
-        productEntity.setCategory(productCreate.getCategory());
-        productEntity.setPrice(productCreate.getPrice());
-        productEntity.setDescription(productCreate.getDescription());
-        productEntity.setPreparationTime(productCreate.getPreparationTime());
-        productEntity.setImage(productCreate.getImage());
+    public Product saveProduct(ProductCreate productCreate) {
+        Product product = new Product();
+        product.setName(productCreate.getName());
+        product.setCategory(productCreate.getCategory());
+        product.setPrice(productCreate.getPrice());
+        product.setDescription(productCreate.getDescription());
+        product.setPreparationTime(productCreate.getPreparationTime());
+        product.setImage(productCreate.getImage());
 
-        return productRepository.save(productEntity);
+        return productPort.save(product);
     }
 
-    public ProductEntity updateProduct(ProductEntity productEntity) {
+    public Product updateProduct(Product productEntity) {
         Integer productId = productEntity.getId();
 
-        ProductEntity existingProductEntity = productRepository.findById(productId)
-                .orElseThrow(() -> new EntityNotFoundException("Product with ID " + productId + " not found"));
-
-        if (productEntity.getName() != null) {
-            existingProductEntity.setName(productEntity.getName());
-            existingProductEntity.setCategory(productEntity.getCategory());
-            existingProductEntity.setPrice(productEntity.getPrice());
-            existingProductEntity.setDescription(productEntity.getDescription());
-            existingProductEntity.setPreparationTime(productEntity.getPreparationTime());
-            existingProductEntity.setImage(productEntity.getImage());
+        Product existingProduct = productPort.findById(productId);
+        if (existingProduct == null) {
+            throw new EntityNotFoundException("Product with ID " + productId + " not found");
         }
 
-        return productRepository.save(existingProductEntity);
+        if (productEntity.getName() != null) {
+            existingProduct.setName(productEntity.getName());
+            existingProduct.setCategory(productEntity.getCategory());
+            existingProduct.setPrice(productEntity.getPrice());
+            existingProduct.setDescription(productEntity.getDescription());
+            existingProduct.setPreparationTime(productEntity.getPreparationTime());
+            existingProduct.setImage(productEntity.getImage());
+        }
+
+        return productPort.save(existingProduct);
     }
 
-    public ProductEntity findById(int id) {
-        return productRepository.findById(id);
+    public Product findById(int id) {
+        return productPort.findById(id);
     }
 
-    public List<ProductEntity> findByCategory(CategoryProduct category) {
-        List<ProductEntity> allProductEntities = productRepository.findAll();
+    public List<Product> findByCategory(CategoryProduct category) {
+        List<Product> allProductEntities = productPort.findAll();
         return allProductEntities.stream()
                 .filter(product -> product.getCategory() == category)
                 .collect(Collectors.toList());
     }
 
     public void deleteById(int id) {
-        productRepository.deleteById(id);
+        productPort.deleteById(id);
     }
 }

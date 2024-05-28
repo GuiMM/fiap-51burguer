@@ -1,7 +1,7 @@
 package com.fiap.burguer.adapter.driver.controller;
 import com.fiap.burguer.core.application.dto.ClientCreate;
 import com.fiap.burguer.adapter.driven.entities.ClientEntity;
-import com.fiap.burguer.adapter.driven.entities.Product;
+import com.fiap.burguer.adapter.driven.entities.ProductEntity;
 import com.fiap.burguer.core.application.dto.ErrorResponse;
 import com.fiap.burguer.core.application.service.ClientService;
 import com.fiap.burguer.core.domain.Client;
@@ -87,7 +87,7 @@ public class ClientController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Cliente atualizado",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Product.class)) }),
+                            schema = @Schema(implementation = ProductEntity.class)) }),
             @ApiResponse(responseCode = "400", description = "Infos de cliente invalido",
                     content = @Content)})
     public @ResponseBody Client putClient(@Valid Client client) {

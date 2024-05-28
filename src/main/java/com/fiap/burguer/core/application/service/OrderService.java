@@ -4,7 +4,7 @@ import com.fiap.burguer.core.application.dto.OrderRequest;
 import com.fiap.burguer.core.application.dto.OrderResponse;
 import com.fiap.burguer.adapter.driven.entities.Order;
 import com.fiap.burguer.adapter.driven.entities.OrderItem;
-import com.fiap.burguer.adapter.driven.entities.Product;
+import com.fiap.burguer.adapter.driven.entities.ProductEntity;
 import com.fiap.burguer.core.application.enums.StatusOrder;
 import com.fiap.burguer.adapter.driven.repository.OrderRepository;
 import com.fiap.burguer.adapter.driven.repository.ProductRepository;
@@ -29,12 +29,12 @@ public class OrderService {
         }
 
         Date date = new Date();
-        List<Product> products = new ArrayList<>();
+        List<ProductEntity> productEntities = new ArrayList<>();
 
         for (OrderItem item : order.getOrderItemsList()) {
             Integer preparationTime = Integer.parseInt(item.getPreparationTime());
             date = item.getOrder().getDateCreated();
-            products.add(item.getProduct());
+            productEntities.add(item.getProductEntity());
         }
 
         OrderResponse response = new OrderResponse();
@@ -43,7 +43,7 @@ public class OrderService {
         response.setTotalPrice(order.getTotalPrice());
         response.setTimeWaitingOrder(order.getTimeWaitingOrder());
         response.setDateCreated(date);
-        response.setProducts(products);
+        response.setProductEntities(productEntities);
 
         if (order.getClientEntity() != null) {
             response.setClientEntity(order.getClientEntity());
@@ -65,19 +65,19 @@ public class OrderService {
         }
 
         List<OrderItem> orderItems = orderRequest.getItems().stream().map(itemRequest -> {
-            Optional<Product> optionalProduct = Optional.ofNullable(productRepository.findById(itemRequest.getProductId()));
-            Product product = optionalProduct.orElseThrow(() -> new RuntimeException("Product not found"));
+            Optional<ProductEntity> optionalProduct = Optional.ofNullable(productRepository.findById(itemRequest.getProductId()));
+            ProductEntity productEntity = optionalProduct.orElseThrow(() -> new RuntimeException("Product not found"));
 
             OrderItem orderItem = new OrderItem();
-            orderItem.setProduct(product);
+            orderItem.setProductEntity(productEntity);
             orderItem.setAmount(itemRequest.getQuantity());
-            orderItem.setProductPrice(product.getPrice());
-            orderItem.setPreparationTime(product.getPreparationTime().toString());
-            orderItem.setDescription(product.getDescription());
+            orderItem.setProductPrice(productEntity.getPrice());
+            orderItem.setPreparationTime(productEntity.getPreparationTime().toString());
+            orderItem.setDescription(productEntity.getDescription());
             orderItem.setOrder(order);
 
-            order.setTotalPrice(order.getTotalPrice() + (product.getPrice() * itemRequest.getQuantity()));
-            timeOrder.updateAndGet(v -> v + order.getTimeWaitingOrder() + (product.getPreparationTime() * itemRequest.getQuantity()));
+            order.setTotalPrice(order.getTotalPrice() + (productEntity.getPrice() * itemRequest.getQuantity()));
+            timeOrder.updateAndGet(v -> v + order.getTimeWaitingOrder() + (productEntity.getPreparationTime() * itemRequest.getQuantity()));
 
 
             return orderItem;

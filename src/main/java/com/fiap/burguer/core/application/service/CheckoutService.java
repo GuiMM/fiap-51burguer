@@ -2,7 +2,7 @@ package com.fiap.burguer.core.application.service;
 
 import com.fiap.burguer.adapter.driven.entities.Order;
 import com.fiap.burguer.adapter.driven.entities.OrderItem;
-import com.fiap.burguer.adapter.driven.entities.Product;
+import com.fiap.burguer.adapter.driven.entities.ProductEntity;
 import com.fiap.burguer.core.application.dto.CheckoutResponse;
 import com.fiap.burguer.core.application.dto.OrderResponse;
 import com.fiap.burguer.core.application.enums.StatusOrder;
@@ -67,14 +67,14 @@ public class CheckoutService {
         double totalPrice = 0.0;
         Integer timeWaitingOrder = 0;
         Date date = new Date();
-        List<Product> products = new ArrayList<>();
+        List<ProductEntity> productEntities = new ArrayList<>();
 
         for (OrderItem item : checkOut.getOrder().getOrderItemsList()) {
             totalPrice += item.getProductPrice() * item.getAmount();
             Integer preparationTime = Integer.parseInt(item.getPreparationTime());
             timeWaitingOrder += (preparationTime * item.getAmount());
             date = item.getOrder().getDateCreated();
-            products.add(item.getProduct());
+            productEntities.add(item.getProductEntity());
         }
         OrderResponse responseOrder = new OrderResponse();
         responseOrder.setId(checkOut.getOrder().getId());
@@ -82,7 +82,7 @@ public class CheckoutService {
         responseOrder.setTotalPrice(checkOut.getOrder().getTotalPrice());
         responseOrder.setTimeWaitingOrder(checkOut.getOrder().getTimeWaitingOrder());
         responseOrder.setDateCreated(date);
-        responseOrder.setProducts(products);
+        responseOrder.setProductEntities(productEntities);
 
         if (checkOut.getOrder().getClientEntity() != null) {
             responseOrder.setClientEntity(checkOut.getOrder().getClientEntity());

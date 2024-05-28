@@ -1,18 +1,18 @@
 package com.fiap.burguer.adapter.driven.entities;
+
 import com.fiap.burguer.core.application.enums.CategoryProduct;
+import com.fiap.burguer.core.domain.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity(name = "product")
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+public class ProductEntity extends Product {
 
     @Id
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 

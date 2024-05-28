@@ -1,6 +1,6 @@
 package com.fiap.burguer.adapter.driver.controller;
 import com.fiap.burguer.core.application.dto.ProductCreate;
-import com.fiap.burguer.adapter.driven.entities.Product;
+import com.fiap.burguer.adapter.driven.entities.ProductEntity;
 import com.fiap.burguer.core.application.enums.CategoryProduct;
 import com.fiap.burguer.core.application.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,18 +33,18 @@ public class ProductController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Encontrou produto",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Product.class))}),
+                            schema = @Schema(implementation = ProductEntity.class))}),
             @ApiResponse(responseCode = "400", description = "Id de produto invalido",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Produto não encontrado",
                     content = @Content)})
-    public @ResponseBody ResponseEntity<Product> getProductById(
+    public @ResponseBody ResponseEntity<ProductEntity> getProductById(
             @Parameter(description = "ID do produto a ser consultado", required = true) @PathVariable("id") int id) {
-        Product product = productService.findById(id);
-        if (product == null) {
+        ProductEntity productEntity = productService.findById(id);
+        if (productEntity == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return new ResponseEntity<>(productEntity, HttpStatus.OK);
     }
 
     @GetMapping("/category/{category}")
@@ -57,16 +57,16 @@ public class ProductController {
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Produtos não encontrados para a categoria",
                     content = @Content) })
-    public ResponseEntity<List<Product>> getProductsByCategory(
+    public ResponseEntity<List<ProductEntity>> getProductsByCategory(
             @Parameter(description = "Categoria dos produtos a serem consultados", required = true) @PathVariable("category") CategoryProduct category) {
         try {
-            List<Product> products = productService.findByCategory(category);
-            if (products == null || products.isEmpty()) {
+            List<ProductEntity> productEntities = productService.findByCategory(category);
+            if (productEntities == null || productEntities.isEmpty()) {
                 HttpHeaders headers = new HttpHeaders();
                 headers.add("Custom-Message", "Nenhum produto encontrado para a categoria " + category);
                 return ResponseEntity.notFound().headers(headers).build();
             }
-            return ResponseEntity.ok(products);
+            return ResponseEntity.ok(productEntities);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         }
@@ -77,10 +77,10 @@ public class ProductController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Produto cadastrado",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Product.class))}),
+                            schema = @Schema(implementation = ProductEntity.class))}),
             @ApiResponse(responseCode = "400", description = "Infos de produto invalido",
                     content = @Content)})
-    public @ResponseBody Product postProduct(@RequestBody @Valid ProductCreate productCreate) {
+    public @ResponseBody ProductEntity postProduct(@RequestBody @Valid ProductCreate productCreate) {
         return productService.saveProduct(productCreate);
     }
 
@@ -89,12 +89,12 @@ public class ProductController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Produto atualizado",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Product.class))}),
+                            schema = @Schema(implementation = ProductEntity.class))}),
             @ApiResponse(responseCode = "400", description = "Infos de produto invalido",
                     content = @Content)})
-    public @ResponseBody Product putProduct(@Valid Product product) {
+    public @ResponseBody ProductEntity putProduct(@Valid ProductEntity productEntity) {
 
-        return productService.updateProduct(product);
+        return productService.updateProduct(productEntity);
     }
 
     @DeleteMapping("{id}")
@@ -102,7 +102,7 @@ public class ProductController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Deletou produto",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Product.class))}),
+                            schema = @Schema(implementation = ProductEntity.class))}),
             @ApiResponse(responseCode = "400", description = "Id de produto invalido",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Produto não encontrado",
@@ -110,8 +110,8 @@ public class ProductController {
     public @ResponseBody ResponseEntity deleteProduct(
             @Parameter(description = "ID do produto a ser deletado", required = true) @PathVariable("id") int id) {
 
-        Product product = productService.findById(id);
-        if (product == null) {
+        ProductEntity productEntity = productService.findById(id);
+        if (productEntity == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         try {

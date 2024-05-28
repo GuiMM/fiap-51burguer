@@ -1,6 +1,5 @@
 package com.fiap.burguer.adapter.driven.entities;
 
-import com.fiap.burguer.core.domain.Client;
 import jakarta.persistence.*;
 
 @Entity(name = "`client`")

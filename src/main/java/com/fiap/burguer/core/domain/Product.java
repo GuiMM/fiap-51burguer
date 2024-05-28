@@ -1,10 +1,5 @@
 package com.fiap.burguer.core.domain;
 import com.fiap.burguer.core.application.enums.CategoryProduct;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 
 

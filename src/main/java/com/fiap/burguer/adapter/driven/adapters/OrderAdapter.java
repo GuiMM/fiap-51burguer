@@ -1,14 +1,10 @@
 package com.fiap.burguer.adapter.driven.adapters;
 
 import com.fiap.burguer.adapter.driven.entities.OrderEntity;
-import com.fiap.burguer.adapter.driven.entities.ProductEntity;
-import com.fiap.burguer.adapter.driven.mappers.OrderMapper;
-import com.fiap.burguer.adapter.driven.mappers.ProductMapper;
 import com.fiap.burguer.adapter.driven.repository.OrderRepository;
 import com.fiap.burguer.core.application.enums.StatusOrder;
 import com.fiap.burguer.core.application.ports.OrderPort;
 import com.fiap.burguer.core.domain.Order;
-import com.fiap.burguer.core.domain.Product;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +40,7 @@ public class OrderAdapter implements OrderPort {
     public List<Order> findAll() {
         List<OrderEntity> orderEntityResponse = orderRepository.findAll();
 
-        return  orderEntityResponse.stream()
+        return orderEntityResponse.stream()
                 .map(orderEntity -> modelMapper.map(orderEntity, Order.class))
                 .collect(Collectors.toList());
     }
@@ -53,7 +49,7 @@ public class OrderAdapter implements OrderPort {
     public List<Order> findByStatus(StatusOrder status) {
         List<OrderEntity> orderEntityResponse = orderRepository.findByStatus(status);
 
-        return  orderEntityResponse.stream()
+        return orderEntityResponse.stream()
                 .map(orderEntity -> modelMapper.map(orderEntity, Order.class))
                 .collect(Collectors.toList());
     }

@@ -3,9 +3,9 @@
 package com.fiap.burguer.adapter.driven.entities;
 
 import com.fiap.burguer.core.application.enums.StatusOrder;
-import com.fiap.burguer.core.domain.CheckOut;
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.util.Date;
 import java.util.UUID;
 

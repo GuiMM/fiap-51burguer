@@ -1,4 +1,5 @@
 package com.fiap.burguer.adapter.driven.entities;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,6 +36,5 @@ public class OrderItemEntity {
 
     @Column(name = "amount", nullable = false)
     private Integer amount = 1;
-
 
 }

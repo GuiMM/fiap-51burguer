@@ -20,6 +20,4 @@ public class ProductCreate {
         this.price = price;
         this.category = category;
     }
-
-
 }

@@ -1,11 +1,8 @@
 package com.fiap.burguer.adapter.driven.entities;
 
 import com.fiap.burguer.core.application.enums.CategoryProduct;
-import com.fiap.burguer.core.domain.Product;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity(name = "product")
 @Data
@@ -33,5 +30,4 @@ public class ProductEntity {
 
     @Column(name = "image", nullable = true)
     private String image;
-
 }

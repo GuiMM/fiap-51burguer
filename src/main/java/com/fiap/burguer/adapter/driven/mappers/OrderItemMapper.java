@@ -1,15 +1,12 @@
 package com.fiap.burguer.adapter.driven.mappers;
 
-import com.fiap.burguer.adapter.driven.entities.ClientEntity;
 import com.fiap.burguer.adapter.driven.entities.OrderEntity;
 import com.fiap.burguer.adapter.driven.entities.OrderItemEntity;
-import com.fiap.burguer.core.domain.Client;
 import com.fiap.burguer.core.domain.Order;
 import com.fiap.burguer.core.domain.OrderItem;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +26,6 @@ public class OrderItemMapper {
 
         BeanUtils.copyProperties(orderItemEntity, orderItem);
 
-
         return orderItem;
     }
 
@@ -44,7 +40,6 @@ public class OrderItemMapper {
                 .map(OrderItemMapper::toEntity)
                 .collect(Collectors.toList());
     }
-
 
 
     public static OrderItemEntity toEntity(Order order, OrderItem orderItem) {
@@ -76,7 +71,7 @@ public class OrderItemMapper {
 
     public static List<OrderItemEntity> toEntity(Order order) {
         return order.getOrderItemsList().stream()
-                .map( orderItem -> OrderItemMapper.toEntity(order, orderItem))
+                .map(orderItem -> OrderItemMapper.toEntity(order, orderItem))
                 .collect(Collectors.toList());
     }
 

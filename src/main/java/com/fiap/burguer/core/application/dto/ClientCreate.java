@@ -1,4 +1,5 @@
 package com.fiap.burguer.core.application.dto;
+
 import lombok.Data;
 
 @Data

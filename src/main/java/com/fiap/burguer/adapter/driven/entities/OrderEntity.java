@@ -1,4 +1,5 @@
 package com.fiap.burguer.adapter.driven.entities;
+
 import com.fiap.burguer.core.application.enums.StatusOrder;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,13 +37,4 @@ public class OrderEntity {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItemEntity> orderItemsList;
-
-//    public OrderEntity(Integer timeWaitingOrder, Date dateCreated, StatusOrder status, double totalPrice, List<OrderItemEntity> orderItemsListEntity, ClientEntity clientEntity) {
-//        this.timeWaitingOrder = timeWaitingOrder;
-//        this.dateCreated = dateCreated;
-//        this.status = status;
-//        this.totalPrice = totalPrice;
-//        this.clientEntity = clientEntity;
-//        this.orderItemsListEntity = orderItemsListEntity;
-//    }
 }

@@ -1,9 +1,6 @@
 package com.fiap.burguer.core.domain;
 
-import com.fiap.burguer.adapter.driven.entities.ClientEntity;
 import com.fiap.burguer.core.application.enums.StatusOrder;
-import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;

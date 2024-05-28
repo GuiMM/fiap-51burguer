@@ -1,9 +1,7 @@
 package com.fiap.burguer.adapter.driven.mappers;
 
 import com.fiap.burguer.adapter.driven.entities.CheckOutEntity;
-import com.fiap.burguer.adapter.driven.entities.ClientEntity;
 import com.fiap.burguer.core.domain.CheckOut;
-import com.fiap.burguer.core.domain.Client;
 import org.springframework.beans.BeanUtils;
 
 public class CheckOutMapper {

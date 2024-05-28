@@ -19,21 +19,21 @@ public class ClientAdapter implements ClientPort {
     @Override
     public Client save(Client client) {
         ClientEntity clientEntity = ClientMapper.toEntity(client);
-        ClientEntity clientEntityResponse =  clientRepository.save(clientEntity);
+        ClientEntity clientEntityResponse = clientRepository.save(clientEntity);
 
         return ClientMapper.toDomain(clientEntityResponse);
     }
 
     @Override
     public Client findById(int id) {
-        ClientEntity clientEntityResponse =  clientRepository.findById(id);
+        ClientEntity clientEntityResponse = clientRepository.findById(id);
 
         return ClientMapper.toDomain(clientEntityResponse);
     }
 
     @Override
     public Client findByCpf(String cpf) {
-        ClientEntity clientEntityResponse =  clientRepository.findByCpf(cpf);
+        ClientEntity clientEntityResponse = clientRepository.findByCpf(cpf);
 
         return ClientMapper.toDomain(clientEntityResponse);
     }

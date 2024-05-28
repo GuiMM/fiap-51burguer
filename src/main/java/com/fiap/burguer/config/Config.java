@@ -1,4 +1,5 @@
 package com.fiap.burguer.config;
+import com.fiap.burguer.adapter.driven.adapters.CheckOutAdapter;
 import com.fiap.burguer.adapter.driven.adapters.ClientAdapter;
 import com.fiap.burguer.adapter.driven.adapters.ProductAdapter;
 import com.fiap.burguer.adapter.driven.repository.CheckoutRepository;
@@ -29,6 +30,9 @@ public class Config {
     ClientAdapter clientAdapter;
 
     @Autowired
+    CheckOutAdapter checkOutAdapter;
+
+    @Autowired
     CheckoutRepository checkoutRepository;
 
     @Autowired
@@ -51,7 +55,7 @@ public class Config {
 
     @Bean
     public CheckoutService getCheckoutService() {
-        return new CheckoutService(checkoutRepository, orderRepository, paymentGateway);
+        return new CheckoutService(checkOutAdapter, orderRepository, paymentGateway);
     }
 
     @Bean

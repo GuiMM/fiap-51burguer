@@ -1,6 +1,6 @@
 package com.fiap.burguer.adapter.driver.controller;
 import com.fiap.burguer.core.application.dto.CheckoutResponse;
-import com.fiap.burguer.adapter.driven.entities.CheckOut;
+import com.fiap.burguer.adapter.driven.entities.CheckOutEntity;
 import com.fiap.burguer.adapter.driven.entities.Order;
 import com.fiap.burguer.core.application.enums.StatusOrder;
 import com.fiap.burguer.adapter.driven.repository.ClientRepository;
@@ -27,7 +27,7 @@ public class CheckoutController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Consulta de checkout do Pedido, realizada com sucesso!",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CheckOut.class))}),
+                            schema = @Schema(implementation = CheckOutEntity.class))}),
             @ApiResponse(responseCode = "400", description = "Não foi possível encontrar o checkout para este pedido!",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Pedido não encontrado, tente outro!",
@@ -35,13 +35,13 @@ public class CheckoutController {
     public @ResponseBody  ResponseEntity<?> getCheckoutOrderById(
             @Parameter(description = "ID do pedido a ser consultado", required = true) @PathVariable("id") int id) {
         try {
-            CheckOut checkout = checkoutService.findById(id);
+            CheckOutEntity checkout = checkoutService.findById(id);
 
             if (checkout == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             Order order = checkoutService.findOrderById(checkout.getOrder().getId());
-            CheckOut checkoutNew = checkoutService.mapOrderToCheckout(order, order.getStatus());
+            CheckOutEntity checkoutNew = checkoutService.mapOrderToCheckout(order, order.getStatus());
             CheckoutResponse response = checkoutService.mapCheckoutToResponse(checkoutNew);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class CheckoutController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Checkout criado com sucesso!",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CheckOut.class))}),
+                            schema = @Schema(implementation = CheckOutEntity.class))}),
             @ApiResponse(responseCode = "400", description = "Não foi possível criar o checkout para este pedido!",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Checkout não encontrado, tente outro!",
@@ -70,7 +70,7 @@ public class CheckoutController {
         }else{
             checkoutService.updateStatusOrder(order, statusOrder);
         }
-        CheckOut checkoutNew = checkoutService.save(checkoutService.mapOrderToCheckout(order, statusOrder));
+        CheckOutEntity checkoutNew = checkoutService.save(checkoutService.mapOrderToCheckout(order, statusOrder));
         try {
             if (checkoutNew == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

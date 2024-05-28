@@ -1,5 +1,6 @@
 package com.fiap.burguer.core.application.service;
 
+import com.fiap.burguer.adapter.driven.adapters.CheckOutAdapter;
 import com.fiap.burguer.adapter.driven.entities.Order;
 import com.fiap.burguer.adapter.driven.entities.OrderItem;
 import com.fiap.burguer.adapter.driven.entities.ProductEntity;
@@ -9,25 +10,26 @@ import com.fiap.burguer.core.application.enums.StatusOrder;
 import com.fiap.burguer.core.application.ports.IPaymentGateway;
 import com.fiap.burguer.adapter.driven.repository.CheckoutRepository;
 import com.fiap.burguer.adapter.driven.repository.OrderRepository;
-import com.fiap.burguer.adapter.driven.entities.CheckOut;
+import com.fiap.burguer.adapter.driven.entities.CheckOutEntity;
+import com.fiap.burguer.core.domain.CheckOut;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class CheckoutService {
-    private final CheckoutRepository checkoutRepository;
+    private final CheckOutAdapter checkOutAdapter;
     private final OrderRepository orderRepository;
     private final IPaymentGateway paymentGateway;
 
-    public CheckoutService(CheckoutRepository checkoutRepository, OrderRepository orderRepository, IPaymentGateway paymentGateway) {
-        this.checkoutRepository = checkoutRepository;
+    public CheckoutService(CheckOutAdapter checkOutAdapter, OrderRepository orderRepository, IPaymentGateway paymentGateway) {
+        this.checkOutAdapter = checkOutAdapter;
         this.orderRepository = orderRepository;
         this.paymentGateway = paymentGateway;
     }
 
     public CheckOut findById(int id) {
-        return checkoutRepository.findById(id);
+        return checkOutAdapter.findById(id);
     }
 
     public Order findOrderById(int id) {
@@ -46,12 +48,12 @@ public class CheckoutService {
 
     }
 
-    public CheckOut save(CheckOut checkOut) {
-        return checkoutRepository.save(checkOut);
+    public CheckOut save(CheckOutEntity checkOutEntity) {
+        return checkOutAdapter.save(checkOutEntity);
     }
 
-    public CheckOut mapOrderToCheckout(Order order, StatusOrder statusOrder) {
-        CheckOut checkoutNew = new CheckOut();
+    public CheckOutEntity mapOrderToCheckout(Order order, StatusOrder statusOrder) {
+        CheckOutEntity checkoutNew = new CheckOutEntity();
         checkoutNew.setDateCreated(new Date());
         checkoutNew.setOrder(order);
         checkoutNew.setTotalPrice(order.getTotalPrice());
@@ -60,8 +62,8 @@ public class CheckoutService {
         return checkoutNew;
     }
 
-    public CheckoutResponse mapCheckoutToResponse(CheckOut checkOut) {
-        if (checkOut == null) {
+    public CheckoutResponse mapCheckoutToResponse(CheckOutEntity checkOutEntity) {
+        if (checkOutEntity == null) {
             return null;
         }
         double totalPrice = 0.0;
@@ -69,7 +71,7 @@ public class CheckoutService {
         Date date = new Date();
         List<ProductEntity> productEntities = new ArrayList<>();
 
-        for (OrderItem item : checkOut.getOrder().getOrderItemsList()) {
+        for (OrderItem item : checkOutEntity.getOrder().getOrderItemsList()) {
             totalPrice += item.getProductPrice() * item.getAmount();
             Integer preparationTime = Integer.parseInt(item.getPreparationTime());
             timeWaitingOrder += (preparationTime * item.getAmount());
@@ -77,24 +79,24 @@ public class CheckoutService {
             productEntities.add(item.getProductEntity());
         }
         OrderResponse responseOrder = new OrderResponse();
-        responseOrder.setId(checkOut.getOrder().getId());
-        responseOrder.setStatus(checkOut.getOrder().getStatus() != null ? checkOut.getOrder().getStatus().toString() : null);
-        responseOrder.setTotalPrice(checkOut.getOrder().getTotalPrice());
-        responseOrder.setTimeWaitingOrder(checkOut.getOrder().getTimeWaitingOrder());
+        responseOrder.setId(checkOutEntity.getOrder().getId());
+        responseOrder.setStatus(checkOutEntity.getOrder().getStatus() != null ? checkOutEntity.getOrder().getStatus().toString() : null);
+        responseOrder.setTotalPrice(checkOutEntity.getOrder().getTotalPrice());
+        responseOrder.setTimeWaitingOrder(checkOutEntity.getOrder().getTimeWaitingOrder());
         responseOrder.setDateCreated(date);
         responseOrder.setProductEntities(productEntities);
 
-        if (checkOut.getOrder().getClientEntity() != null) {
-            responseOrder.setClientEntity(checkOut.getOrder().getClientEntity());
+        if (checkOutEntity.getOrder().getClientEntity() != null) {
+            responseOrder.setClientEntity(checkOutEntity.getOrder().getClientEntity());
         }
 
         CheckoutResponse responseCheckout = new CheckoutResponse();
         responseCheckout.setOrder(responseOrder);
-        responseCheckout.setTransactId(checkOut.getTransactId());
-        responseCheckout.setId(checkOut.getId());
-        responseCheckout.setPayment_status(checkOut.getPaymentStatus());
-        responseCheckout.setDateCreated(checkOut.getDateCreated());
-        responseCheckout.setTotalPrice(checkOut.getTotalPrice());
+        responseCheckout.setTransactId(checkOutEntity.getTransactId());
+        responseCheckout.setId(checkOutEntity.getId());
+        responseCheckout.setPayment_status(checkOutEntity.getPaymentStatus());
+        responseCheckout.setDateCreated(checkOutEntity.getDateCreated());
+        responseCheckout.setTotalPrice(checkOutEntity.getTotalPrice());
         return responseCheckout;
     }
 }

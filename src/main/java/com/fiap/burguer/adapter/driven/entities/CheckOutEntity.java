@@ -3,6 +3,7 @@
 package com.fiap.burguer.adapter.driven.entities;
 
 import com.fiap.burguer.core.application.enums.StatusOrder;
+import com.fiap.burguer.core.domain.CheckOut;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CheckOut {
+public class CheckOutEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +21,7 @@ public class CheckOut {
 
     @OneToOne
     @JoinColumn(name = "order_id", nullable = true)
-    private OrderEntity orderEntity;
+    private OrderEntity order;
 
     @Column(name = "date_created", nullable = true)
     private Date dateCreated;

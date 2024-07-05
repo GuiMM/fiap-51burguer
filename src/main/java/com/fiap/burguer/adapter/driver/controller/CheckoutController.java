@@ -41,8 +41,6 @@ public class CheckoutController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -60,22 +58,11 @@ public class CheckoutController {
             @Parameter(description = "ID do pedido para criar checkout", required = true) @PathVariable("id") int id,
             @Parameter(description = "Status do Pedido", required = true, schema = @Schema(allowableValues = {"APPROVEDPAYMENT", "REJECTEDPAYMENT"}))
             @PathVariable("status_order") StatusOrder statusOrder) {
-        Order order = checkoutService.findOrderById(id);
-        if(order.getStatus() == StatusOrder.RECEIVED|| order.getStatus() == StatusOrder.CANCELED){
-            String errorMessage = "Não foi possível realizar o pagamento, pois o pedido " + order.getId() + " já está com o status "+ order.getStatus() ;
-            return ResponseEntity.badRequest().body(errorMessage);
-        }else{
-            checkoutService.updateStatusOrder(order, statusOrder);
-        }
-        CheckOut checkoutNew = checkoutService.save(checkoutService.mapOrderToCheckout(order, statusOrder));
-        try {
-            if (checkoutNew == null) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-            CheckoutResponse response = checkoutService.mapCheckoutToResponse(checkoutNew);
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
+        CheckOut checkoutNew = checkoutService.createCheckout(id, statusOrder);
+        CheckoutResponse response = checkoutService.mapCheckoutToResponse(checkoutNew);
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+
     }
 }

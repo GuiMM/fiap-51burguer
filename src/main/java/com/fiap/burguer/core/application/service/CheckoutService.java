@@ -2,6 +2,7 @@ package com.fiap.burguer.core.application.service;
 import com.fiap.burguer.adapter.driven.adapters.CheckOutAdapter;
 import com.fiap.burguer.adapter.driven.adapters.OrderAdapter;
 import com.fiap.burguer.adapter.driven.adapters.PaymentGateway;
+import com.fiap.burguer.adapter.driver.handlers.ImpossibleToCheckoutException;
 import com.fiap.burguer.core.application.dto.CheckoutResponse;
 import com.fiap.burguer.core.application.dto.OrderResponse;
 import com.fiap.burguer.core.application.enums.StatusOrder;
@@ -9,6 +10,8 @@ import com.fiap.burguer.core.domain.CheckOut;
 import com.fiap.burguer.core.domain.Order;
 import com.fiap.burguer.core.domain.OrderItem;
 import com.fiap.burguer.core.domain.Product;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +50,23 @@ public class CheckoutService {
 
     public CheckOut save(CheckOut checkOut) {
         return checkOutAdapter.save(checkOut);
+    }
+
+
+    public CheckOut createCheckout(int id, StatusOrder statusOrder){
+        Order order = this.findOrderById(id);
+        if(order.getStatus() == StatusOrder.RECEIVED|| order.getStatus() == StatusOrder.CANCELED){
+            String errorMessage = "Não foi possível realizar o pagamento, pois o pedido " + order.getId() + " já está com o status "+ order.getStatus() ;
+            throw new ImpossibleToCheckoutException(errorMessage);
+        }else{
+            this.updateStatusOrder(order, statusOrder);
+        }
+        CheckOut checkoutNew = this.save(this.mapOrderToCheckout(order, statusOrder));
+
+        if (checkoutNew == null) {
+            throw new RuntimeException("Não foi possível processar a solicitação");
+        }
+        return checkoutNew;
     }
 
     public CheckOut mapOrderToCheckout(Order order, StatusOrder statusOrder) {

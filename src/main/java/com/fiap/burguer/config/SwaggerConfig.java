@@ -14,7 +14,7 @@ public class SwaggerConfig {
     {
         return GroupedOpenApi.builder()
                 .group("OpenApiController")
-                .packagesToScan("com.fiap.burguer.adapter.driver.controller")
+                .packagesToScan("com.fiap.burguer")
                 .build();
     }
 

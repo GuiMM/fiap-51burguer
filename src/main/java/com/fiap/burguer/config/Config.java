@@ -1,9 +1,10 @@
 package com.fiap.burguer.config;
-import com.fiap.burguer.adapter.driven.adapters.*;
-import com.fiap.burguer.core.application.service.CheckoutService;
-import com.fiap.burguer.core.application.service.ClientService;
-import com.fiap.burguer.core.application.service.OrderService;
-import com.fiap.burguer.core.application.service.ProductService;
+import com.fiap.burguer.core.application.ports.IPaymentGateway;
+import com.fiap.burguer.core.application.usecases.CheckoutUseCases;
+import com.fiap.burguer.core.application.usecases.ClientUseCases;
+import com.fiap.burguer.core.application.usecases.OrderUseCases;
+import com.fiap.burguer.core.application.usecases.ProductUseCases;
+import com.fiap.burguer.infraestructure.adapters.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,27 +29,27 @@ public class Config {
 
 
     @Bean
-    public ProductService getProductService() {
-        return new ProductService(productAdapter);
+    public ProductUseCases getProductService() {
+        return new ProductUseCases(productAdapter);
     }
 
     @Bean
-    public OrderService getOrderService() {
-        return new OrderService(orderAdapter, productAdapter);
+    public OrderUseCases getOrderService() {
+        return new OrderUseCases(orderAdapter, productAdapter);
     }
 
     @Bean
-    public ClientService getClientService() {
-        return new ClientService(clientAdapter);
+    public ClientUseCases getClientService() {
+        return new ClientUseCases(clientAdapter);
     }
 
     @Bean
-    public CheckoutService getCheckoutService() {
-        return new CheckoutService(checkoutAdapter, orderAdapter, paymentGateway);
+    public CheckoutUseCases getCheckoutService() {
+        return new CheckoutUseCases(checkoutAdapter, orderAdapter, paymentGateway);
     }
 
     @Bean
-    public PaymentGateway getPaymentGateway() {
+    public IPaymentGateway getPaymentGateway() {
         return new PaymentGateway();
     }
 

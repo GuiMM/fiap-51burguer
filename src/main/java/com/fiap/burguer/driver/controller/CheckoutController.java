@@ -21,15 +21,12 @@ public class CheckoutController implements CheckoutApi {
     }
 
     public ResponseEntity<?> getCheckoutOrderById(int id) {
-        try {
-            CheckOut checkout = checkoutUseCases.findById(id);
-            Order order = orderUseCases.getOrderById(checkout.getOrder().getId());
-            CheckOut checkoutNew = checkoutUseCases.mapOrderToCheckout(order);
-            CheckoutResponse response = CheckoutPresenter.mapCheckoutToResponse(checkoutNew);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
+        CheckOut checkout = checkoutUseCases.findById(id);
+        Order order = orderUseCases.getOrderById(checkout.getOrder().getId());
+        CheckOut checkoutNew = checkoutUseCases.mapOrderToCheckout(order);
+        CheckoutResponse response = CheckoutPresenter.mapCheckoutToResponse(checkoutNew);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
@@ -39,6 +36,5 @@ public class CheckoutController implements CheckoutApi {
         CheckoutResponse response = CheckoutPresenter.mapCheckoutToResponse(checkoutNew);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
-
     }
 }

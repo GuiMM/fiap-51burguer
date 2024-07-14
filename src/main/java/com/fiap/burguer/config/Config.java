@@ -1,4 +1,5 @@
 package com.fiap.burguer.config;
+import com.fiap.burguer.core.application.ports.ClientPort;
 import com.fiap.burguer.core.application.ports.IPaymentGateway;
 import com.fiap.burguer.core.application.usecases.CheckoutUseCases;
 import com.fiap.burguer.core.application.usecases.ClientUseCases;
@@ -35,7 +36,7 @@ public class Config {
 
     @Bean
     public OrderUseCases getOrderService() {
-        return new OrderUseCases(orderAdapter, productAdapter);
+        return new OrderUseCases(orderAdapter, productAdapter, clientAdapter);
     }
 
     @Bean

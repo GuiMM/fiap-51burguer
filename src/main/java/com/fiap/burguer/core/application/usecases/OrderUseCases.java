@@ -123,10 +123,17 @@ public class OrderUseCases {
     }
 
     public int timeWaitingOrderQueue() {
-        List<Order> receivedOrderEntities = getOrdersByStatus(StatusOrder.RECEIVED);
-        List<Order> preparationOrderEntities = getOrdersByStatus(StatusOrder.PREPARATION);
 
-        return sumTimeWaitingOrder(receivedOrderEntities) + sumTimeWaitingOrder(preparationOrderEntities);
+        List<Order> receivedOrderEntities;
+        List<Order> preparationOrderEntities;
+        try{
+            receivedOrderEntities = getOrdersByStatus(StatusOrder.RECEIVED);
+            preparationOrderEntities = getOrdersByStatus(StatusOrder.PREPARATION);
+
+            return sumTimeWaitingOrder(receivedOrderEntities) + sumTimeWaitingOrder(preparationOrderEntities);
+        }catch (ResourceNotFoundException ex){
+            return 0;
+        }
     }
 
     private int sumTimeWaitingOrder(List<Order> orders) {

@@ -35,13 +35,15 @@ public class ClientUseCases {
     }
 
     public Client findByCpf(String cpf) {
+       cpf = cpf.replaceAll("\\D", "");
+        if (!CPFUtils.isValidCPF(cpf)) throw new InvalidCPFException("CPF '" + cpf + "' inválido!");
         Client client = clientPort.findByCpf(cpf);
         if(client == null) throw new ResourceNotFoundException("Cliente não encontrado a partir de CPF");
         return client;
     }
 
     public void deleteById(int id) {
-        this.verifyClientExistance(id); //verifica se cliente existe
+        this.verifyClientExistance(id);
         clientPort.deleteById(id);
     }
 

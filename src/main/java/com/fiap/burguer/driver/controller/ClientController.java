@@ -43,6 +43,6 @@ public class ClientController implements ClientApi {
 
     public  ResponseEntity deleteClient(int id) {
             clientUseCases.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("Cliente Deletado com sucesso",HttpStatus.OK);
     }
 }

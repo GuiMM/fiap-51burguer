@@ -21,9 +21,7 @@ public class CheckoutController implements CheckoutApi {
     }
 
     public ResponseEntity<?> getCheckoutOrderById(int id) {
-
-        CheckOut checkout = checkoutUseCases.findById(id);
-        Order order = orderUseCases.getOrderById(checkout.getOrder().getId());
+        Order order = orderUseCases.getOrderById(id);
         CheckOut checkoutNew = checkoutUseCases.mapOrderToCheckout(order);
         CheckoutResponse response = CheckoutPresenter.mapCheckoutToResponse(checkoutNew);
         return new ResponseEntity<>(response, HttpStatus.OK);

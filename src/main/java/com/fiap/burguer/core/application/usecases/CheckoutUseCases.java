@@ -21,8 +21,8 @@ public class CheckoutUseCases {
         this.paymentGateway = paymentGateway;
     }
 
-    public CheckOut findById(int id) {
-        CheckOut checkout = checkOutPort.findById(id);
+    public Order findById(int id) {
+        Order checkout = orderPort.findById(id);
         if(checkout == null) throw new ResourceNotFoundException("Checkout não encontrado.");
         return checkout;
     }
@@ -31,13 +31,10 @@ public class CheckoutUseCases {
     public void updateStatusOrder(Order order, StatusOrder statusOrder) {
         if (paymentGateway.processPayment(statusOrder)) {
             order.setStatus(StatusOrder.RECEIVED);
-
         } else {
             order.setStatus(StatusOrder.WAITINGPAYMENT);
-
         }
         orderPort.save(order);
-
     }
 
     public CheckOut save(CheckOut checkOut) {
@@ -67,7 +64,7 @@ public class CheckoutUseCases {
         checkoutNew.setOrder(order);
         checkoutNew.setTotalPrice(order.getTotalPrice());
         checkoutNew.setTransactId(checkoutNew.getTransactId());
-        checkoutNew.setPaymentStatus(StatusOrder.APPROVEDPAYMENT);
+        checkoutNew.setPaymentStatus(order.getStatus());
         return checkoutNew;
     }
 

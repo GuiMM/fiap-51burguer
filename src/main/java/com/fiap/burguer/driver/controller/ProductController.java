@@ -50,8 +50,9 @@ public class ProductController implements ProductApi {
 
 
     public  ResponseEntity deleteProduct(int id) {
+
             productUseCases.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("Produto Deletado com sucesso",HttpStatus.OK);
 
     }
 }

@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  MYSQL_DATABASE: "burguer51"
+  MYSQL_PASSWORD: "Grupo51@2024"
+  MYSQL_ROOT_PASSWORD: "root"
+  MYSQL_USER: "GangstaBurguer"
+kind: ConfigMap
+metadata:
+  name: burguer-app-config

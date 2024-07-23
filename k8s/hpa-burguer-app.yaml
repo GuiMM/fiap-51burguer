@@ -7,36 +7,17 @@ items:
     spec:
       maxReplicas: 10
       metrics:
-        - resource:
+        - type: Resource
+          resource:
             name: cpu
             target:
-              averageUtilization: 50
               type: Utilization
-          type: Resource
+              averageUtilization: 1
       minReplicas: 1
       scaleTargetRef:
         apiVersion: apps/v1
         kind: Deployment
         name: burguer-app
-    status:
-      conditions:
-        - lastTransitionTime: "2024-07-22T16:27:07Z"
-          message: the HPA controller was able to get the target's current scale
-          reason: SucceededGetScale
-          status: "True"
-          type: AbleToScale
-        - lastTransitionTime: "2024-07-22T16:27:07Z"
-          message:
-            "the HPA was unable to compute the replica count: failed to get cpu
-            utilization: unable to get metrics for resource cpu: unable to fetch metrics
-            from resource metrics API: the server could not find the requested resource
-            (get pods.metrics.k8s.io)"
-          reason: FailedGetResourceMetric
-          status: "False"
-          type: ScalingActive
-      currentMetrics: null
-      currentReplicas: 3
-      desiredReplicas: 0
 kind: List
 metadata:
   resourceVersion: ""

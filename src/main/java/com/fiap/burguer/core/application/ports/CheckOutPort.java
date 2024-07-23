@@ -1,6 +1,5 @@
 package com.fiap.burguer.core.application.ports;
 
-import com.fiap.burguer.adapter.driven.entities.CheckOutEntity;
 import com.fiap.burguer.core.domain.CheckOut;
 
 public interface CheckOutPort {

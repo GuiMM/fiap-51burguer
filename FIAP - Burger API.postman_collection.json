@@ -21,12 +21,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8787/products?id=1&name=Cheeseburger&category=DRINK&price=5.0&description=Classic cheeseburger&preparationTime=5&image=http://gangstaburguer.com/images/cheeseburger.jpg",
+							"raw": "http://localhost:8080/products?id=1&name=Cheeseburger&category=DRINK&price=5.0&description=Classic cheeseburger&preparationTime=5&image=http://gangstaburguer.com/images/cheeseburger.jpg",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"products"
 							],
@@ -225,12 +225,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8787/products",
+							"raw": "http://localhost:8080/products",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"products"
 							]
@@ -333,12 +333,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8787/products/:id",
+							"raw": "http://localhost:8080/products/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"products",
 								":id"
@@ -460,12 +460,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8787/products/:id",
+							"raw": "http://localhost:8080/products/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"products",
 								":id"
@@ -587,12 +587,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8787/products/category/:category",
+							"raw": "http://localhost:8080/products/category/:category",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"products",
 								"category",
@@ -723,12 +723,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8787/orders",
+							"raw": "http://localhost:8080/orders",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"orders"
 							]
@@ -816,12 +816,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8787/orders",
+							"raw": "http://localhost:8080/orders",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"orders"
 							]
@@ -961,12 +961,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8787/orders/:id/status?newStatus=PREPARATION",
+							"raw": "http://localhost:8080/orders/:id/status?newStatus=PREPARATION",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"orders",
 								":id",
@@ -1120,12 +1120,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8787/orders/status/:status",
+							"raw": "http://localhost:8080/orders/status/:status",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"orders",
 								"status",
@@ -1251,12 +1251,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8787/orders/:id",
+							"raw": "http://localhost:8080/orders/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"orders",
 								":id"
@@ -1383,12 +1383,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8787/client?id=4&name=Joao Assis Rodrigues&email=joaoAssis@gmail.com&cpf=286.958.300-12",
+							"raw": "http://localhost:8080/client?id=4&name=Joao Assis Rodrigues&email=joaoAssis@gmail.com&cpf=286.958.300-12",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"client"
 							],
@@ -1528,12 +1528,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8787/client?name=Joao Assis&email=joaoAssis@gmail.com&cpf=286.958.300-12",
+							"raw": "http://localhost:8080/client?name=Joao Assis&email=joaoAssis@gmail.com&cpf=286.958.300-12",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"client"
 							],
@@ -1668,12 +1668,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8787/client/cpf?cpf=286.958.300-12",
+							"raw": "http://localhost:8080/client/cpf?cpf=286.958.300-12",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"client",
 								"cpf"
@@ -1801,12 +1801,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8787/client/:id",
+							"raw": "http://localhost:8080/client/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"client",
 								":id"
@@ -1928,12 +1928,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8787/client/:id",
+							"raw": "http://localhost:8080/client/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"client",
 								":id"
@@ -2060,12 +2060,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8787/checkout/criar/:id/:status_order",
+							"raw": "http://localhost:8080/checkout/criar/:id/:status_order",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"checkout",
 								"criar",
@@ -2209,12 +2209,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8787/checkout/:id",
+							"raw": "http://localhost:8080/checkout/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8787",
+							"port": "8080",
 							"path": [
 								"checkout",
 								":id"

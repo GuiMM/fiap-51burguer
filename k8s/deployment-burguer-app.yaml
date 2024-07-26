@@ -41,7 +41,7 @@ spec:
                   name: burguer-app-config
                   key: MYSQL_PASSWORD
                   optional: false
-          image: caramassada/51-burguer-app:1.0
+          image: appburguer51/51-burguer-app:latest
           imagePullPolicy: IfNotPresent
           name: 51-burguer-app
           resources:

@@ -22,39 +22,52 @@ spec:
         app: db
     spec:
       containers:
-      - env:
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            configMapKeyRef:
-              name: burguer-app-config
-              key: MYSQL_ROOT_PASSWORD
-              optional: false
-        - name: MYSQL_DATABASE
-          valueFrom:
-            configMapKeyRef:
-              name: burguer-app-config
-              key: MYSQL_DATABASE
-              optional: false
-        - name: MYSQL_USER
-          valueFrom:
-            configMapKeyRef:
-              name: burguer-app-config
-              key: MYSQL_USER
-              optional: false
-        - name: MYSQL_PASSWORD
-          valueFrom:
-              configMapKeyRef:
-                name: burguer-app-config
-                key: MYSQL_PASSWORD
-                optional: false
-        image: mysql:8.0
-        imagePullPolicy: IfNotPresent
-        name: mysql
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
+        - env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: burguer-app-config
+                  key: MYSQL_ROOT_PASSWORD
+                  optional: false
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: burguer-app-config
+                  key: MYSQL_DATABASE
+                  optional: false
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: burguer-app-config
+                  key: MYSQL_USER
+                  optional: false
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: burguer-app-config
+                  key: MYSQL_PASSWORD
+                  optional: false
+          image: mysql:8.0
+          name: mysql
+          volumeMounts:
+            - name: mysql-initdb
+              mountPath: /docker-entrypoint-initdb.d
+          resources:
+            requests:
+              memory: "1024Mi"
+              cpu: "500m"
+            limits:
+              memory: "2048Mi"
+              cpu: "2"
+          imagePullPolicy: IfNotPresent
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+      volumes:
+        - name: mysql-initdb
+          configMap:
+            name: burguer-app-config

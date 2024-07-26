@@ -5,6 +5,10 @@ items:
     metadata:
       name: burguer-app
     spec:
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: burguer-app
       minReplicas: 1
       maxReplicas: 10
       metrics:
@@ -14,10 +18,6 @@ items:
             target:
               type: Utilization
               averageUtilization: 80
-      scaleTargetRef:
-        apiVersion: apps/v1
-        kind: Deployment
-        name: burguer-app
 kind: List
 metadata:
   resourceVersion: ""

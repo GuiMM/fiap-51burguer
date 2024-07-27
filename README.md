@@ -18,7 +18,7 @@ Thiago Augusto Nery - RM 355063 - doomerbr@gmail.com
     - CRUD Cliente.
                       
     - Identificação do Cliente via CPF.
-                        
+ 
     - CRUD produtos.
                       
     - Buscar produtos por categoria.
@@ -28,7 +28,13 @@ Thiago Augusto Nery - RM 355063 - doomerbr@gmail.com
     - CRUD pedidos.
                      
     - Listar os pedidos.
-                                 
+
+    - Checkout do pedido que deve receber os produtos solicitados e retornar a identificação do pedido.
+
+    - Consultar status do pagamento do pedido.
+
+    - Webhook recebendo confirmação de pagamento.
+
 
 ## ✔️ Técnicas e tecnologias utilizadas
 
@@ -36,8 +42,9 @@ Thiago Augusto Nery - RM 355063 - doomerbr@gmail.com
 
 - `Aplicação`: Java 22
 - `Banco de dados`: My SQL
-- `Arquitetura`: Hexagonal(ports and adapters)
+- `Arquitetura`: Clean Architecture
 - `Containerização`: Docker
+- `Orquestação`: Kubernets
 - `Design de software`: DDD
 
 
@@ -48,21 +55,58 @@ Thiago Augusto Nery - RM 355063 - doomerbr@gmail.com
 Deverá ter instalado:
 
     - JDK 22
-    - Docker
+    - Docker(Certifique-se de que as opções de kubernets estejam habilitadas no docker desktop)
 
-Após a instalação executar o comando na pasta raiz da aplicação:
+Após a instalação executar os comandos ordenados abaixo na pasta raiz da aplicação:
 
-    - docker-compose -f Docker/docker-compose.yml up
+1 . **Aplicar ConfigMap:**
+
+    - kubectl apply -f .\k8s\configmap-burguer-app.yaml
+
+
+2 . **Aplicar Métricas:**
+
+    - kubectl apply -f .\k8s\metrics.yaml
+
+
+3 . **Aplicar Deployment da Aplicação:**
+
+     - kubectl apply -f .\k8s\deployment-burguer-app.yaml
+
+
+4 . **Aplicar Deployment do Banco de Dados:**
+
+     - kubectl apply -f .\k8s\deployment-db.yaml
+
+
+5 . **Aplicar Horizontal Pod Autoscaler:**
+
+     - kubectl apply -f .\k8s\hpa-burguer-app.yaml
+
+
+6 . **Aplicar Service da Aplicação:**
+
+     - kubectl apply -f .\k8s\service-burguer-app.yaml
+
+
+7 . **Aplicar Service do Banco de Dados:**
+
+     - kubectl apply -f .\k8s\service-db.yaml
+
 
 ## 📁 Acesso ao projeto
-Você pode acessar os arquivos do projeto clicando [aqui](https://github.com/GuiMM/fiap-51burguer).
+Você pode acessar os arquivos do projeto clicando [aqui](https://github.com/GuiMM/fiap-51burguer),
+
+Também pode acessar a lista de endpoints ja configurada para importar no postman clicando [aqui](https://github.com/GuiMM/fiap-51burguer/blob/master/FIAP%20-%20Burger%20API.postman_collection.json),
+
+Ou acesse os endpoints pelo Swagger no link [link](http://localhost:8080/swagger-ui/index.html#).
 
 E aos diagramas de DDD clicando [aqui](https://miro.com/app/board/uXjVKTKDZGE=/).
 
 ## 📚 Mais informações do curso
 **Pós Tech - Turma 6SOAT**
 
-**Tech challenge 1: Criação de um sistema monolito aplicado arquitetura de ports and adapters**
+**Tech challenge 2: Refatoração do projeto seguindo os padrões de clean code e clean architecture e orquestração de containers de forma escalável**
 
 ## 📄 Licença
 Não se aplica.

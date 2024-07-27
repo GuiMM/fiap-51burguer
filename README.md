@@ -83,18 +83,17 @@ Após a instalação executar os comandos ordenados abaixo na pasta raiz da apli
 
      - kubectl apply -f .\k8s\deployment-burguer-app.yaml
 
-     
-6 . **Aplicar Horizontal Pod Autoscaler:**
 
-     - kubectl apply -f .\k8s\hpa-burguer-app.yaml
-
-
-7 . **Aplicar Service da Aplicação:**
+6 . **Aplicar Service da Aplicação:**
 
      - kubectl apply -f .\k8s\service-burguer-app.yaml
 
 
+7 . **Aplicar Horizontal Pod Autoscaler:**
 
+     - kubectl apply -f .\k8s\hpa-burguer-app.yaml
+
+     
 
 ## 📁 Acesso ao projeto
 Você pode acessar os arquivos do projeto clicando [aqui](https://github.com/GuiMM/fiap-51burguer),

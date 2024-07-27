@@ -98,11 +98,13 @@ Após a instalação executar os comandos ordenados abaixo na pasta raiz da apli
 ## 📁 Acesso ao projeto
 Você pode acessar os arquivos do projeto clicando [aqui](https://github.com/GuiMM/fiap-51burguer),
 
-Também pode acessar a lista de endpoints ja configurada para importar no postman clicando [aqui](https://github.com/GuiMM/fiap-51burguer/blob/master/FIAP%20-%20Burger%20API.postman_collection.json),
+E aos diagramas de DDD clicando [aqui](https://miro.com/app/board/uXjVKTKDZGE=/).
+
+## 🔧 Após a execução do projeto
+
+Você pode acessar a lista de endpoints ja configurada para importar no postman clicando [aqui](https://github.com/GuiMM/fiap-51burguer/blob/master/FIAP%20-%20Burger%20API.postman_collection.json),
 
 Ou acesse os endpoints pelo Swagger no link [link](http://localhost:8080/swagger-ui/index.html#).
-
-E aos diagramas de DDD clicando [aqui](https://miro.com/app/board/uXjVKTKDZGE=/).
 
 ## 📚 Mais informações do curso
 **Pós Tech - Turma 6SOAT**

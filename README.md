@@ -50,8 +50,7 @@ Thiago Augusto Nery - RM 355063 - doomerbr@gmail.com
 
 ## 📐 Diagrama de arquitetura
 
-```Mermaid
-
+```mermaid
     graph TB
     subgraph Kubernetes Cluster
         subgraph Namespace
@@ -86,7 +85,6 @@ Thiago Augusto Nery - RM 355063 - doomerbr@gmail.com
     DatabaseService --> DatabasePod
     DatabasePod --> ConfigMap
     Deployment-Burguer-app --> ConfigMap
-
 ``` 
 
 

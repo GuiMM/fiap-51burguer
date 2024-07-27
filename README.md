@@ -1,6 +1,6 @@
 # Fiap 51 Burguer
 
-Sistema de pedidos de lanche. Primerio tech challenge do curso de Pós Tech - turma 6SOAT de Software Architecture para aplicar conceitos de clean code e clean architecture.
+Sistema de pedidos de lanche. Segundo tech challenge do curso de Pós Tech - turma 6SOAT de Software Architecture para aplicar conceitos de clean code e clean architecture.
 
 ## 👨‍🔧👩‍🔧 Integrantes
 Carlos Jafet - RM 354076 - cjafet07@gmail.com

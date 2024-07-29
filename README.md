@@ -13,6 +13,22 @@ Juliano Silva Nunes - RM 354144 - silva.juliano8130@gmail.com
 
 Thiago Augusto Nery - RM 355063 - doomerbr@gmail.com
 
+
+## 📁 Acesso ao projeto
+Você pode acessar os arquivos do projeto clicando [aqui](https://github.com/GuiMM/fiap-51burguer),
+
+Tambem pode acessar o video da segunda fase do projeto clicando  [aqui](https://www.youtube.com/watch?v=jiOKUzZcc_Y&ab_channel=PosTech-SoftwareArchitectureGrupo51),
+ 
+E aos diagramas de DDD clicando [aqui](https://miro.com/app/board/uXjVKTKDZGE=/).
+
+
+## 🔧 Após a execução do projeto
+
+Você pode acessar a lista de endpoints ja configurada para importar no postman clicando [aqui](https://github.com/GuiMM/fiap-51burguer/blob/master/FIAP%20-%20Burger%20API.postman_collection.json),
+
+Ou acesse os endpoints pelo Swagger no link [link](http://localhost:8080/swagger-ui/index.html#).
+
+
 ## 🔨 Funcionalidades do projeto
 
     - CRUD Cliente.
@@ -95,6 +111,8 @@ Thiago Augusto Nery - RM 355063 - doomerbr@gmail.com
     Deployment-Burguer-app --> ConfigMap
 ``` 
 
+## 📐 Diagrama de Sequencia
+https://github.com/GuiMM/fiap-51burguer/blob/master/Diagrama%20de%20sequencia.png
 
 ## 🛠️ Abrir e rodar o projeto
 
@@ -142,17 +160,6 @@ Após a instalação executar os comandos ordenados abaixo na pasta raiz da apli
      - kubectl apply -f .\k8s\hpa-burguer-app.yaml
 
      
-
-## 📁 Acesso ao projeto
-Você pode acessar os arquivos do projeto clicando [aqui](https://github.com/GuiMM/fiap-51burguer),
-
-E aos diagramas de DDD clicando [aqui](https://miro.com/app/board/uXjVKTKDZGE=/).
-
-## 🔧 Após a execução do projeto
-
-Você pode acessar a lista de endpoints ja configurada para importar no postman clicando [aqui](https://github.com/GuiMM/fiap-51burguer/blob/master/FIAP%20-%20Burger%20API.postman_collection.json),
-
-Ou acesse os endpoints pelo Swagger no link [link](http://localhost:8080/swagger-ui/index.html#).
 
 ## 📚 Mais informações do curso
 **Pós Tech - Turma 6SOAT**

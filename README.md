@@ -95,6 +95,8 @@ Thiago Augusto Nery - RM 355063 - doomerbr@gmail.com
     Deployment-Burguer-app --> ConfigMap
 ``` 
 
+## 📐 Diagrama de Sequencia
+https://github.com/GuiMM/fiap-51burguer/blob/master/Diagrama%20de%20sequencia.png
 
 ## 🛠️ Abrir e rodar o projeto
 

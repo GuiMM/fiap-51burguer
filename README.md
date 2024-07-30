@@ -21,16 +21,12 @@ Tambem pode acessar o video da segunda fase do projeto clicando  [aqui](https://
  
 E aos diagramas de DDD clicando [aqui](https://miro.com/app/board/uXjVKTKDZGE=/).
 
-Após iniciar a aplicação, a documentação pode ser acessada através do endereço clicando [aqui](http://localhost:8080/swagger-ui/index.html)
-
-Ou baixar a collection e importá-la no Postman clicando [aqui](https://github.com/GuiMM/fiap-51burguer/blob/master/FIAP%20-%20Burger%20API.postman_collection.json)
-
 
 ## 🔧 Após a execução do projeto
 
 Você pode acessar a lista de endpoints ja configurada para importar no postman clicando [aqui](https://github.com/GuiMM/fiap-51burguer/blob/master/FIAP%20-%20Burger%20API.postman_collection.json),
 
-Ou acesse os endpoints pelo Swagger no link [link](http://localhost:8080/swagger-ui/index.html#).
+Ou acesse os endpoints pelo Swagger no link [link](http://localhost:8080/swagger-ui/index.html).
 
 
 ## 🔨 Funcionalidades do projeto

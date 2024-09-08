@@ -15,6 +15,7 @@
     <description>sistema para pedidos de lanche</description>
     <properties>
         <java.version>22</java.version>
+        <maven.compiler.release>22</maven.compiler.release>
     </properties>
     <dependencies>
         <dependency>
@@ -61,6 +62,15 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${maven.compiler.release}</source>
+                    <target>${maven.compiler.release}</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>

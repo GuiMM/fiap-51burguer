@@ -16,7 +16,7 @@
     <properties>
         <java.version>22</java.version>
         <maven.compiler.release>22</maven.compiler.release>
-        <sonar.organization>FiapTeam51</sonar.organization>
+        <sonar.organization>fiapteam51</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
     <dependencies>

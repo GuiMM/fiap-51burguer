@@ -25,28 +25,24 @@ spec:
         - env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
-                configMapKeyRef:
-                  name: burguer-app-config
+                secretKeyRef:
+                  name: secret-burguer51
                   key: MYSQL_ROOT_PASSWORD
-                  optional: false
             - name: MYSQL_DATABASE
               valueFrom:
-                configMapKeyRef:
-                  name: burguer-app-config
+                secretKeyRef:
+                  name: secret-burguer51
                   key: MYSQL_DATABASE
-                  optional: false
             - name: MYSQL_USER
               valueFrom:
-                configMapKeyRef:
-                  name: burguer-app-config
+                secretKeyRef:
+                  name: secret-burguer51
                   key: MYSQL_USER
-                  optional: false
             - name: MYSQL_PASSWORD
               valueFrom:
-                configMapKeyRef:
-                  name: burguer-app-config
+                secretKeyRef:
+                  name: secret-burguer51
                   key: MYSQL_PASSWORD
-                  optional: false
           image: mysql:8.0
           name: mysql
           volumeMounts:

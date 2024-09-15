@@ -1,6 +1,6 @@
 package com.fiap.burguer.core.application.usecases;
-
 import com.fiap.burguer.core.application.Exception.RequestException;
+import com.fiap.burguer.core.application.Exception.ResourceNotAcceptableException;
 import com.fiap.burguer.core.application.Exception.ResourceNotFoundException;
 import com.fiap.burguer.core.application.ports.ClientPort;
 import com.fiap.burguer.core.domain.Client;
@@ -11,9 +11,6 @@ import com.fiap.burguer.core.application.ports.ProductPort;
 import com.fiap.burguer.core.domain.Order;
 import com.fiap.burguer.core.domain.OrderItem;
 import com.fiap.burguer.core.domain.Product;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -49,28 +46,21 @@ public class OrderUseCases {
             if(client == null)
                 throw new IllegalArgumentException("Cliente não encontrado");
 
-            orderRequest.setClient(client);
             return client;
         }
         return null;
     }
 
-    public Order createOrder(OrderRequest orderRequest) {
+    public Order createOrder(OrderRequest orderRequest)  {
         this.validateOrder(orderRequest);
-
         AtomicReference<Integer> timeOrder = new AtomicReference<>(0);
-        orderRequest.setClient(this.getClientOrder(orderRequest));
-
+        Client client = this.getClientOrder(orderRequest);
         Order order = new Order();
+        order.setClient(client);
         order.setDateCreated(new Date());
         order.setStatus(StatusOrder.WAITINGPAYMENT);
         order.setTotalPrice(0.0);
         order.setTimeWaitingOrder(0);
-
-        if (orderRequest.getClient() != null) {
-            order.setClient(orderRequest.getClient());
-        }
-
         List<OrderItem> orderItems = makeOrderItemObjects(orderRequest, timeOrder, order);
         order.setTimeWaitingOrder(timeOrder.get() + timeWaitingOrderQueue());
         order.setOrderItemsList(orderItems);
@@ -78,6 +68,7 @@ public class OrderUseCases {
     }
 
     private List<OrderItem> makeOrderItemObjects(OrderRequest orderRequest, AtomicReference<Integer> timeOrder, Order order) {
+
         return orderRequest.getItems().stream().map(itemRequest -> {
             Optional<Product> optionalProduct = Optional.ofNullable(productPort.findById(itemRequest.getProductId()));
             Product product = optionalProduct.orElseThrow(() -> new RuntimeException(String.format("Produto %s não encontrado", itemRequest.getProductId())));
@@ -208,4 +199,6 @@ public class OrderUseCases {
     private boolean isCancelValid(StatusOrder currentStatus) {
         return currentStatus == StatusOrder.WAITINGPAYMENT || currentStatus == StatusOrder.REJECTEDPAYMENT;
     }
+
+
 }

@@ -29,6 +29,11 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 ##Instructions:
 ## From project root:
-##docker build -f Docker/Dockerfile -t 51-burguer-app .
-## docker tag 51-burguer-app appburguer/51-burguer-app:latest
-##docker-compose -f Docker/docker-compose.yml up
+## docker build -f Docker/Dockerfile -t 51-burguer-app .
+## docker tag 51-burguer-app appburguer51/51-burguer-app:latest
+
+## Pushing image to docker hub
+## docker login registry-1.docker.io -u appburguer51
+## docker push appburguer51/51-burguer-app:latest
+
+## docker-compose -f Docker/docker-compose.yml up

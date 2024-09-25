@@ -14,27 +14,29 @@ services:
       db:
         condition: service_healthy
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/${MYSQL_DATABASE}
-      - SPRING_DATASOURCE_USERNAME=${MYSQL_USER}
-      - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - SPRING_JPA_SHOW_SQL=true
+      - POSTGRES_DATABASE=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
 
   db:
-    image: mysql:8.0
-    container_name: mysql
+    image: postgres
+    container_name: postgres
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_ROOT_USER=postgres
+      - POSTGRES_ROOT_PASSWORD=postgres
     ports:
-      - "3306:3306"
+      - "5432:5432"
+    volumes:
+      - ./pg-data/:/docker-entrypoint-initdb.d/
+#      - ./pg-data/data:/var/lib/postgresql/data
     restart: always
     networks:
       - sql_network
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h db -u root --password=${MYSQL_ROOT_PASSWORD}"]
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -42,3 +44,6 @@ services:
 networks:
   sql_network:
     driver: bridge
+
+#volumes:
+#  pg-data:

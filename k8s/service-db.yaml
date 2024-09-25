@@ -6,14 +6,14 @@ metadata:
   name: db
 spec:
   type: ClusterIP
+  internalTrafficPolicy: Cluster
   selector:
     app: db
-  internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
   ipFamilyPolicy: SingleStack
   ports:
-  - port: 3306
+  - port: 5432
     protocol: TCP
-    targetPort: 3306
+    targetPort: 5432
   sessionAffinity: None

@@ -42,3 +42,6 @@ services:
 networks:
   sql_network:
     driver: bridge
+
+#volumes:
+#  pg-data:

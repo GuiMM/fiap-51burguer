@@ -23,6 +23,11 @@ spec:
     spec:
       containers:
         - env:
+            - name: POSTGRES_URL
+              valueFrom:
+                secretKeyRef:
+                  name: secret-burguer51
+                  key: POSTGRES_URL
             - name: POSTGRES_DATABASE
               valueFrom:
                 secretKeyRef:

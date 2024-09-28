@@ -1,9 +1,7 @@
 package com.fiap.burguer.core.domain;
-
 import java.io.Serializable;
 
 public class Client implements Serializable {
-
     private int id;
 
     private String name;

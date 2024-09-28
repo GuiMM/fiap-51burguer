@@ -2,9 +2,7 @@ package com.fiap.burguer.core.domain;
 import com.fiap.burguer.core.application.enums.CategoryProduct;
 import java.io.Serializable;
 
-
 public class Product  implements Serializable {
-
     private int id;
 
     private String name;

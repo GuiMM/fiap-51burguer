@@ -23,21 +23,26 @@ spec:
     spec:
       containers:
         - env:
-            - name: MYSQL_DATABASE
+            - name: POSTGRES_URL
               valueFrom:
                 secretKeyRef:
                   name: secret-burguer51
-                  key: MYSQL_DATABASE
-            - name: MYSQL_USER
+                  key: POSTGRES_URL
+            - name: POSTGRES_DATABASE
               valueFrom:
                 secretKeyRef:
                   name: secret-burguer51
-                  key: MYSQL_USER
-            - name: MYSQL_PASSWORD
+                  key: POSTGRES_DATABASE
+            - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: secret-burguer51
-                  key: MYSQL_PASSWORD
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-burguer51
+                  key: POSTGRES_PASSWORD
           image: appburguer51/51-burguer-app:latest
           imagePullPolicy: IfNotPresent
           name: 51-burguer-app

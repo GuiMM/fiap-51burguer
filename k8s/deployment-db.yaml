@@ -23,30 +23,40 @@ spec:
     spec:
       containers:
         - env:
-            - name: MYSQL_ROOT_PASSWORD
+            - name: POSTGRES_URL
               valueFrom:
                 secretKeyRef:
                   name: secret-burguer51
-                  key: MYSQL_ROOT_PASSWORD
-            - name: MYSQL_DATABASE
+                  key: POSTGRES_URL
+            - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
                   name: secret-burguer51
-                  key: MYSQL_DATABASE
-            - name: MYSQL_USER
+                  key: POSTGRES_DATABASE
+            - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: secret-burguer51
-                  key: MYSQL_USER
-            - name: MYSQL_PASSWORD
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: secret-burguer51
-                  key: MYSQL_PASSWORD
-          image: mysql:8.0
-          name: mysql
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_ROOT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secret-burguer51
+                  key: POSTGRES_ROOT_USER
+            - name: POSTGRES_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-burguer51
+                  key: POSTGRES_ROOT_PASSWORD
+          image: postgres
+          name: postgres
           volumeMounts:
-            - name: mysql-initdb
+            - name: postgres-initdb
               mountPath: /docker-entrypoint-initdb.d
           resources:
             requests:
@@ -64,6 +74,6 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-        - name: mysql-initdb
+        - name: postgres-initdb
           configMap:
             name: burguer-app-config

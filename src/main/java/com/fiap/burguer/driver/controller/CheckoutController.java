@@ -1,6 +1,6 @@
 package com.fiap.burguer.driver.controller;
 import com.fiap.burguer.api.CheckoutApi;
-import com.fiap.burguer.core.application.usecases.OrderUseCases;
+import com.fiap.burguer.core.application.usecases.GetOrderByIdUseCase;
 import com.fiap.burguer.driver.presenters.CheckoutPresenter;
 import com.fiap.burguer.driver.dto.CheckoutResponse;
 import com.fiap.burguer.core.application.enums.StatusOrder;
@@ -14,21 +14,23 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class CheckoutController implements CheckoutApi {
     CheckoutUseCases checkoutUseCases;
-    OrderUseCases orderUseCases;
-    public CheckoutController(CheckoutUseCases checkoutUseCases, OrderUseCases orderUseCases) {
+    GetOrderByIdUseCase getOrderByIdUseCase;
+
+    public CheckoutController(CheckoutUseCases checkoutUseCases, GetOrderByIdUseCase getOrderByIdUseCase) {
         this.checkoutUseCases = checkoutUseCases;
-        this.orderUseCases = orderUseCases;
+        this.getOrderByIdUseCase = getOrderByIdUseCase;
     }
 
-    public ResponseEntity<?> getCheckoutOrderById(int id) {
-        Order order = orderUseCases.getOrderById(id);
+
+    public ResponseEntity<?> getCheckoutOrderById(int id, String authorizationHeader) {
+        Order order = getOrderByIdUseCase.getOrderById(id, authorizationHeader);
         CheckOut checkoutNew = checkoutUseCases.mapOrderToCheckout(order);
         CheckoutResponse response = CheckoutPresenter.mapCheckoutToResponse(checkoutNew);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
-    public ResponseEntity<?> postCheckout(int id, StatusOrder statusOrder) {
+    public ResponseEntity<?> postCheckout(int id, StatusOrder statusOrder, String authorizationHeader) {
 
         CheckOut checkoutNew = checkoutUseCases.createCheckout(id, statusOrder);
         CheckoutResponse response = CheckoutPresenter.mapCheckoutToResponse(checkoutNew);

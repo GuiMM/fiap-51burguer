@@ -1,6 +1,7 @@
 package com.fiap.burguer.core.application.usecases;
 
 import com.fiap.burguer.core.application.Exception.ResourceNotFoundException;
+import com.fiap.burguer.core.application.ports.AuthenticationPort;
 import com.fiap.burguer.driver.dto.ProductCreate;
 import com.fiap.burguer.core.application.enums.CategoryProduct;
 import com.fiap.burguer.core.application.ports.ProductPort;
@@ -14,12 +15,18 @@ import java.util.stream.Collectors;
 
 public class ProductUseCases {
     private final ProductPort productPort;
+    private final AuthenticationPort authenticationPort;
 
-    public ProductUseCases(ProductPort productPort) {
+    public ProductUseCases(ProductPort productPort, AuthenticationPort authenticationPort) {
         this.productPort = productPort;
+        this.authenticationPort = authenticationPort;
+
     }
 
-    public Product saveProduct(ProductCreate productCreate) {
+    public Product saveProduct(ProductCreate productCreate, String authorizationHeader) {
+        authenticationPort.validateAuthorizationHeader(authorizationHeader);
+        authenticationPort.validateIsAdminAccess(authorizationHeader);
+
         Product product = new Product();
         product.setName(productCreate.getName());
         product.setCategory(productCreate.getCategory());
@@ -31,7 +38,10 @@ public class ProductUseCases {
         return productPort.save(product);
     }
 
-    public Product updateProduct(Product productEntity) {
+    public Product updateProduct(Product productEntity, String authorizationHeader) {
+        authenticationPort.validateAuthorizationHeader(authorizationHeader);
+        authenticationPort.validateIsAdminAccess(authorizationHeader);
+
         Integer productId = productEntity.getId();
 
         Product existingProduct = productPort.findById(productId);
@@ -51,14 +61,18 @@ public class ProductUseCases {
         return productPort.save(existingProduct);
     }
 
-    public Product findById(int id) {
+    public Product findById(int id, String authorizationHeader) {
+        authenticationPort.validateAuthorizationHeader(authorizationHeader);
+
         Product product = productPort.findById(id);
         if(product == null) throw new ResourceNotFoundException("Produto não encontrado");
         return product;
 
     }
 
-    public List<Product> findByCategory(CategoryProduct category) {
+    public List<Product> findByCategory(CategoryProduct category, String authorizationHeader) {
+        authenticationPort.validateAuthorizationHeader(authorizationHeader);
+
         List<Product> allProductEntities = productPort.findAll();
 
         List<Product> filteredProductEntities = allProductEntities.stream()
@@ -71,13 +85,15 @@ public class ProductUseCases {
         return filteredProductEntities;
     }
 
-    public void deleteById(int id) {
-        this.verifyProductExistance(id); //verifica se cliente existe
+    public void deleteById(int id, String authorizationHeader) {
+        authenticationPort.validateAuthorizationHeader(authorizationHeader);
+        authenticationPort.validateIsAdminAccess(authorizationHeader);
+        this.verifyProductExistance(id,authorizationHeader);
         productPort.deleteById(id);
     }
 
-    public boolean verifyProductExistance(int id){
-        this.findById(id);
+    public boolean verifyProductExistance(int id, String authorizationHeader){
+        this.findById(id, authorizationHeader);
         return true;
     }
 }

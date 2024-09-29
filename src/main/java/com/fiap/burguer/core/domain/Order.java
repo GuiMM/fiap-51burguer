@@ -1,12 +1,9 @@
 package com.fiap.burguer.core.domain;
-
 import com.fiap.burguer.core.application.enums.StatusOrder;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 public class Order implements Serializable {
-
     private int id;
 
     private Integer timeWaitingOrder;

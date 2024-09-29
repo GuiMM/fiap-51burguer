@@ -38,7 +38,7 @@ public class OrderAdapter implements OrderPort {
 
     @Override
     public List<Order> findAll() {
-        List<OrderEntity> orderEntityResponse = orderRepository.findAll();
+        List<OrderEntity> orderEntityResponse = orderRepository.findAllOrders();
 
         return orderEntityResponse.stream()
                 .map(orderEntity -> modelMapper.map(orderEntity, Order.class))

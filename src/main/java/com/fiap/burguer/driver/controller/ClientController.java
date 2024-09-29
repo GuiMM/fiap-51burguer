@@ -6,7 +6,6 @@ import com.fiap.burguer.core.domain.Client;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class ClientController implements ClientApi {
@@ -19,9 +18,9 @@ public class ClientController implements ClientApi {
 
     public ResponseEntity<?> postClient(ClientCreate clientCreate) {
         Client entity = new Client();
-        entity.setName(clientCreate.getName());
-        entity.setEmail(clientCreate.getEmail());
-        entity.setCpf(clientCreate.getCpf());
+        entity.setName(clientCreate.getNameClient());
+        entity.setEmail(clientCreate.getEmailClient());
+        entity.setCpf(clientCreate.getCpfClient());
 
        Client newClient = clientUseCases.saveClientOrUpdate(entity);
        return ResponseEntity.ok().body(newClient);

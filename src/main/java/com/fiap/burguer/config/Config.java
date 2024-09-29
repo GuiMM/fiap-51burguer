@@ -1,10 +1,6 @@
 package com.fiap.burguer.config;
-import com.fiap.burguer.core.application.ports.ClientPort;
 import com.fiap.burguer.core.application.ports.IPaymentGateway;
-import com.fiap.burguer.core.application.usecases.CheckoutUseCases;
-import com.fiap.burguer.core.application.usecases.ClientUseCases;
-import com.fiap.burguer.core.application.usecases.OrderUseCases;
-import com.fiap.burguer.core.application.usecases.ProductUseCases;
+import com.fiap.burguer.core.application.usecases.*;
 import com.fiap.burguer.infraestructure.adapters.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -26,17 +22,51 @@ public class Config {
     CheckOutAdapter checkoutAdapter;
 
     @Autowired
+    AuthenticationAdapter authenticationAdapter;
+
+    @Autowired
     PaymentGateway paymentGateway;
 
 
     @Bean
     public ProductUseCases getProductService() {
-        return new ProductUseCases(productAdapter);
+        return new ProductUseCases(productAdapter, authenticationAdapter);
+    }
+
+
+
+    @Bean
+    public ValidateOrderUseCase validateOrderUseCase() {
+        return new ValidateOrderUseCase();
     }
 
     @Bean
-    public OrderUseCases getOrderService() {
-        return new OrderUseCases(orderAdapter, productAdapter, clientAdapter);
+    public GetClientOrderUseCase getClientOrderUseCase() {
+        return new GetClientOrderUseCase( clientAdapter);
+    }
+    @Bean
+    public CreateOrderUseCase createOrderUseCase() {
+        return new CreateOrderUseCase(orderAdapter,validateOrderUseCase(), getClientOrderUseCase(),productAdapter,timeWaitingOrderQueueUseCase(), authenticationAdapter);
+    }
+
+    @Bean
+    public GetOrderByIdUseCase getOrderByIdUseCase() {
+        return new GetOrderByIdUseCase(orderAdapter, authenticationAdapter);
+    }
+
+    @Bean
+    public GetAllOrdersUseCase getAllOrdersUseCase() {
+        return new GetAllOrdersUseCase(orderAdapter, authenticationAdapter);
+    }
+
+    @Bean
+    public TimeWaitingOrderQueueUseCase timeWaitingOrderQueueUseCase() {
+        return new TimeWaitingOrderQueueUseCase(getOrdersByStatusUseCase());
+    }
+
+    @Bean
+    public OrdersStatusUseCase getOrdersByStatusUseCase() {
+        return new OrdersStatusUseCase(orderAdapter, authenticationAdapter);
     }
 
     @Bean

@@ -1,9 +1,7 @@
 package com.fiap.burguer.driver.dto;
 
 import com.fiap.burguer.core.application.enums.CategoryProduct;
-import lombok.Data;
 
-@Data
 public class ProductCreate {
     private String name;
     private CategoryProduct category;
@@ -19,5 +17,53 @@ public class ProductCreate {
         this.description = description;
         this.price = price;
         this.category = category;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public CategoryProduct getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryProduct category) {
+        this.category = category;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getPreparationTime() {
+        return preparationTime;
+    }
+
+    public void setPreparationTime(Integer preparationTime) {
+        this.preparationTime = preparationTime;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

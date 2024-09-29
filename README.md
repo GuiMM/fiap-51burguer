@@ -160,6 +160,8 @@ Após a instalação executar os comandos ordenados abaixo na pasta raiz da apli
      - kubectl apply -f .\k8s\hpa-burguer-app.yaml
 
      
+MER - Modelo de entidade relacionamento
+https://github.com/GuiMM/fiap-51burguer/pull/12/commits/6e8aa20c961ead8507bafe190a84e0affc7ab932
 
 ## 📚 Mais informações do curso
 **Pós Tech - Turma 6SOAT**

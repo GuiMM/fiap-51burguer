@@ -1,12 +1,10 @@
 package com.fiap.burguer.driver.controller;
 import com.fiap.burguer.api.OrderApi;
+import com.fiap.burguer.core.application.usecases.*;
 import com.fiap.burguer.driver.presenters.OrderPresenter;
 import com.fiap.burguer.driver.dto.OrderRequest;
 import com.fiap.burguer.driver.dto.OrderResponse;
 import com.fiap.burguer.core.application.enums.StatusOrder;
-import com.fiap.burguer.core.application.usecases.ClientUseCases;
-import com.fiap.burguer.core.application.usecases.OrderUseCases;
-import com.fiap.burguer.core.domain.Client;
 import com.fiap.burguer.core.domain.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,23 +14,29 @@ import java.util.stream.Collectors;
 
 @Controller
 public class OrderController implements OrderApi {
-    private final OrderUseCases orderUseCases;
     private final ClientUseCases clientservice;
+    private final CreateOrderUseCase createOrderUseCase;
+    private final GetAllOrdersUseCase getAllOrdersUseCase;
+    private final OrdersStatusUseCase ordersByStatusUseCase;
+    private final GetOrderByIdUseCase getOrderByIdUseCase;
 
-    public OrderController(OrderUseCases orderUseCases, ClientUseCases clientservice) {
-        this.orderUseCases = orderUseCases;
+    public OrderController(ClientUseCases clientservice, CreateOrderUseCase createOrder , GetAllOrdersUseCase getAllOrders, OrdersStatusUseCase getOrdersByStatus, GetOrderByIdUseCase getOrderById ) {
         this.clientservice = clientservice;
+        this.createOrderUseCase = createOrder;
+        this.getAllOrdersUseCase = getAllOrders;
+        this.ordersByStatusUseCase = getOrdersByStatus;
+        this.getOrderByIdUseCase = getOrderById;
     }
 
-    public ResponseEntity<?> createOrder(OrderRequest orderRequest) {
+    public ResponseEntity<?> createOrder (OrderRequest orderRequest, String authorizationHeader) {
 
-        Order order = orderUseCases.createOrder(orderRequest);
+        Order order = createOrderUseCase.createOrder(orderRequest, authorizationHeader);
         OrderResponse response = OrderPresenter.mapOrderToResponse(order);
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<List<OrderResponse>> getAllOrders() {
-        List<Order> orderEntities = orderUseCases.getAllOrders();
+    public ResponseEntity<List<OrderResponse>> getAllOrders( String authorizationHeader) {
+        List<Order> orderEntities = getAllOrdersUseCase.getAllOrders(authorizationHeader);
 
         List<OrderResponse> responses = orderEntities.stream()
                 .map(OrderPresenter::mapOrderToResponse)
@@ -41,8 +45,8 @@ public class OrderController implements OrderApi {
     }
 
 
-    public ResponseEntity<List<OrderResponse>> getOrdersByStatus(StatusOrder status) {
-        List<Order> orders = orderUseCases.getOrdersByStatus(status);
+    public ResponseEntity<List<OrderResponse>> getOrdersByStatus(StatusOrder status, String authorizationHeader) {
+        List<Order> orders = ordersByStatusUseCase.getOrdersByStatus(status, authorizationHeader);
 
         List<OrderResponse> responses = orders.stream()
                 .map(OrderPresenter::mapOrderToResponse)
@@ -50,18 +54,18 @@ public class OrderController implements OrderApi {
         return ResponseEntity.ok(responses);
     }
 
-    public  ResponseEntity<OrderResponse> getOrderById(int id) {
-        Order order = orderUseCases.getOrderById(id);
+    public  ResponseEntity<OrderResponse> getOrderById(int id, String authorizationHeader) {
+        Order order = getOrderByIdUseCase.getOrderById(id, authorizationHeader);
         OrderResponse response = OrderPresenter.mapOrderToResponse(order);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
-    public ResponseEntity<?> updateOrderStatus(int id, StatusOrder newStatus) {
+    public ResponseEntity<?> updateOrderStatus(int id, StatusOrder newStatus, String authorizationHeader) {
 
-        Order order = orderUseCases.getOrderById(id);
+        Order order = getOrderByIdUseCase.getOrderById(id, authorizationHeader);
 
-        orderUseCases.updateOrderStatus(order, newStatus);
+        ordersByStatusUseCase.updateOrderStatus(order, newStatus, authorizationHeader);
         OrderResponse response = OrderPresenter.mapOrderToResponse(order);
         return ResponseEntity.ok(response);
     }

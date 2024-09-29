@@ -30,7 +30,8 @@ jobs:
         run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.REGION_DEFAULT }}
 
       - name: Package
-        run: docker-compose -f Docker/docker-compose.yml web
+        run: | 
+          docker compose -f Docker/docker-compose.yml build web
 
       - name: Kube Secrets
         run: |

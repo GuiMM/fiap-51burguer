@@ -29,6 +29,9 @@ jobs:
       - name: Update Kube Config
         run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.REGION_DEFAULT }}
 
+      - name: Package
+        run: docker-compose -f Docker/docker-compose.yml web
+
       - name: Kube Secrets
         run: |
          kubectl create secret generic secret-burguer51 \

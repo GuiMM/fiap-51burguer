@@ -28,9 +28,12 @@ public interface OrderApi {
                             schema = @Schema(implementation = OrderResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Requisição inválida",
                     content = @Content),
+            @ApiResponse(responseCode = "401", description = "Não autorizado",
+                    content = @Content),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
                     content = @Content)})
-    public ResponseEntity<?> createOrder(@RequestBody @Valid OrderRequest orderRequest);
+    public ResponseEntity<?> createOrder(@RequestBody @Valid OrderRequest orderRequest,
+                                         @RequestHeader(value = "Authorization", required = false) String authorizationHeader);
 
     @GetMapping
     @Operation(summary = "Consulta todos os pedidos")
@@ -40,7 +43,8 @@ public interface OrderApi {
                             schema = @Schema(implementation = OrderResponse.class))}),
             @ApiResponse(responseCode = "404", description = "Nenhum pedido encontrado",
                     content = @Content)})
-    public ResponseEntity<List<OrderResponse>> getAllOrders();
+    public ResponseEntity<List<OrderResponse>> getAllOrders(
+            @RequestHeader(value = "Authorization", required = false) String authorizationHeader);
 
     @GetMapping("/status/{status}")
     @Operation(summary = "Consulta pedidos por status")
@@ -54,7 +58,8 @@ public interface OrderApi {
                     content = @Content)})
     public ResponseEntity<List<OrderResponse>> getOrdersByStatus(
             @Parameter(description = "Status do pedido", required = true)
-            @PathVariable("status") StatusOrder status);
+            @PathVariable("status") StatusOrder status,
+            @RequestHeader(value = "Authorization", required = false) String authorizationHeader);
 
     @GetMapping("/{id}")
     @Operation(summary = "Consulta pedido por ID")
@@ -67,7 +72,8 @@ public interface OrderApi {
             @ApiResponse(responseCode = "404", description = "Pedido não encontrado",
                     content = @Content)})
     public @ResponseBody ResponseEntity<OrderResponse> getOrderById(
-            @Parameter(description = "ID do pedido a ser consultado", required = true) @PathVariable("id") int id);
+            @Parameter(description = "ID do pedido a ser consultado", required = true) @PathVariable("id") int id,
+            @RequestHeader(value = "Authorization", required = false) String authorizationHeader);
 
     @PutMapping("/{id}/status")
     @Operation(summary = "Atualiza o status de um pedido")
@@ -87,6 +93,7 @@ public interface OrderApi {
                     "READY",
                     "FINISHED",
                     "CANCELED"}))
-            @RequestParam StatusOrder newStatus);
+            @RequestParam StatusOrder newStatus,
+            @RequestHeader(value = "Authorization", required = false) String authorizationHeader);
 
 }

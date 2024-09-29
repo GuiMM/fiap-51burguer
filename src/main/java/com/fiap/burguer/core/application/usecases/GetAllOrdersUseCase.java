@@ -1,18 +1,22 @@
 package com.fiap.burguer.core.application.usecases;
 import com.fiap.burguer.core.application.Exception.ResourceNotFoundException;
 import com.fiap.burguer.core.application.enums.StatusOrder;
+import com.fiap.burguer.core.application.ports.AuthenticationPort;
 import com.fiap.burguer.core.application.ports.OrderPort;
 import com.fiap.burguer.core.domain.Order;
 import java.util.List;
 
 public class GetAllOrdersUseCase {
     private final OrderPort orderPort;
-
-    public GetAllOrdersUseCase(OrderPort orderPort) {
+    private final AuthenticationPort authenticationPort;
+    public GetAllOrdersUseCase(OrderPort orderPort, AuthenticationPort authenticationPort) {
         this.orderPort = orderPort;
+        this.authenticationPort = authenticationPort;
     }
 
-    public List<Order> getAllOrders() {
+    public List<Order> getAllOrders(String authorizationHeader) {
+        authenticationPort.validateAuthorizationHeader(authorizationHeader);
+
         List<Order> orderEntities = orderPort.findAll();
 
         if (orderEntities == null || orderEntities.isEmpty()) {

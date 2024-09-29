@@ -2,6 +2,7 @@ package com.fiap.burguer.core.application.usecases;
 
 import com.fiap.burguer.core.application.Exception.ResourceNotFoundException;
 import com.fiap.burguer.core.application.enums.StatusOrder;
+import com.fiap.burguer.core.application.ports.AuthenticationPort;
 import com.fiap.burguer.core.domain.Order;
 
 import java.util.List;
@@ -13,10 +14,10 @@ public class TimeWaitingOrderQueueUseCase {
         this.getOrdersByStatusUseCase = getOrdersByStatusUseCase;
     }
 
-    public int execute() {
+    public int execute(String authorizationHeader) {
         try {
-            List<Order> receivedOrderEntities = getOrdersByStatusUseCase.getOrdersByStatus(StatusOrder.RECEIVED);
-            List<Order> preparationOrderEntities = getOrdersByStatusUseCase.getOrdersByStatus(StatusOrder.PREPARATION);
+            List<Order> receivedOrderEntities = getOrdersByStatusUseCase.getOrdersByStatus(StatusOrder.RECEIVED, authorizationHeader);
+            List<Order> preparationOrderEntities = getOrdersByStatusUseCase.getOrdersByStatus(StatusOrder.PREPARATION, authorizationHeader);
 
             return sumTimeWaitingOrder(receivedOrderEntities) + sumTimeWaitingOrder(preparationOrderEntities);
         } catch (ResourceNotFoundException ex) {

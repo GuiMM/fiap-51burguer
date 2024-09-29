@@ -25,7 +25,8 @@ public interface CheckoutApi {
             @ApiResponse(responseCode = "404", description = "Pedido não encontrado, tente outro!",
                     content = @Content)})
     public @ResponseBody  ResponseEntity<?> getCheckoutOrderById(
-            @Parameter(description = "ID do pedido a ser consultado", required = true) @PathVariable("id") int id);
+            @Parameter(description = "ID do pedido a ser consultado", required = true) @PathVariable("id") int id,
+            @RequestHeader(value = "Authorization", required = false) String authorizationHeader);
 
     @PostMapping("/criar/{id}/{status_order}")
     @Operation(summary = "Cria checkout por ID do pedido")
@@ -40,5 +41,6 @@ public interface CheckoutApi {
     public @ResponseBody ResponseEntity<?> postCheckout(
             @Parameter(description = "ID do pedido para criar checkout", required = true) @PathVariable("id") int id,
             @Parameter(description = "Status do Pedido", required = true, schema = @Schema(allowableValues = {"APPROVEDPAYMENT", "REJECTEDPAYMENT"}))
-            @PathVariable("status_order") StatusOrder statusOrder) ;
+            @PathVariable("status_order") StatusOrder statusOrder,
+            @RequestHeader(value = "Authorization", required = false) String authorizationHeader) ;
 }

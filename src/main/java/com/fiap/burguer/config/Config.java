@@ -22,12 +22,15 @@ public class Config {
     CheckOutAdapter checkoutAdapter;
 
     @Autowired
+    AuthenticationAdapter authenticationAdapter;
+
+    @Autowired
     PaymentGateway paymentGateway;
 
 
     @Bean
     public ProductUseCases getProductService() {
-        return new ProductUseCases(productAdapter);
+        return new ProductUseCases(productAdapter, authenticationAdapter);
     }
 
 
@@ -43,17 +46,17 @@ public class Config {
     }
     @Bean
     public CreateOrderUseCase createOrderUseCase() {
-        return new CreateOrderUseCase(orderAdapter,validateOrderUseCase(), getClientOrderUseCase(),productAdapter,timeWaitingOrderQueueUseCase());
+        return new CreateOrderUseCase(orderAdapter,validateOrderUseCase(), getClientOrderUseCase(),productAdapter,timeWaitingOrderQueueUseCase(), authenticationAdapter);
     }
 
     @Bean
     public GetOrderByIdUseCase getOrderByIdUseCase() {
-        return new GetOrderByIdUseCase(orderAdapter);
+        return new GetOrderByIdUseCase(orderAdapter, authenticationAdapter);
     }
 
     @Bean
     public GetAllOrdersUseCase getAllOrdersUseCase() {
-        return new GetAllOrdersUseCase(orderAdapter);
+        return new GetAllOrdersUseCase(orderAdapter, authenticationAdapter);
     }
 
     @Bean
@@ -63,7 +66,7 @@ public class Config {
 
     @Bean
     public OrdersStatusUseCase getOrdersByStatusUseCase() {
-        return new OrdersStatusUseCase(orderAdapter);
+        return new OrdersStatusUseCase(orderAdapter, authenticationAdapter);
     }
 
     @Bean

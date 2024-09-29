@@ -29,29 +29,28 @@ public class ProductController implements ProductApi {
     }
 
 
-    public ResponseEntity<Product> getProductById(int id) {
-        Product product = productUseCases.findById(id);
+    public ResponseEntity<Product> getProductById(int id, String authorizationHeader) {
+        Product product = productUseCases.findById(id, authorizationHeader);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Product>> getProductsByCategory(CategoryProduct category) {
-            List<Product> productEntities = productUseCases.findByCategory(category);
+    public ResponseEntity<List<Product>> getProductsByCategory(CategoryProduct category, String authorizationHeader) {
+            List<Product> productEntities = productUseCases.findByCategory(category, authorizationHeader);
             return ResponseEntity.ok(productEntities);
     }
 
-    public Product postProduct(ProductCreate productCreate) {
-        return productUseCases.saveProduct(productCreate);
+    public Product postProduct(ProductCreate productCreate, String authorizationHeader) {
+        return productUseCases.saveProduct(productCreate, authorizationHeader);
     }
 
 
-    public Product putProduct(Product product) {
-        return productUseCases.updateProduct(product);
+    public Product putProduct(Product product, String authorizationHeader) {
+        return productUseCases.updateProduct(product, authorizationHeader);
     }
 
 
-    public  ResponseEntity deleteProduct(int id) {
-
-            productUseCases.deleteById(id);
+    public ResponseEntity deleteProduct(int id, String authorizationHeader) {
+            productUseCases.deleteById(id, authorizationHeader);
             return new ResponseEntity<>("Produto Deletado com sucesso",HttpStatus.OK);
 
     }

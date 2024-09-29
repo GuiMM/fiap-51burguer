@@ -3,6 +3,7 @@ package com.fiap.burguer.core.application.usecases;
 import com.fiap.burguer.core.application.Exception.RequestException;
 import com.fiap.burguer.core.application.Exception.ResourceNotFoundException;
 import com.fiap.burguer.core.application.enums.StatusOrder;
+import com.fiap.burguer.core.application.ports.AuthenticationPort;
 import com.fiap.burguer.core.application.ports.OrderPort;
 import com.fiap.burguer.core.domain.Order;
 
@@ -10,12 +11,16 @@ import java.util.List;
 
 public class OrdersStatusUseCase {
     private final OrderPort orderPort;
+    private final AuthenticationPort authenticationPort;
 
-    public OrdersStatusUseCase(OrderPort orderPort) {
+    public OrdersStatusUseCase(OrderPort orderPort, AuthenticationPort authenticationPort) {
         this.orderPort = orderPort;
+        this.authenticationPort = authenticationPort;
     }
 
-    public List<Order> getOrdersByStatus(StatusOrder status) {
+    public List<Order> getOrdersByStatus(StatusOrder status, String authorizationHeader) {
+        authenticationPort.validateAuthorizationHeader(authorizationHeader);
+
         List<Order> orderEntities = orderPort.findByStatus(status);
 
         if (orderEntities == null || orderEntities.isEmpty()) {
@@ -25,7 +30,9 @@ public class OrdersStatusUseCase {
         return orderEntities;
     }
 
-    public void updateOrderStatus(Order order, StatusOrder newStatus) {
+    public void updateOrderStatus(Order order, StatusOrder newStatus, String authorizationHeader) {
+        authenticationPort.validateAuthorizationHeader(authorizationHeader);
+        authenticationPort.validateIsAdminAccess(authorizationHeader);
 
         boolean isValidUpdate = isValidStatusUpdate(order.getStatus(), newStatus);
         if (!isValidUpdate) {

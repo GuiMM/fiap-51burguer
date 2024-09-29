@@ -28,15 +28,15 @@ public class OrderController implements OrderApi {
         this.getOrderByIdUseCase = getOrderById;
     }
 
-    public ResponseEntity<?> createOrder (OrderRequest orderRequest) {
+    public ResponseEntity<?> createOrder (OrderRequest orderRequest, String authorizationHeader) {
 
-        Order order = createOrderUseCase.createOrder(orderRequest);
+        Order order = createOrderUseCase.createOrder(orderRequest, authorizationHeader);
         OrderResponse response = OrderPresenter.mapOrderToResponse(order);
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<List<OrderResponse>> getAllOrders() {
-        List<Order> orderEntities = getAllOrdersUseCase.getAllOrders();
+    public ResponseEntity<List<OrderResponse>> getAllOrders( String authorizationHeader) {
+        List<Order> orderEntities = getAllOrdersUseCase.getAllOrders(authorizationHeader);
 
         List<OrderResponse> responses = orderEntities.stream()
                 .map(OrderPresenter::mapOrderToResponse)
@@ -45,8 +45,8 @@ public class OrderController implements OrderApi {
     }
 
 
-    public ResponseEntity<List<OrderResponse>> getOrdersByStatus(StatusOrder status) {
-        List<Order> orders = ordersByStatusUseCase.getOrdersByStatus(status);
+    public ResponseEntity<List<OrderResponse>> getOrdersByStatus(StatusOrder status, String authorizationHeader) {
+        List<Order> orders = ordersByStatusUseCase.getOrdersByStatus(status, authorizationHeader);
 
         List<OrderResponse> responses = orders.stream()
                 .map(OrderPresenter::mapOrderToResponse)
@@ -54,18 +54,18 @@ public class OrderController implements OrderApi {
         return ResponseEntity.ok(responses);
     }
 
-    public  ResponseEntity<OrderResponse> getOrderById(int id) {
-        Order order = getOrderByIdUseCase.getOrderById(id);
+    public  ResponseEntity<OrderResponse> getOrderById(int id, String authorizationHeader) {
+        Order order = getOrderByIdUseCase.getOrderById(id, authorizationHeader);
         OrderResponse response = OrderPresenter.mapOrderToResponse(order);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
-    public ResponseEntity<?> updateOrderStatus(int id, StatusOrder newStatus) {
+    public ResponseEntity<?> updateOrderStatus(int id, StatusOrder newStatus, String authorizationHeader) {
 
-        Order order = getOrderByIdUseCase.getOrderById(id);
+        Order order = getOrderByIdUseCase.getOrderById(id, authorizationHeader);
 
-        ordersByStatusUseCase.updateOrderStatus(order, newStatus);
+        ordersByStatusUseCase.updateOrderStatus(order, newStatus, authorizationHeader);
         OrderResponse response = OrderPresenter.mapOrderToResponse(order);
         return ResponseEntity.ok(response);
     }

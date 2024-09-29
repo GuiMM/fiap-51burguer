@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fiap.burguer.core.domain.Client;
 
 public class OrderRequest {
+    @JsonIgnore
     private Integer idClient;
+
     private List<OrderItemRequest> items;
 
     public OrderRequest() {

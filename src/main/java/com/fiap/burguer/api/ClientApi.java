@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public interface ClientApi {
 
-
     @PostMapping(name = "/create", produces = "application/json")
     @Operation(summary = "Cadastra cliente")
     @ApiResponses(value = {

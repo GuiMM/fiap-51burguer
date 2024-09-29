@@ -34,7 +34,8 @@ public interface ProductApi {
             @ApiResponse(responseCode = "404", description = "Produto não encontrado",
                     content = @Content)})
     public @ResponseBody ResponseEntity<Product> getProductById(
-            @Parameter(description = "ID do produto a ser consultado", required = true) @PathVariable("id") int id);
+            @Parameter(description = "ID do produto a ser consultado", required = true) @PathVariable("id") int id,
+            @RequestHeader(value = "Authorization", required = false) String authorizationHeader);
 
     @GetMapping("/category/{category}")
     @Operation(summary = "Consulta produtos por categoria")
@@ -47,7 +48,8 @@ public interface ProductApi {
             @ApiResponse(responseCode = "404", description = "Produtos não encontrados para a categoria",
                     content = @Content) })
     public ResponseEntity<List<Product>> getProductsByCategory(
-            @Parameter(description = "Categoria dos produtos a serem consultados", required = true) @PathVariable("category") CategoryProduct category);
+            @Parameter(description = "Categoria dos produtos a serem consultados", required = true) @PathVariable("category") CategoryProduct category,
+            @RequestHeader(value = "Authorization", required = false) String authorizationHeader);
 
     @PostMapping(name = "/create", produces = "application/json")
     @Operation(summary = "Cadastra produto")
@@ -57,7 +59,8 @@ public interface ProductApi {
                             schema = @Schema(implementation = Product.class))}),
             @ApiResponse(responseCode = "400", description = "Infos de produto invalido",
                     content = @Content)})
-    public @ResponseBody Product postProduct(@RequestBody @Valid ProductCreate productCreate);
+    public @ResponseBody Product postProduct(@RequestBody @Valid ProductCreate productCreate,
+                                             @RequestHeader(value = "Authorization", required = false) String authorizationHeader);
 
     @PutMapping(name = "/update", produces = "application/json")
     @Operation(summary = "Atualiza produto")
@@ -67,7 +70,8 @@ public interface ProductApi {
                             schema = @Schema(implementation = ProductEntity.class))}),
             @ApiResponse(responseCode = "400", description = "Infos de produto invalido",
                     content = @Content)})
-    public @ResponseBody Product putProduct(@Valid Product product);
+    public @ResponseBody Product putProduct(@Valid Product product,
+                                            @RequestHeader(value = "Authorization", required = false) String authorizationHeader);
 
     @DeleteMapping("{id}")
     @Operation(summary = "Deleta produto por ID")
@@ -80,6 +84,7 @@ public interface ProductApi {
             @ApiResponse(responseCode = "404", description = "Produto não encontrado",
                     content = @Content)})
     public @ResponseBody ResponseEntity deleteProduct(
-            @Parameter(description = "ID do produto a ser deletado", required = true) @PathVariable("id") int id);
+            @Parameter(description = "ID do produto a ser deletado", required = true) @PathVariable("id") int id,
+            @RequestHeader(value = "Authorization", required = false) String authorizationHeader);
 }
 

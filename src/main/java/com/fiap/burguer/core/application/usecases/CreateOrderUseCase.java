@@ -1,7 +1,9 @@
 package com.fiap.burguer.core.application.usecases;
 import com.fiap.burguer.core.application.enums.StatusOrder;
+import com.fiap.burguer.core.application.ports.AuthenticationPort;
 import com.fiap.burguer.core.application.ports.OrderPort;
 import com.fiap.burguer.core.application.ports.ProductPort;
+import com.fiap.burguer.core.application.utils.JwtUtil;
 import com.fiap.burguer.core.domain.Client;
 import com.fiap.burguer.core.domain.Order;
 import com.fiap.burguer.core.domain.OrderItem;
@@ -20,20 +22,31 @@ public class CreateOrderUseCase {
     private final GetClientOrderUseCase getClientOrderUseCase;
     private final ProductPort productPort;
     private final TimeWaitingOrderQueueUseCase timeWaitingOrderQueueUseCase;
+    private final AuthenticationPort authenticationPort;
 
     public CreateOrderUseCase(OrderPort orderPort,
                               ValidateOrderUseCase validateOrderUseCase,
                               GetClientOrderUseCase getClientOrderUseCase,
                               ProductPort productPort,
-                              TimeWaitingOrderQueueUseCase timeWaitingOrderQueueUseCase) {
+                              TimeWaitingOrderQueueUseCase timeWaitingOrderQueueUseCase,
+                              AuthenticationPort authenticationPort) {
         this.orderPort = orderPort;
         this.validateOrderUseCase = validateOrderUseCase;
         this.getClientOrderUseCase = getClientOrderUseCase;
         this.productPort = productPort;
         this.timeWaitingOrderQueueUseCase = timeWaitingOrderQueueUseCase;
+        this.authenticationPort = authenticationPort;
     }
 
-    public Order createOrder(OrderRequest orderRequest) {
+    public Order createOrder(OrderRequest orderRequest, String authorizationHeader) {
+        authenticationPort.validateAuthorizationHeader(authorizationHeader);
+
+        Integer clientId = authenticationPort.validateIdUser(authorizationHeader);
+
+        if (clientId != null) {
+            orderRequest.setIdClient(clientId);
+        }
+
         validateOrderUseCase.execute(orderRequest);
         AtomicReference<Integer> timeOrder = new AtomicReference<>(0);
         Client client = getClientOrderUseCase.execute(orderRequest);
@@ -46,7 +59,7 @@ public class CreateOrderUseCase {
         order.setTimeWaitingOrder(0);
 
         List<OrderItem> orderItems = makeOrderItemObjects(orderRequest, timeOrder, order);
-        order.setTimeWaitingOrder(timeOrder.get() + timeWaitingOrderQueueUseCase.execute());
+        order.setTimeWaitingOrder(timeOrder.get() + timeWaitingOrderQueueUseCase.execute(authorizationHeader));
         order.setOrderItemsList(orderItems);
 
         return orderPort.save(order);

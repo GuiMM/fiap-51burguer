@@ -42,14 +42,16 @@ jobs:
           
 
       - name: Kube Secrets
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: |
          kubectl create secret generic secret-burguer51 \
-            --from-literal=POSTGRES_URL=${{ secrets.POSTGRES_URL }} \
+            --from-literal=POSTGRES_URL="${{ secrets.POSTGRES_URL }}" \
             --from-literal=POSTGRES_DATABASE=${{ secrets.POSTGRES_DATABASE }} \
             --from-literal=POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
             --from-literal=POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
 
       - name: Kube Apply
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: |
           kubectl apply -f k8s/configmap-burguer-app.yaml
           kubectl apply -f k8s/metrics.yaml

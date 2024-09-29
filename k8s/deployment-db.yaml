@@ -28,7 +28,7 @@ spec:
                 secretKeyRef:
                   name: secret-burguer51
                   key: POSTGRES_URL
-            - name: POSTGRES_DB
+            - name: POSTGRES_DATABASE
               valueFrom:
                 secretKeyRef:
                   name: secret-burguer51

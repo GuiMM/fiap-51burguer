@@ -168,5 +168,7 @@ https://github.com/GuiMM/fiap-51burguer/pull/12/commits/6e8aa20c961ead8507bafe19
 
 **Tech challenge 2: Refatoração do projeto seguindo os padrões de clean code e clean architecture e orquestração de containers de forma escalável**
 
+**Tech challenge 3: Refatoração da arquitetura para provisionar o cluster em cloud(AWS) e o banco no RDS.**
+
 ## 📄 Licença
 Não se aplica.

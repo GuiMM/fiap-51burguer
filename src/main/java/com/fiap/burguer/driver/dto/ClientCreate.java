@@ -15,27 +15,27 @@ public class ClientCreate {
         this.cpf = cpf;
     }
 
-    public String getName() {
+    public String getNameClient() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setNameClient(String name) {
         this.name = name;
     }
 
-    public String getEmail() {
+    public String getEmailClient() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmailClient(String email) {
         this.email = email;
     }
 
-    public String getCpf() {
+    public String getCpfClient() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public void setCpfClient(String cpf) {
         this.cpf = cpf;
     }
 }

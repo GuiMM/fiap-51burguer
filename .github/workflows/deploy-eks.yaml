@@ -43,8 +43,7 @@ jobs:
 
       - name: Kube Secrets
         if: ${{ github.ref_name == 'master' }} && github.event_name == 'push'
-        run: |
-         kubectl delete secret secret-burguer51 
+        run: | 
          kubectl create secret generic secret-burguer51 \
             --from-literal=POSTGRES_URL="${{ secrets.POSTGRES_URL }}" \
             --from-literal=POSTGRES_DATABASE=${{ secrets.POSTGRES_DATABASE }} \
@@ -54,7 +53,6 @@ jobs:
       - name: Kube Apply
         if: ${{ github.ref_name == 'master' }} && github.event_name == 'push'
         run: |
-          kubectl delete all --all
           kubectl apply -f k8s/configmap-burguer-app.yaml
           kubectl apply -f k8s/metrics.yaml
           kubectl apply -f k8s/deployment-burguer-app.yaml

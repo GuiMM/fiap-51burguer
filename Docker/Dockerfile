@@ -21,7 +21,7 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
   # Expose the application port (adjust if necessary)
-EXPOSE 8080
+EXPOSE 80
 
   # Set the entry point to run the Spring Boot application
 ENTRYPOINT ["java", "-jar", "app.jar"]
@@ -29,11 +29,13 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 ##Instructions:
 ## From project root:
-## docker build -f Docker/Dockerfile -t 51-burguer-app .
-## docker tag 51-burguer-app appburguer51/51-burguer-app:latest
+## docker build -f Docker/Dockerfile -t 51-burguer-app-aws .
+## docker tag 51-burguer-app-aws appburguer51/51-burguer-app-aws:1.0
 
 ## Pushing image to docker hub
 ## docker login registry-1.docker.io -u appburguer51
-## docker push appburguer51/51-burguer-app:latest
+## docker push appburguer51/51-burguer-app-aws:1.0
 
 ## docker-compose -f Docker/docker-compose.yml up
+
+##caramassada/51-burguer-app-aws:latest

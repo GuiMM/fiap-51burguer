@@ -166,5 +166,7 @@ Após a instalação executar os comandos ordenados abaixo na pasta raiz da apli
 
 **Tech challenge 2: Refatoração do projeto seguindo os padrões de clean code e clean architecture e orquestração de containers de forma escalável**
 
+**Tech challenge 3: Refatoração da arquitetura para provisionar o cluster em cloud(AWS) e o banco no RDS.**
+
 ## 📄 Licença
 Não se aplica.

@@ -1,32 +1,62 @@
 package com.fiap.burguer.driver.dto;
-
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fiap.burguer.core.domain.Client;
-import jakarta.validation.constraints.Min;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class OrderRequest {
     private Integer idClient;
-
-    @JsonIgnore
-    private Client client;
     private List<OrderItemRequest> items;
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
+    public OrderRequest() {
+    }
+
+    public OrderRequest(Integer idClient, Client client, List<OrderItemRequest> items) {
+        this.idClient = idClient;
+        this.items = items;
+    }
+
+    public Integer getIdClient() {
+        return idClient;
+    }
+
+    public void setIdClient(Integer idClient) {
+        this.idClient = idClient;
+    }
+
+    public List<OrderItemRequest> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItemRequest> items) {
+        this.items = items;
+    }
+
     public static class OrderItemRequest {
-
         private int productId;
-
-        @Min(value = 1, message = "A quantidade deve ser maior que zero")
         private int quantity;
 
+        public OrderItemRequest() {
+        }
+
+        public OrderItemRequest(int productId, int quantity) {
+            this.productId = productId;
+            this.quantity = quantity;
+        }
+
+        public int getProductId() {
+            return productId;
+        }
+
+        public void setProductId(int productId) {
+            this.productId = productId;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(int quantity) {
+            this.quantity = quantity;
+        }
     }
 }

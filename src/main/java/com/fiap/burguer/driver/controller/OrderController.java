@@ -1,12 +1,10 @@
 package com.fiap.burguer.driver.controller;
 import com.fiap.burguer.api.OrderApi;
+import com.fiap.burguer.core.application.usecases.*;
 import com.fiap.burguer.driver.presenters.OrderPresenter;
 import com.fiap.burguer.driver.dto.OrderRequest;
 import com.fiap.burguer.driver.dto.OrderResponse;
 import com.fiap.burguer.core.application.enums.StatusOrder;
-import com.fiap.burguer.core.application.usecases.ClientUseCases;
-import com.fiap.burguer.core.application.usecases.OrderUseCases;
-import com.fiap.burguer.core.domain.Client;
 import com.fiap.burguer.core.domain.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,23 +14,29 @@ import java.util.stream.Collectors;
 
 @Controller
 public class OrderController implements OrderApi {
-    private final OrderUseCases orderUseCases;
     private final ClientUseCases clientservice;
+    private final CreateOrderUseCase createOrderUseCase;
+    private final GetAllOrdersUseCase getAllOrdersUseCase;
+    private final OrdersStatusUseCase ordersByStatusUseCase;
+    private final GetOrderByIdUseCase getOrderByIdUseCase;
 
-    public OrderController(OrderUseCases orderUseCases, ClientUseCases clientservice) {
-        this.orderUseCases = orderUseCases;
+    public OrderController(ClientUseCases clientservice, CreateOrderUseCase createOrder , GetAllOrdersUseCase getAllOrders, OrdersStatusUseCase getOrdersByStatus, GetOrderByIdUseCase getOrderById ) {
         this.clientservice = clientservice;
+        this.createOrderUseCase = createOrder;
+        this.getAllOrdersUseCase = getAllOrders;
+        this.ordersByStatusUseCase = getOrdersByStatus;
+        this.getOrderByIdUseCase = getOrderById;
     }
 
-    public ResponseEntity<?> createOrder(OrderRequest orderRequest) {
+    public ResponseEntity<?> createOrder (OrderRequest orderRequest) {
 
-        Order order = orderUseCases.createOrder(orderRequest);
+        Order order = createOrderUseCase.createOrder(orderRequest);
         OrderResponse response = OrderPresenter.mapOrderToResponse(order);
         return ResponseEntity.ok(response);
     }
 
     public ResponseEntity<List<OrderResponse>> getAllOrders() {
-        List<Order> orderEntities = orderUseCases.getAllOrders();
+        List<Order> orderEntities = getAllOrdersUseCase.getAllOrders();
 
         List<OrderResponse> responses = orderEntities.stream()
                 .map(OrderPresenter::mapOrderToResponse)
@@ -42,7 +46,7 @@ public class OrderController implements OrderApi {
 
 
     public ResponseEntity<List<OrderResponse>> getOrdersByStatus(StatusOrder status) {
-        List<Order> orders = orderUseCases.getOrdersByStatus(status);
+        List<Order> orders = ordersByStatusUseCase.getOrdersByStatus(status);
 
         List<OrderResponse> responses = orders.stream()
                 .map(OrderPresenter::mapOrderToResponse)
@@ -51,7 +55,7 @@ public class OrderController implements OrderApi {
     }
 
     public  ResponseEntity<OrderResponse> getOrderById(int id) {
-        Order order = orderUseCases.getOrderById(id);
+        Order order = getOrderByIdUseCase.getOrderById(id);
         OrderResponse response = OrderPresenter.mapOrderToResponse(order);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -59,9 +63,9 @@ public class OrderController implements OrderApi {
 
     public ResponseEntity<?> updateOrderStatus(int id, StatusOrder newStatus) {
 
-        Order order = orderUseCases.getOrderById(id);
+        Order order = getOrderByIdUseCase.getOrderById(id);
 
-        orderUseCases.updateOrderStatus(order, newStatus);
+        ordersByStatusUseCase.updateOrderStatus(order, newStatus);
         OrderResponse response = OrderPresenter.mapOrderToResponse(order);
         return ResponseEntity.ok(response);
     }

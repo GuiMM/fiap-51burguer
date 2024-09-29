@@ -1,10 +1,7 @@
 package com.fiap.burguer.driver.dto;
-
 import com.fiap.burguer.core.application.enums.StatusOrder;
-import lombok.Data;
 import java.util.Date;
 
-@Data
 public class CheckoutResponse {
     private int id;
     private OrderResponse order;
@@ -13,19 +10,68 @@ public class CheckoutResponse {
     private double totalPrice;
     private String transactId;
 
-    CheckoutResponse(int id,
-                     OrderResponse order,
-                     Date dateCreated,
-                     StatusOrder payment_status,
-                     double totalPrice,
-                     String transactId){
-        this.dateCreated = dateCreated;
+    public CheckoutResponse(int id,
+                            OrderResponse order,
+                            Date dateCreated,
+                            StatusOrder payment_status,
+                            double totalPrice,
+                            String transactId) {
         this.id = id;
-        this.transactId = transactId;
         this.order = order;
+        this.dateCreated = dateCreated;
         this.payment_status = payment_status;
+        this.totalPrice = totalPrice;
+        this.transactId = transactId;
+    }
+
+    public CheckoutResponse() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public OrderResponse getOrder() {
+        return order;
+    }
+
+    public void setOrder(OrderResponse order) {
+        this.order = order;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public StatusOrder getPayment_status() {
+        return payment_status;
+    }
+
+    public void setPayment_status(StatusOrder payment_status) {
+        this.payment_status = payment_status;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public CheckoutResponse(){}
+    public String getTransactId() {
+        return transactId;
+    }
+
+    public void setTransactId(String transactId) {
+        this.transactId = transactId;
+    }
 }

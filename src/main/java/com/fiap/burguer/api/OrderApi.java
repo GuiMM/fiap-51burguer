@@ -1,13 +1,8 @@
 package com.fiap.burguer.api;
 
 import com.fiap.burguer.core.application.enums.StatusOrder;
-import com.fiap.burguer.core.application.usecases.ClientUseCases;
-import com.fiap.burguer.core.application.usecases.OrderUseCases;
-import com.fiap.burguer.core.domain.Client;
-import com.fiap.burguer.core.domain.Order;
 import com.fiap.burguer.driver.dto.OrderRequest;
 import com.fiap.burguer.driver.dto.OrderResponse;
-import com.fiap.burguer.driver.presenters.OrderPresenter;
 import com.fiap.burguer.infraestructure.entities.OrderEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,12 +11,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/orders")

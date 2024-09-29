@@ -31,7 +31,7 @@ jobs:
 
       - name: Package
         run: | 
-          docker-compose -f Docker/docker-compose.yml build web
+          docker compose -f Docker/docker-compose.yml build web
 
       - name: Kube Secrets
         run: |

@@ -29,9 +29,17 @@ jobs:
       - name: Update Kube Config
         run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.REGION_DEFAULT }}
 
-      - name: Package
+      - name: Package & Tag
         run: | 
           docker compose -f Docker/docker-compose.yml build web
+          docker tag docker.io/library/51-burguer-app 375275125343.dkr.ecr.us-east-1.amazonaws.com/51burguer-image:latest
+          docker ps
+
+      - name: Push to ECR
+        run: |
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 375275125343.dkr.ecr.us-east-1.amazonaws.com
+          docker push 375275125343.dkr.ecr.us-east-1.amazonaws.com/51burguer-image:latest
+          
 
       - name: Kube Secrets
         run: |

@@ -171,6 +171,5 @@ https://github.com/GuiMM/fiap-51burguer/pull/12/commits/6e8aa20c961ead8507bafe19
 **Tech challenge 3: Refatoração da arquitetura para provisionar o cluster em cloud(AWS) e o banco no RDS.**
 
 
-
 ## 📄 Licença
 Não se aplica.

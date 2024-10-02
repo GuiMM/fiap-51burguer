@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "d04154e5-ab0e-42ea-b68d-a3640bec464b",
-		"name": "FIAP - Burger API",
-		"description": "API for managing burgers\n\nContact:\n\nCarlos Jafet  - RM 354076 - cjafet07@gmail.com\n\nGuilherme Macedo Moreira - RM 353750 - guilherme.macedomoreira@gmail.com\n\nIsabella Bellinazzi da Silva - RM 354143 - isabellinazzi@hotmail.com\n\nJuliano Silva Nunes - RM 354144 - silva.juliano8130@gmail.com\n\nThiago Augusto Nery - RM 355063 - doomerbr@gmail.com\n\nContact Support:\n Name: Grupo 51",
+		"_postman_id": "1dbfa519-946d-4b3d-a58a-2bbc4638645e",
+		"name": "Fiap - Burger API AWS",
+		"description": "API for managing burgers\n\nContact:\n\nCarlos Jafet - RM 354076 - [cjafet07@gmail.com](https://mailto:cjafet07@gmail.com)\n\nGuilherme Macedo Moreira - RM 353750 - [guilherme.macedomoreira@gmail.com](https://mailto:guilherme.macedomoreira@gmail.com)\n\nIsabella Bellinazzi da Silva - RM 354143 - [isabellinazzi@hotmail.com](https://mailto:isabellinazzi@hotmail.com)\n\nJuliano Silva Nunes - RM 354144 - [silva.juliano8130@gmail.com](https://mailto:silva.juliano8130@gmail.com)\n\nThiago Augusto Nery - RM 355063 - [doomerbr@gmail.com](https://mailto:doomerbr@gmail.com)\n\nContact Support:  \nName: Grupo 51",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23604147"
 	},
@@ -11,8 +11,18 @@
 			"name": "products",
 			"item": [
 				{
-					"name": "Atualiza produto",
+					"name": "Atualiza produto - Admin",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjcGYiOiI3NzU4MjkzMDAwMiIsIm5hbWUiOiJNYXJpYSBOdW5lcyIsImlkIjoyLCJpc0FkbWluIjp0cnVlLCJleHAiOjE3Mjc3NTczNTksImVtYWlsIjoibWFyaWFOdW5lc0BleGFtcGxlLmNvbSJ9.U3IQIYYQSkJQaQVv5eSQV014NrblOw7NEUP34VCR2R8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -21,12 +31,15 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/products?id=1&name=Cheeseburger&category=DRINK&price=5.0&description=Classic cheeseburger&preparationTime=5&image=http://gangstaburguer.com/images/cheeseburger.jpg",
+							"raw": "http://aa4b76e56e8044a098a1882f19900bc0-1394836592.us-east-1.elb.amazonaws.com/products?id=1&name=Cheeseburger&category=DRINK&price=5.0&description=Classic cheeseburger&preparationTime=5&image=http://gangstaburguer.com/images/cheeseburger.jpg",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"aa4b76e56e8044a098a1882f19900bc0-1394836592",
+								"us-east-1",
+								"elb",
+								"amazonaws",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"products"
 							],
@@ -201,8 +214,18 @@
 					]
 				},
 				{
-					"name": "Cadastra produto",
+					"name": "Cadastra produto -  Admin",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjcGYiOiI3NzU4MjkzMDAwMiIsIm5hbWUiOiJNYXJpYSBOdW5lcyIsImlkIjoyLCJpc0FkbWluIjp0cnVlLCJleHAiOjE3Mjc3NTI2NTMsImVtYWlsIjoibWFyaWFOdW5lc0BleGFtcGxlLmNvbSJ9.whVKjtjJdJpl_JXyMc_P4kJPFZgWCEU3nRgKnnNJV10",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -225,12 +248,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/products",
+							"raw": "http://aa4b76e56e8044a098a1882f19900bc0-1394836592.us-east-1.elb.amazonaws.com/products",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"aa4b76e56e8044a098a1882f19900bc0-1394836592",
+								"us-east-1",
+								"elb",
+								"amazonaws",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"products"
 							]
@@ -325,6 +351,16 @@
 				{
 					"name": "Consulta produto por ID",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjcGYiOiIwNzkwMDU4NTAyOCIsIm5hbWUiOiJKb8OjbyBTaWx2YSIsImlkIjoxLCJpc0FkbWluIjpmYWxzZSwiZXhwIjoxNzI3NzUyNjUzLCJlbWFpbCI6ImpvYW9zaWx2YUBleGFtcGxlLmNvbSJ9.rc1hgnr4H1CagL5P-AznjLgM_ojt2gXZO6FNrAxL-Jk",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -333,12 +369,15 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/products/:id",
+							"raw": "http://aa4b76e56e8044a098a1882f19900bc0-1394836592.us-east-1.elb.amazonaws.com/products/:id",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"aa4b76e56e8044a098a1882f19900bc0-1394836592",
+								"us-east-1",
+								"elb",
+								"amazonaws",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"products",
 								":id"
@@ -450,8 +489,18 @@
 					]
 				},
 				{
-					"name": "Deleta produto por ID",
+					"name": "Deleta produto por ID - Admin",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjcGYiOiI3NzU4MjkzMDAwMiIsIm5hbWUiOiJNYXJpYSBOdW5lcyIsImlkIjoyLCJpc0FkbWluIjp0cnVlLCJleHAiOjE3Mjc3NTI2NTMsImVtYWlsIjoibWFyaWFOdW5lc0BleGFtcGxlLmNvbSJ9.whVKjtjJdJpl_JXyMc_P4kJPFZgWCEU3nRgKnnNJV10",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [
 							{
@@ -460,12 +509,15 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/products/:id",
+							"raw": "http://aa4b76e56e8044a098a1882f19900bc0-1394836592.us-east-1.elb.amazonaws.com/products/:id",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"aa4b76e56e8044a098a1882f19900bc0-1394836592",
+								"us-east-1",
+								"elb",
+								"amazonaws",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"products",
 								":id"
@@ -473,7 +525,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "10",
+									"value": "22",
 									"description": "(Required) ID do produto a ser deletado"
 								}
 							]
@@ -587,13 +639,18 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/products/category/:category",
+							"raw": "http://aa4b76e56e8044a098a1882f19900bc0-1394836592.us-east-1.elb.amazonaws.com/swagger-ui/index.html/products/category/:category",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"aa4b76e56e8044a098a1882f19900bc0-1394836592",
+								"us-east-1",
+								"elb",
+								"amazonaws",
+								"com"
 							],
-							"port": "8080",
 							"path": [
+								"swagger-ui",
+								"index.html",
 								"products",
 								"category",
 								":category"
@@ -715,6 +772,16 @@
 				{
 					"name": "Consulta todos os pedidos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjcGYiOiI3NzU4MjkzMDAwMiIsIm5hbWUiOiJNYXJpYSBOdW5lcyIsImlkIjoyLCJpc0FkbWluIjp0cnVlLCJleHAiOjE3Mjc3NTczNTksImVtYWlsIjoibWFyaWFOdW5lc0BleGFtcGxlLmNvbSJ9.U3IQIYYQSkJQaQVv5eSQV014NrblOw7NEUP34VCR2R8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -723,12 +790,15 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/orders",
+							"raw": "http://aa4b76e56e8044a098a1882f19900bc0-1394836592.us-east-1.elb.amazonaws.com/orders",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"aa4b76e56e8044a098a1882f19900bc0-1394836592",
+								"us-east-1",
+								"elb",
+								"amazonaws",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"orders"
 							]
@@ -794,6 +864,16 @@
 				{
 					"name": "Cria um novo pedido",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjcGYiOiI3NzU4MjkzMDAwMiIsIm5hbWUiOiJNYXJpYSBOdW5lcyIsImlkIjoyLCJpc0FkbWluIjp0cnVlLCJleHAiOjE3Mjc3NTczNTksImVtYWlsIjoibWFyaWFOdW5lc0BleGFtcGxlLmNvbSJ9.U3IQIYYQSkJQaQVv5eSQV014NrblOw7NEUP34VCR2R8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -807,7 +887,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"idClient\": \"1\",\n  \"items\": [\n    {\n      \"productId\": \"2\",\n      \"quantity\": \"1\"\n    },\n    {\n      \"productId\": \"3\",\n      \"quantity\": \"2\"\n    }\n  ]\n}",
+							"raw": "{\n  \"items\": [\n    {\n      \"productId\": \"1\",\n      \"quantity\": \"1\"\n    },\n    {\n      \"productId\": \"2\",\n      \"quantity\": \"2\"\n    }\n  ]\n}",
 							"options": {
 								"raw": {
 									"headerFamily": "json",
@@ -816,12 +896,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/orders",
+							"raw": "http://aa4b76e56e8044a098a1882f19900bc0-1394836592.us-east-1.elb.amazonaws.com/orders",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"aa4b76e56e8044a098a1882f19900bc0-1394836592",
+								"us-east-1",
+								"elb",
+								"amazonaws",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"orders"
 							]
@@ -953,6 +1036,16 @@
 				{
 					"name": "Atualiza o status de um pedido",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjcGYiOiI3NzU4MjkzMDAwMiIsIm5hbWUiOiJNYXJpYSBOdW5lcyIsImlkIjoyLCJpc0FkbWluIjp0cnVlLCJleHAiOjE3Mjc3NTczNTksImVtYWlsIjoibWFyaWFOdW5lc0BleGFtcGxlLmNvbSJ9.U3IQIYYQSkJQaQVv5eSQV014NrblOw7NEUP34VCR2R8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -961,12 +1054,15 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/orders/:id/status?newStatus=PREPARATION",
+							"raw": "http://aa4b76e56e8044a098a1882f19900bc0-1394836592.us-east-1.elb.amazonaws.com/orders/:id/status?newStatus=PREPARATION",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"aa4b76e56e8044a098a1882f19900bc0-1394836592",
+								"us-east-1",
+								"elb",
+								"amazonaws",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"orders",
 								":id",
@@ -1120,12 +1216,15 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/orders/status/:status",
+							"raw": "http://aa4b76e56e8044a098a1882f19900bc0-1394836592.us-east-1.elb.amazonaws.com/orders/status/:status",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"aa4b76e56e8044a098a1882f19900bc0-1394836592",
+								"us-east-1",
+								"elb",
+								"amazonaws",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"orders",
 								"status",
@@ -1243,6 +1342,16 @@
 				{
 					"name": "Consulta pedido por ID",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjcGYiOiIwNzkwMDU4NTAyOCIsIm5hbWUiOiJKb8OjbyBTaWx2YSIsImlkIjoxLCJpc0FkbWluIjpmYWxzZSwiZXhwIjoxNzI3NzU3MzU5LCJlbWFpbCI6ImpvYW9zaWx2YUBleGFtcGxlLmNvbSJ9.fuYJOabJ_Mmoof7A14lQfgrZXuvcxxPcNK4Hag_6V_Y",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -1251,12 +1360,15 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/orders/:id",
+							"raw": "http://aa4b76e56e8044a098a1882f19900bc0-1394836592.us-east-1.elb.amazonaws.com/orders/:id",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"aa4b76e56e8044a098a1882f19900bc0-1394836592",
+								"us-east-1",
+								"elb",
+								"amazonaws",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"orders",
 								":id"
@@ -1370,688 +1482,21 @@
 			]
 		},
 		{
-			"name": "client",
-			"item": [
-				{
-					"name": "Atualiza cliente",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8080/client?id=4&name=Joao Assis Rodrigues&email=joaoAssis@gmail.com&cpf=286.958.300-12",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"client"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "4",
-									"description": "(Required) Id do Cliente"
-								},
-								{
-									"key": "name",
-									"value": "Joao Assis Rodrigues",
-									"description": "(Required) Nome do Cliente"
-								},
-								{
-									"key": "email",
-									"value": "joaoAssis@gmail.com",
-									"description": "(Required) Email do Cliente"
-								},
-								{
-									"key": "cpf",
-									"value": "286.958.300-12",
-									"description": "(Required) CPF do Cliente"
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Cliente atualizado",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/client?id=<integer>&name=<string>&email=<string>&cpf=<string>",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"client"
-									],
-									"query": [
-										{
-											"key": "id",
-											"value": "<integer>",
-											"description": "(Required) "
-										},
-										{
-											"key": "name",
-											"value": "<string>",
-											"description": "(Required) "
-										},
-										{
-											"key": "email",
-											"value": "<string>",
-											"description": "(Required) "
-										},
-										{
-											"key": "cpf",
-											"value": "<string>",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"category\": \"DRINK\",\n  \"price\": \"<double>\",\n  \"description\": \"<string>\",\n  \"preparationTime\": \"<integer>\",\n  \"image\": \"<string>\"\n}"
-						},
-						{
-							"name": "Infos de cliente invalido",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/client?id=<integer>&name=<string>&email=<string>&cpf=<string>",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"client"
-									],
-									"query": [
-										{
-											"key": "id",
-											"value": "<integer>",
-											"description": "(Required) "
-										},
-										{
-											"key": "name",
-											"value": "<string>",
-											"description": "(Required) "
-										},
-										{
-											"key": "email",
-											"value": "<string>",
-											"description": "(Required) "
-										},
-										{
-											"key": "cpf",
-											"value": "<string>",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "text",
-							"header": [],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "Cadastra cliente",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8080/client?name=Joao Assis&email=joaoAssis@gmail.com&cpf=286.958.300-12",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"client"
-							],
-							"query": [
-								{
-									"key": "name",
-									"value": "Joao Assis",
-									"description": "(Required) Nome do Cliente"
-								},
-								{
-									"key": "email",
-									"value": "joaoAssis@gmail.com",
-									"description": "(Required) Email do Cliente"
-								},
-								{
-									"key": "cpf",
-									"value": "286.958.300-12",
-									"description": "(Required) CPF do Cliente"
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Cliente cadastrado",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/client?name=<string>&email=<string>&cpf=<string>",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"client"
-									],
-									"query": [
-										{
-											"key": "name",
-											"value": "<string>",
-											"description": "(Required) "
-										},
-										{
-											"key": "email",
-											"value": "<string>",
-											"description": "(Required) "
-										},
-										{
-											"key": "cpf",
-											"value": "<string>",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"email\": \"<string>\",\n  \"cpf\": \"<string>\"\n}"
-						},
-						{
-							"name": "Infos de cliente inválido",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/client?name=<string>&email=<string>&cpf=<string>",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"client"
-									],
-									"query": [
-										{
-											"key": "name",
-											"value": "<string>",
-											"description": "(Required) "
-										},
-										{
-											"key": "email",
-											"value": "<string>",
-											"description": "(Required) "
-										},
-										{
-											"key": "cpf",
-											"value": "<string>",
-											"description": "(Required) "
-										}
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n  \"status\": \"<integer>\",\n  \"message\": \"<string>\",\n  \"timestamp\": \"<long>\"\n}"
-						}
-					]
-				},
-				{
-					"name": "Consulta cliente por CPF",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8080/client/cpf?cpf=286.958.300-12",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"client",
-								"cpf"
-							],
-							"query": [
-								{
-									"key": "cpf",
-									"value": "286.958.300-12",
-									"description": "(Required) CPF do cliente a ser consultada"
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Encontrou cliente",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/client/cpf?cpf=<string>",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"client",
-										"cpf"
-									],
-									"query": [
-										{
-											"key": "cpf",
-											"value": "<string>",
-											"description": "(Required) CPF do cliente a ser consultada"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"email\": \"<string>\",\n  \"cpf\": \"<string>\"\n}"
-						},
-						{
-							"name": "Id de cliente inválido",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/client/cpf?cpf=<string>",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"client",
-										"cpf"
-									],
-									"query": [
-										{
-											"key": "cpf",
-											"value": "<string>",
-											"description": "(Required) CPF do cliente a ser consultada"
-										}
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "text",
-							"header": [],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Cliente não encontrada",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/client/cpf?cpf=<string>",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"client",
-										"cpf"
-									],
-									"query": [
-										{
-											"key": "cpf",
-											"value": "<string>",
-											"description": "(Required) CPF do cliente a ser consultada"
-										}
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "Deleta cliente por ID",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8080/client/:id",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"client",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "<integer>",
-									"description": "(Required) ID do cliente a ser deletado"
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Deletou cliente",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/client/:id",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"client",
-										":id"
-									],
-									"variable": [
-										{
-											"key": "id"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"email\": \"<string>\",\n  \"cpf\": \"<string>\"\n}"
-						},
-						{
-							"name": "Id de cliente inválido",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/client/:id",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"client",
-										":id"
-									],
-									"variable": [
-										{
-											"key": "id"
-										}
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "text",
-							"header": [],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Cliente não encontrado",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/client/:id",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"client",
-										":id"
-									],
-									"variable": [
-										{
-											"key": "id"
-										}
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "Consulta cliente por ID",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8080/client/:id",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"client",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1",
-									"description": "(Required) ID do cliente a ser consultada"
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Encontrou cliente",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/client/:id",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"client",
-										":id"
-									],
-									"variable": [
-										{
-											"key": "id"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"email\": \"<string>\",\n  \"cpf\": \"<string>\"\n}"
-						},
-						{
-							"name": "Id de cliente inválido",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/client/:id",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"client",
-										":id"
-									],
-									"variable": [
-										{
-											"key": "id"
-										}
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "text",
-							"header": [],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Cliente não encontrada",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/client/:id",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"client",
-										":id"
-									],
-									"variable": [
-										{
-											"key": "id"
-										}
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "text",
-							"header": [],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				}
-			]
-		},
-		{
 			"name": "checkout",
 			"item": [
 				{
 					"name": "Cria checkout por ID do pedido",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjcGYiOiIwNzkwMDU4NTAyOCIsIm5hbWUiOiJKb8OjbyBTaWx2YSIsImlkIjoxLCJpc0FkbWluIjpmYWxzZSwiZXhwIjoxNzI3NzU3MzU5LCJlbWFpbCI6ImpvYW9zaWx2YUBleGFtcGxlLmNvbSJ9.fuYJOabJ_Mmoof7A14lQfgrZXuvcxxPcNK4Hag_6V_Y",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -2060,12 +1505,15 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/checkout/criar/:id/:status_order",
+							"raw": "http://aa4b76e56e8044a098a1882f19900bc0-1394836592.us-east-1.elb.amazonaws.com/checkout/criar/:id/:status_order",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"aa4b76e56e8044a098a1882f19900bc0-1394836592",
+								"us-east-1",
+								"elb",
+								"amazonaws",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"checkout",
 								"criar",
@@ -2201,6 +1649,16 @@
 				{
 					"name": "Consulta checkout do pedido por ID",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjcGYiOiIwNzkwMDU4NTAyOCIsIm5hbWUiOiJKb8OjbyBTaWx2YSIsImlkIjoxLCJpc0FkbWluIjpmYWxzZSwiZXhwIjoxNzI3NzU3MzU5LCJlbWFpbCI6ImpvYW9zaWx2YUBleGFtcGxlLmNvbSJ9.fuYJOabJ_Mmoof7A14lQfgrZXuvcxxPcNK4Hag_6V_Y",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -2209,12 +1667,15 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/checkout/:id",
+							"raw": "http://aa4b76e56e8044a098a1882f19900bc0-1394836592.us-east-1.elb.amazonaws.com/checkout/:id",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"aa4b76e56e8044a098a1882f19900bc0-1394836592",
+								"us-east-1",
+								"elb",
+								"amazonaws",
+								"com"
 							],
-							"port": "8080",
 							"path": [
 								"checkout",
 								":id"
@@ -2326,12 +1787,171 @@
 					]
 				}
 			]
-		}
-	],
-	"variable": [
+		},
 		{
-			"key": "baseUrl",
-			"value": "http://localhost:8080"
+			"name": "user cognito",
+			"item": [
+				{
+					"name": "Cria Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf\": \"775.829.300-02\",\r\n    \"name\": \"Maria Nunes\",\r\n    \"email\": \"mariaNunes@example.com\",\r\n    \"password\": \"@Burguer51\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://ni553jt8b7.execute-api.us-east-1.amazonaws.com/Prod/admin",
+							"protocol": "https",
+							"host": [
+								"ni553jt8b7",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cria Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf\": \"079.005.850-28\",\r\n    \"name\": \"João Silva\",\r\n    \"email\": \"joaosilva@example.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://ni553jt8b7.execute-api.us-east-1.amazonaws.com/Prod/user",
+							"protocol": "https",
+							"host": [
+								"ni553jt8b7",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf\": \"775.829.300-02\",\r\n    \"password\": \"@Burguer51\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://ni553jt8b7.execute-api.us-east-1.amazonaws.com/Prod/user",
+							"protocol": "https",
+							"host": [
+								"ni553jt8b7",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cpf\": \"079.005.850-28\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://ni553jt8b7.execute-api.us-east-1.amazonaws.com/Prod/user",
+							"protocol": "https",
+							"host": [
+								"ni553jt8b7",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gera Usuário generico",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://ni553jt8b7.execute-api.us-east-1.amazonaws.com/Prod/user",
+							"protocol": "https",
+							"host": [
+								"ni553jt8b7",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

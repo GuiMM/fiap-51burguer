@@ -33,7 +33,7 @@ spring.application.name=burguer51-test
 
 # Configuração do H2 em memória
 spring.datasource.url=jdbc:h2:mem:testdb
-spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.driver-class-name=org.h2.Driver
 spring.datasource.username=sa
 spring.datasource.password=
 spring.h2.console.enabled=true

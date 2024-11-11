@@ -65,7 +65,7 @@ public interface ClientApi {
                             schema = @Schema(implementation = ProductEntity.class)) }),
             @ApiResponse(responseCode = "400", description = "Infos de cliente invalido",
                     content = @Content)})
-    public @ResponseBody ResponseEntity<Client> putClient(@Valid Client client);
+    public @ResponseBody Client putClient(@Valid Client client);
 
     @DeleteMapping("{id}")
     @Operation(summary = "Deleta cliente por ID")

@@ -36,8 +36,9 @@ public class ClientController implements ClientApi {
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
-    public Client putClient(Client client) {
-        return clientUseCases.saveClientOrUpdate(client);
+    public ResponseEntity<Client> putClient(Client client) {
+        Client updateClient = clientUseCases.saveClientOrUpdate(client);
+        return new ResponseEntity<>(updateClient, HttpStatus.OK);
     }
 
     public  ResponseEntity deleteClient(int id) {

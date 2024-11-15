@@ -12,7 +12,7 @@ public class OrderRequest {
     public OrderRequest() {
     }
 
-    public OrderRequest(Integer idClient, Client client, List<OrderItemRequest> items) {
+    public OrderRequest(Integer idClient, List<OrderItemRequest> items) {
         this.idClient = idClient;
         this.items = items;
     }

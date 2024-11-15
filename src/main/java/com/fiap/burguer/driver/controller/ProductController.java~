@@ -23,8 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 public class ProductController implements ProductApi {
-    private final ProductUseCases productUseCases;
-
+    ProductUseCases productUseCases;
     public ProductController(ProductUseCases productUseCases) {
         this.productUseCases = productUseCases;
     }

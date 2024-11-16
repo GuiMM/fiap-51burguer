@@ -1,5 +1,4 @@
 package com.fiap.burguer.config;
-import com.fiap.burguer.core.application.ports.IPaymentGateway;
 import com.fiap.burguer.core.application.usecases.*;
 import com.fiap.burguer.infraestructure.adapters.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,24 +15,12 @@ public class Config {
     OrderAdapter orderAdapter;
 
     @Autowired
-    ClientAdapter clientAdapter;
-
-    @Autowired
-    CheckOutAdapter checkoutAdapter;
-
-    @Autowired
     AuthenticationAdapter authenticationAdapter;
-
-    @Autowired
-    PaymentGateway paymentGateway;
-
 
     @Bean
     public ProductUseCases getProductService() {
         return new ProductUseCases(productAdapter, authenticationAdapter);
     }
-
-
 
     @Bean
     public ValidateOrderUseCase validateOrderUseCase() {
@@ -60,28 +47,7 @@ public class Config {
     }
 
     @Bean
-    public TimeWaitingOrderQueueUseCase timeWaitingOrderQueueUseCase() {
-        return new TimeWaitingOrderQueueUseCase(getOrdersByStatusUseCase());
-    }
-
-    @Bean
     public OrdersStatusUseCase getOrdersByStatusUseCase() {
         return new OrdersStatusUseCase(orderAdapter, authenticationAdapter);
     }
-
-    @Bean
-    public ClientUseCases getClientService() {
-        return new ClientUseCases(clientAdapter);
-    }
-
-    @Bean
-    public CheckoutUseCases getCheckoutService() {
-        return new CheckoutUseCases(checkoutAdapter, orderAdapter, paymentGateway);
-    }
-
-    @Bean
-    public IPaymentGateway getPaymentGateway() {
-        return new PaymentGateway();
-    }
-
 }

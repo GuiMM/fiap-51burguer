@@ -33,4 +33,8 @@ public class OrderEntity {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItemEntity> orderItemsList;
+
+    @Column(name = "client_id", nullable = true)
+    private int idClient;
+
 }

@@ -14,14 +14,12 @@ import java.util.stream.Collectors;
 
 @Controller
 public class OrderController implements OrderApi {
-    private final ClientUseCases clientservice;
     private final CreateOrderUseCase createOrderUseCase;
     private final GetAllOrdersUseCase getAllOrdersUseCase;
     private final OrdersStatusUseCase ordersByStatusUseCase;
     private final GetOrderByIdUseCase getOrderByIdUseCase;
 
-    public OrderController(ClientUseCases clientservice, CreateOrderUseCase createOrder , GetAllOrdersUseCase getAllOrders, OrdersStatusUseCase getOrdersByStatus, GetOrderByIdUseCase getOrderById ) {
-        this.clientservice = clientservice;
+    public OrderController(CreateOrderUseCase createOrder , GetAllOrdersUseCase getAllOrders, OrdersStatusUseCase getOrdersByStatus, GetOrderByIdUseCase getOrderById ) {
         this.createOrderUseCase = createOrder;
         this.getAllOrdersUseCase = getAllOrders;
         this.ordersByStatusUseCase = getOrdersByStatus;

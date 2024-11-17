@@ -31,10 +31,6 @@ public class OrderEntity {
     @Column(name = "total_price", nullable = false)
     private double totalPrice;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id", nullable = true)
-    private ClientEntity client;
-
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItemEntity> orderItemsList;
 }

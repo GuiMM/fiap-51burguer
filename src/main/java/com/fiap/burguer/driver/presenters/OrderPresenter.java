@@ -33,11 +33,6 @@ public class OrderPresenter {
         response.setTimeWaitingOrder(order.getTimeWaitingOrder());
         response.setDateCreated(date);
         response.setProducts(products);
-
-        if (order.getClient() != null) {
-            response.setClient(order.getClient());
-        }
-
         return response;
     }
 }

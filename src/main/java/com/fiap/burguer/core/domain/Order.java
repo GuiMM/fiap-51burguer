@@ -14,8 +14,6 @@ public class Order implements Serializable {
 
     private double totalPrice;
 
-    private Client client;
-
     private List<OrderItem> orderItemsList;
 
     public Integer getTimeWaitingOrder() {
@@ -56,14 +54,6 @@ public class Order implements Serializable {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
     }
 
     public List<OrderItem> getOrderItemsList() {

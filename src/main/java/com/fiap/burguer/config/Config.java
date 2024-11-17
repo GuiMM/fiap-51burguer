@@ -27,13 +27,10 @@ public class Config {
         return new ValidateOrderUseCase();
     }
 
-    @Bean
-    public GetClientOrderUseCase getClientOrderUseCase() {
-        return new GetClientOrderUseCase( clientAdapter);
-    }
+
     @Bean
     public CreateOrderUseCase createOrderUseCase() {
-        return new CreateOrderUseCase(orderAdapter,validateOrderUseCase(), getClientOrderUseCase(),productAdapter,timeWaitingOrderQueueUseCase(), authenticationAdapter);
+        return new CreateOrderUseCase(orderAdapter,validateOrderUseCase(),productAdapter, authenticationAdapter);
     }
 
     @Bean

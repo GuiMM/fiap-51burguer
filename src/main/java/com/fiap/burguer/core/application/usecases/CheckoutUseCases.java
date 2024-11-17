@@ -45,7 +45,7 @@ public class CheckoutUseCases {
     public CheckOut createCheckout(int id, StatusOrder statusOrder){
         Order order = orderPort.findById(id);
         if(order.getStatus() == StatusOrder.RECEIVED|| order.getStatus() == StatusOrder.CANCELED){
-            String errorMessage = "Não foi possível realizar o pagamento, pois o pedido " + order.getId() + " já está com o status "+ order.getStatus() ;
+            String errorMessage = "Não foi possível realizar o pagamento, pois o pedido " + order.getId() + " já está com o status "+ order.getStatus();
             throw new ImpossibleToCheckoutException(errorMessage);
         }else{
             this.updateStatusOrder(order, statusOrder);

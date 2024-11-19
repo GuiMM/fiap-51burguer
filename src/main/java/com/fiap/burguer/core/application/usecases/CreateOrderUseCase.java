@@ -18,15 +18,17 @@ public class CreateOrderUseCase {
     private final OrderPort orderPort;
     private final ValidateOrderUseCase validateOrderUseCase;
     private final ProductPort productPort;
+    private final TimeWaitingOrderQueueUseCase timeWaitingOrderQueueUseCase;
     private final AuthenticationPort authenticationPort;
 
     public CreateOrderUseCase(OrderPort orderPort,
                               ValidateOrderUseCase validateOrderUseCase,
-                              ProductPort productPort,
+                              ProductPort productPort, TimeWaitingOrderQueueUseCase timeWaitingOrderQueueUseCase,
                               AuthenticationPort authenticationPort) {
         this.orderPort = orderPort;
         this.validateOrderUseCase = validateOrderUseCase;
         this.productPort = productPort;
+        this.timeWaitingOrderQueueUseCase = timeWaitingOrderQueueUseCase;
         this.authenticationPort = authenticationPort;
     }
 
@@ -48,8 +50,8 @@ public class CreateOrderUseCase {
         order.setTimeWaitingOrder(0);
 
         List<OrderItem> orderItems = makeOrderItemObjects(orderRequest, timeOrder, order);
+        order.setTimeWaitingOrder(timeOrder.get() + timeWaitingOrderQueueUseCase.execute(authorizationHeader));
         order.setOrderItemsList(orderItems);
-
         return orderPort.save(order);
     }
 

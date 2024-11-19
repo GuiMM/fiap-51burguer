@@ -46,7 +46,10 @@ public interface ProductApi {
             @ApiResponse(responseCode = "400", description = "Categoria de produto inválida",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Produtos não encontrados para a categoria",
-                    content = @Content) })
+                    content = @Content) ,
+            @ApiResponse(responseCode = "406", description = "Tipo de mídia não aceitável",
+                    content = @Content)})
+
     public ResponseEntity<List<Product>> getProductsByCategory(
             @Parameter(description = "Categoria dos produtos a serem consultados", required = true) @PathVariable("category") CategoryProduct category,
             @RequestHeader(value = "Authorization", required = false) String authorizationHeader);

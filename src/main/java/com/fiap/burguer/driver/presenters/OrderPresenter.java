@@ -19,12 +19,14 @@ public class OrderPresenter {
         Date date = new Date();
         List<Product> products = new ArrayList<>();
 
-        if(order.getOrderItemsList() != null)
+        if (order.getOrderItemsList() != null) {
             for (OrderItem item : order.getOrderItemsList()) {
-                Integer preparationTime = Integer.parseInt(item.getPreparationTime());
-                date = item.getOrder().getDateCreated();
+                if (item.getOrder() != null && item.getOrder().getDateCreated() != null) {
+                    date = item.getOrder().getDateCreated();
+                }
                 products.add(item.getProduct());
             }
+        }
 
         OrderResponse response = new OrderResponse();
         response.setId(order.getId());
@@ -35,4 +37,5 @@ public class OrderPresenter {
         response.setProducts(products);
         return response;
     }
+
 }

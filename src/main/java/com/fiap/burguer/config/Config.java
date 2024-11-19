@@ -30,7 +30,12 @@ public class Config {
 
     @Bean
     public CreateOrderUseCase createOrderUseCase() {
-        return new CreateOrderUseCase(orderAdapter,validateOrderUseCase(),productAdapter, authenticationAdapter);
+        return new CreateOrderUseCase(orderAdapter,validateOrderUseCase(),productAdapter,timeWaitingOrderQueueUseCase() ,authenticationAdapter);
+    }
+
+    @Bean
+    public TimeWaitingOrderQueueUseCase timeWaitingOrderQueueUseCase() {
+        return new TimeWaitingOrderQueueUseCase(getOrdersByStatusUseCase());
     }
 
     @Bean

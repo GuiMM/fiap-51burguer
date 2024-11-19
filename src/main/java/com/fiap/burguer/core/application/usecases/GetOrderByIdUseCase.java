@@ -1,5 +1,6 @@
 package com.fiap.burguer.core.application.usecases;
 
+import com.fiap.burguer.core.application.Exception.RequestException;
 import com.fiap.burguer.core.application.Exception.ResourceNotFoundException;
 import com.fiap.burguer.core.application.ports.AuthenticationPort;
 import com.fiap.burguer.core.application.ports.OrderPort;
@@ -16,7 +17,7 @@ public class GetOrderByIdUseCase {
 
     public Order getOrderById(int id, String authorizationHeader) {
         authenticationPort.validateAuthorizationHeader(authorizationHeader);
-
+        if(id < 1 ) throw new RequestException("Id do Pedido inválido");
         Order order = orderPort.findById(id);
         if (order == null) {
             throw new ResourceNotFoundException("Pedido não encontrado");

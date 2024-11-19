@@ -1,5 +1,6 @@
 package com.fiap.burguer.core.application.usecases;
 
+import com.fiap.burguer.core.application.Exception.RequestException;
 import com.fiap.burguer.core.application.Exception.ResourceNotFoundException;
 import com.fiap.burguer.core.application.ports.AuthenticationPort;
 import com.fiap.burguer.driver.dto.ProductCreate;
@@ -7,9 +8,6 @@ import com.fiap.burguer.core.application.enums.CategoryProduct;
 import com.fiap.burguer.core.application.ports.ProductPort;
 import com.fiap.burguer.core.domain.Product;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,7 +61,7 @@ public class ProductUseCases {
 
     public Product findById(int id, String authorizationHeader) {
         authenticationPort.validateAuthorizationHeader(authorizationHeader);
-
+        if(id < 1 ) throw new RequestException("Id do Produto inválido");
         Product product = productPort.findById(id);
         if(product == null) throw new ResourceNotFoundException("Produto não encontrado");
         return product;
@@ -76,7 +74,7 @@ public class ProductUseCases {
         List<Product> allProductEntities = productPort.findAll();
 
         List<Product> filteredProductEntities = allProductEntities.stream()
-                .filter(product -> product.getCategory() == category)
+                .filter(product -> product.getCategory() ==  category)
                 .collect(Collectors.toList());
 
         if (filteredProductEntities == null || filteredProductEntities.isEmpty()) {

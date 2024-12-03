@@ -144,6 +144,13 @@ Após a instalação executar os comandos ordenados abaixo na pasta raiz da apli
      - kubectl apply -f .\k8s\hpa-burguer-app.yaml
 
 
+## Evoluçoes do projeto monolito para microsserviços:
+
+- [**Microsserviço payment**](https://github.com/julianoBeerg/fiap-payment51burguer)
+- [**Microsserviço product and order**](https://github.com/Isa-Bellinazzi/fiap-product-and-order51burguer)
+- [**Microsserviço client**](https://github.com/Tnery81/fiap-client51burger)
+  
+
 ## 📚 Mais informações do curso
 **Pós Tech - Turma 6SOAT**
 
